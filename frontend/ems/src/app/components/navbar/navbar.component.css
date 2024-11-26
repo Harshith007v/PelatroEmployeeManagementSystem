@@ -1,0 +1,9 @@
+.navbar{
+    background-color: #263238; /* Same as sidebar */
+  color: white;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}

@@ -16,6 +16,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { BodyComponent } from './components/body/body.component';
 
 // import { CommonModule } from '@angular/common';
 
@@ -32,6 +34,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     NavbarComponent,
     FooterComponent,
     DashboardComponent,
+    SidebarComponent,
+    BodyComponent,
   ],
   imports: [
     BrowserModule,
