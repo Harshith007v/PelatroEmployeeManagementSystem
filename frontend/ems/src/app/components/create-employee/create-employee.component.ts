@@ -62,7 +62,7 @@ export class CreateEmployeeComponent implements OnInit {
         departmentField.classList.add('is-invalid');
       }
       Swal.fire({
-        position: "top-right",
+        position: "center",
         icon: "warning",
         title: "Please fill all the fields",
         showConfirmButton: false,

@@ -14,6 +14,8 @@ import { ViewEmployeeComponent } from './components/view-employee/view-employee.
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // import { CommonModule } from '@angular/common';
 
@@ -28,6 +30,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
+    FooterComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

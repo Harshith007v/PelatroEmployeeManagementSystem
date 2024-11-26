@@ -7,6 +7,7 @@ import { UpdateEmployeeComponent } from './components/update-employee/update-emp
 import { ViewEmployeeComponent } from './components/view-employee/view-employee.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from '../app/components/register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'searchEmployees', component: SearchEmployeeComponent },
   { path: 'update-employees/:id', component: UpdateEmployeeComponent },
   { path: 'view-employee/:id', component: ViewEmployeeComponent },
+  { path: 'dashboard', component: DashboardComponent }
 
 
 ];

@@ -1,5 +1,7 @@
-<h3>View Employee Details</h3>
-<div>
+<app-navbar></app-navbar>
+
+<div class="container">
+  <h3>View Employee Details</h3>
   <div>
     <label><b>Employee ID : </b></label> PEL{{ employee.id }}
   </div>
@@ -22,5 +24,5 @@
     <label><b>Department Name : </b></label>
     {{ employee.department.departmentName }}
   </div>
+  <button (click)="backToEmployeeList()" class="btn btn-info">Back</button>
 </div>
-<button (click)="backToEmployeeList()" class="btn btn-info">Back</button>
