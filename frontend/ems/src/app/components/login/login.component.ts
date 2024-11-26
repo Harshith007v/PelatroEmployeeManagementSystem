@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginComponent {
 
   onLogin() {
     if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['/home']); // Redirect to home on success
+      this.router.navigate(['employees']); // Redirect to home on success
     } else {
       this.errorMessage = 'Invalid username or password';
     }
