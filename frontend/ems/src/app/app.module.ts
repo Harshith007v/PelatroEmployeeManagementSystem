@@ -11,6 +11,10 @@ import { CreateEmployeeComponent } from './components/create-employee/create-emp
 import { SearchEmployeeComponent } from './components/search-employee/search-employee.component';
 import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
 import { ViewEmployeeComponent } from './components/view-employee/view-employee.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+
+// import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -19,16 +23,18 @@ import { ViewEmployeeComponent } from './components/view-employee/view-employee.
     CreateEmployeeComponent,
     SearchEmployeeComponent,
     UpdateEmployeeComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
