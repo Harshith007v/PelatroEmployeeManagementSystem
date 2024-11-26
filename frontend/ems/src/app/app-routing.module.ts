@@ -9,15 +9,16 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from '../app/components/register/register.component';
 
 const routes: Routes = [
-  { path: 'employees', component: EmployeeListComponent },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'employees', component: EmployeeListComponent },
   { path: 'createEmployees', component: CreateEmployeeComponent },
   { path: 'searchEmployees', component: SearchEmployeeComponent },
   { path: 'update-employees/:id', component: UpdateEmployeeComponent },
   { path: 'view-employee/:id', component: ViewEmployeeComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+
 
 ];
 
@@ -25,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
