@@ -13,6 +13,7 @@ import { UpdateEmployeeComponent } from './components/update-employee/update-emp
 import { ViewEmployeeComponent } from './components/view-employee/view-employee.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 // import { CommonModule } from '@angular/common';
 
@@ -26,6 +27,7 @@ import { RegisterComponent } from './components/register/register.component';
     ViewEmployeeComponent,
     LoginComponent,
     RegisterComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
