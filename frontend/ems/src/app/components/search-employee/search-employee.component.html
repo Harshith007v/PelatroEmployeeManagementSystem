@@ -1,0 +1,35 @@
+<h2>Search Employee</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="serach-hero">
+      <input
+        type="text"
+        name="search"
+        [(ngModel)]="searchText"
+        placeholder="search by fname, lname or email "
+        style="width: 250px"
+      />
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Employee Id</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email Id</th>
+          <th>Department</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees | filter : searchText">
+          <td>{{ employee.id }}</td>
+          <td>{{ employee.firstName }}</td>
+          <td>{{ employee.lastName }}</td>
+          <td>{{ employee.emailId }}</td>
+          <td>{{ employee.department.departmentName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<h3>View Employee Details</h3>
+<div>
+  <div>
+    <label><b>Employee ID : </b></label> PEL{{ employee.id }}
+  </div>
+  <div>
+    <label><b>First Name : </b></label> {{ employee.firstName }}
+  </div>
+  <div>
+    <label><b>Last Name : </b></label> {{ employee.lastName }}
+  </div>
+  <div>
+    <label><b>Email ID : </b></label> {{ employee.emailId }}
+  </div>
+  <div>
+    <label><b>Role : </b></label> {{ employee.role }}
+  </div>
+  <div>
+    <label><b>Department ID : </b></label> {{ employee.department.id }}
+  </div>
+  <div>
+    <label><b>Department Name : </b></label>
+    {{ employee.department.departmentName }}
+  </div>
+</div>
+<button (click)="backToEmployeeList()" class="btn btn-info">Back</button>

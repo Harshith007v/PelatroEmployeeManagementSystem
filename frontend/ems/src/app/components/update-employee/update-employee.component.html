@@ -1,0 +1,85 @@
+<div class="col-md-6 offset-md-3">
+  <h3>Update Employee</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label> First Name </label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        [(ngModel)]="employee.firstName"
+        name="firstName"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label> Last Name </label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        [(ngModel)]="employee.lastName"
+        name="lastName"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label> Email Id </label>
+      <input
+        type="text"
+        class="form-control"
+        id="emailId"
+        [(ngModel)]="employee.emailId"
+        name="emailId"
+        #firstName="ngModel"
+        required
+        [class.is-invalid]="firstName.touched && firstName.invalid"
+      />
+      <div class="text-danger" *ngIf="firstName.touched && firstName.invalid">
+        First Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label> Role</label>
+      <input
+        type="text"
+        class="form-control"
+        id="role"
+        [(ngModel)]="employee.role"
+        name="role"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label> Department</label>
+      <select
+        type="text"
+        class="form-control"
+        id="department"
+        [(ngModel)]="employee.department.departmentName"
+        name="department"
+        required
+      >
+        <option
+          *ngFor="let dept of departments"
+          [ngValue]="dept.departmentName"
+        >
+          {{ dept.departmentName }}
+        </option>
+      </select>
+    </div>
+
+    <button class="btn btn-success" type="submit">Submit</button>
+    <button
+      (click)="backToEmployeeList()"
+      class="btn btn-info"
+      style="margin-left: 20px"
+    >
+      Back
+    </button>
+  </form>
+</div>
