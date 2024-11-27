@@ -47,4 +47,4 @@ import { BodyComponent } from './components/body/body.component';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

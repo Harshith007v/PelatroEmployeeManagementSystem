@@ -1,0 +1,175 @@
+/* Page Container Styling */
+.page-title{
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 12px;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100vw;
+  padding: 20px;
+  background: #A7BEAE; /* Match Navbar Background */
+  border-radius: 8px;
+  color: #f4f4f4; /* Text Color */
+}
+
+.custom-container {
+  width: calc(100% - 9rem);
+  margin: 10px auto;
+  margin-left: 83px;
+  padding: 0;
+}
+
+/* Card Deck Styling */
+.card-deck {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Individual Card Styling */
+.card {
+  flex: 1 1 calc(30% - 20px);
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #E7E8D1; /* Greyish-Black Gradient */
+  color: #f4f4f4;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Card Image Styling */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #B85042; /* Orangish Separator */
+}
+
+/* Card Body Styling */
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  color: #3E4A47; /* Dark grayish-green for header and name */
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.card-text {
+    color: #B85042; /* Reddish-brown for email and department */
+    font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.card-text strong {
+  color: #B85042; /* Orangish Strong Text */
+}
+
+/* Card Footer Styling */
+.card-footer {
+  padding: 15px 20px;
+  background-color: #E7E8D1; /* Match Card Background */
+  border-top: 1px solid #B85042; /* Orangish Border */
+  text-align: center;
+}
+
+.card-footer button {
+  font-size: 0.9rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Buttons */
+.card-footer .btn-info {
+  background-color: #B85042; /* Orangish Button */
+  color: white; /* Greyish-Black Text */
+  width: 80px;
+}
+
+.card-footer .btn-info:hover {
+  background-color: #e67e22; /* Darker Orangish */
+}
+
+.card-footer .btn-danger {
+  background-color: #e74c3c; /* Reddish Button */
+  color: #ffffff;
+  width: 80px;
+}
+
+.card-footer .btn-danger:hover {
+  background-color: #c0392b; /* Darker Red */
+}
+
+.card-footer .btn-primary {
+  background-color: #2980b9; /* Blue Button */
+  color: #ffffff;
+  width: 80px;
+  margin-top: 10px;
+
+}
+
+.card-footer .btn-primary:hover {
+  background-color: #1f6391; /* Darker Blue */
+}
+
+/* Reduce card size */
+.small-card {
+  width: 240px; /* Set desired width */
+  padding: 10px; /* Adjust padding for compact layout */
+  margin: 10px; /* Reduce spacing between cards */
+}
+
+/* Resize the card image */
+.small-card .card-img-top {
+  height: 100px; /* Set desired height */
+  object-fit: cover; /* Maintain aspect ratio and crop overflow */
+}
+
+/* Adjust card body text for smaller size */
+.small-card .card-body {
+  font-size: 14px; /* Reduce font size */
+  padding: 5px; /* Adjust padding */
+}
+
+/* Adjust footer button sizes */
+.small-card .btn-sm {
+  font-size: 12px;
+  padding: 5px 10px; /* Smaller button padding */
+}
+
+/* Optional: Adjust title for smaller cards */
+.small-card .card-title {
+  font-size: 16px;
+}
+
+
+.searchBar{
+  display: flex;
+  
+}
+
+.form-control{
+ 
+    margin-top: 20px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .card-deck {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    flex: 1 1 100%;
+    margin-bottom: 20px;
+  }
+}

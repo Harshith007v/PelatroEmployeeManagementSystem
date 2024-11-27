@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-body',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BodyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -25,6 +26,10 @@ export class BodyComponent implements OnInit {
       styleClass = "body-md-screen";
     }
     return styleClass;
+  }
+
+  shouldRenderOutlet(): boolean {
+    return this.router.url !== '/login';
   }
 
 }

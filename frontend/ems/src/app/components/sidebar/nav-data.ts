@@ -14,9 +14,5 @@ export const navBarData = [
         icon: "fa-solid fa-user",
         label: 'Add employees'
     },
-    {
-        routeLink: '/searchEmployees',
-        icon: "fa-solid fa-magnifying-glass",
-        label: 'Search Employees'
-    }
+
 ];

@@ -1,4 +1,4 @@
-.body{
+/* .body{
     width: calc(100%-5rem);
     height: 100vh;
     margin-left: 5rem;
@@ -21,4 +21,55 @@
 .body-md-screen{
     width: calc(100%-5rem);
     margin-left: 5rem;
+} */
+
+/* General Body Styles */
+.body {
+  width: calc(100% - 4.6rem);
+  height: 85.5vh;
+  margin-left: 5rem;
+  margin-top: 54px; /* Matches Navbar height */
+  background: #A7BEAE; /* Subtle light gray background */
+  overflow: hidden; /* Prevents content from spilling outside */
+  overflow-y: scroll; /* Allows vertical scrolling */
+  box-sizing: border-box; /* Includes padding in width/height calculations */
+  transition: all 0.4s ease;
+  color: #B85042; /* Text color for consistency */
+  font-family: 'Arial', sans-serif;
+  border-radius: 11px;
+}
+
+/* Body for Collapsed Sidebar */
+.body-trimmed {
+  width: calc(100% - 16.5rem);
+  margin-left: 16.5rem;
+}
+
+/* Body for Medium Screen */
+.body-md-screen {
+  width: 100%;
+  margin-left: 0;
+}
+
+/* Content Box Style */
+.body-content {
+  background: #A7BEAE; /* Clean white background */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden; /* Ensures content stays within the box */
+}
+
+
+
+/* Handle Long Content Overflow */
+.body-content::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.body-content::-webkit-scrollbar-thumb {
+  background: #B85042; /* Orangish color for scrollbar thumb */
+  border-radius: 0.25rem;
+}
+
+.body-content::-webkit-scrollbar-track {
+  background: #f4f4f4; /* Light gray background for scrollbar track */
 }

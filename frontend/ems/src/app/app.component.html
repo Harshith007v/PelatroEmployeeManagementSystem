@@ -1,4 +1,19 @@
-<app-navbar></app-navbar>
-<app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
-<app-body [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth">
-</app-body>
+<div *ngIf="isAuthRoute(); else mainLayout">
+  <router-outlet></router-outlet>
+</div>
+
+<ng-template #mainLayout>
+  <div class="layout-wrapper">
+    <app-navbar class="navbar"></app-navbar>
+    <app-sidebar
+      class="sidebar"
+      (onToggleSideNav)="onToggleSideNav($event)"
+    ></app-sidebar>
+    <app-body
+      class="app-content"
+      [collapsed]="isSideNavCollapsed"
+      [screenWidth]="screenWidth"
+    ></app-body>
+    <app-footer class="footer"></app-footer>
+  </div>
+</ng-template>

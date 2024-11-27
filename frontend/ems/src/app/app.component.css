@@ -1,0 +1,29 @@
+/* Layout wrapper to hold the navbar, sidebar, content, and footer */
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+  }
+  
+  /* Body (content area) should scroll without affecting the footer */
+  .app-content {
+    flex: 1; /* Takes all remaining space between navbar and footer */
+     /* Enables scrolling for the content area only */
+    padding: 1rem;
+  }
+  
+  /* Footer stays fixed at the bottom */
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #A7BEAE; /* Match navbar color */
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    z-index: 1000;
+  }
+  

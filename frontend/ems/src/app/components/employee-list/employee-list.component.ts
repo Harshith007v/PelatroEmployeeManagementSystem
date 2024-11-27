@@ -13,6 +13,44 @@ import Swal from 'sweetalert2';
 export class EmployeeListComponent implements OnInit {
 
   employees: Employee[];
+  searchText: any;
+
+  // employees = [
+  //   {
+  //     id: 1,
+  //     firstName: 'John',
+  //     lastName: 'Doe',
+  //     emailId: 'john.doe@example.com',
+  //     department: { departmentName: 'HR' }
+  //   },
+  //   {
+  //     id: 2,
+  //     firstName: 'Jane',
+  //     lastName: 'Smith',
+  //     emailId: 'jane.smith@example.com',
+  //     department: { departmentName: 'IT' }
+  //   },
+  //   {
+  //     id: 3,
+  //     firstName: 'Bob',
+  //     lastName: 'Brown',
+  //     emailId: 'bob.brown@example.com',
+  //     department: { departmentName: 'Finance' }
+  //   },
+  //   {
+  //     id: 3,
+  //     firstName: 'Bob',
+  //     lastName: 'Brown',
+  //     emailId: 'bob.brown@example.com',
+  //     department: { departmentName: 'Finance' }
+  //   }, {
+  //     id: 3,
+  //     firstName: 'Bob',
+  //     lastName: 'Brown',
+  //     emailId: 'bob.brown@example.com',
+  //     department: { departmentName: 'Finance' }
+  //   }
+  // ];
 
   constructor(private employeeService: EmployeeService, private router: Router) { }
 
