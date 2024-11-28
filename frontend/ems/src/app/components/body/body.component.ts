@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class BodyComponent implements OnInit {
 
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {

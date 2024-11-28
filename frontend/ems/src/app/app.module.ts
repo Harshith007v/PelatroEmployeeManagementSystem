@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -44,6 +44,7 @@ import { BodyComponent } from './components/body/body.component';
     HttpClientModule,
     FormsModule,
     Ng2SearchPipeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

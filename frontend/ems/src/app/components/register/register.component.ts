@@ -1,25 +1,41 @@
 import { Component } from '@angular/core';
-import { Router} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  username = '';
-  newPassword = '';
-  confirmPassword = '';
-  errorMessage = '';
+  username: string = '';
+  newPassword: string = '';
+  email: string = '';
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-  onRegister() {
-    if (this.authService.register(this.username, this.newPassword)) {
-      this.router.navigate(['/home']); // Redirect to home on success
-    } else {
-      this.errorMessage = 'Registration failed. Try again.';
-    }
+  onRegister(): void {
+
+    const user = {
+      userName: this.username,
+      password: this.newPassword,
+      userEmail: this.email
+    };
+
+    this.authService.registerUser(user).subscribe({
+      next: (response) => {
+        console.log('Registration successful:', response);
+        this.errorMessage = '';
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Registration failed:', err);
+        this.errorMessage = err.error?.message || 'An error occurred during registration.';
+      }
+    });
   }
 }

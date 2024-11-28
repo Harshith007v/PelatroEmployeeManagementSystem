@@ -12,64 +12,59 @@ import Swal from 'sweetalert2';
 })
 export class EmployeeListComponent implements OnInit {
 
-  employees: Employee[];
+  employees: Employee[] = [];
   searchText: any;
 
-  // employees = [
-  //   {
-  //     id: 1,
-  //     firstName: 'John',
-  //     lastName: 'Doe',
-  //     emailId: 'john.doe@example.com',
-  //     department: { departmentName: 'HR' }
-  //   },
-  //   {
-  //     id: 2,
-  //     firstName: 'Jane',
-  //     lastName: 'Smith',
-  //     emailId: 'jane.smith@example.com',
-  //     department: { departmentName: 'IT' }
-  //   },
-  //   {
-  //     id: 3,
-  //     firstName: 'Bob',
-  //     lastName: 'Brown',
-  //     emailId: 'bob.brown@example.com',
-  //     department: { departmentName: 'Finance' }
-  //   },
-  //   {
-  //     id: 3,
-  //     firstName: 'Bob',
-  //     lastName: 'Brown',
-  //     emailId: 'bob.brown@example.com',
-  //     department: { departmentName: 'Finance' }
-  //   }, {
-  //     id: 3,
-  //     firstName: 'Bob',
-  //     lastName: 'Brown',
-  //     emailId: 'bob.brown@example.com',
-  //     department: { departmentName: 'Finance' }
-  //   }
-  // ];
+  paginatedEmployees: Employee[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
 
   constructor(private employeeService: EmployeeService, private router: Router) { }
 
   ngOnInit(): void {
-
     this.getEmployees();
   }
 
-  getEmployees() {
-    this.employeeService.getEmployeeList().subscribe(data => { this.employees = data; }, (error) => { console.error('Error fetching employees:', error); })
+  getEmployees(): void {
+    this.employeeService.getEmployeeList().subscribe(
+      (data) => {
+        this.employees = data;
+        this.updatePaginatedEmployees();
+      },
+      (error) => {
+        console.error('Error fetching employees:', error);
+      }
+    );
+  }
+
+  updatePaginatedEmployees(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedEmployees = this.employees.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage * this.itemsPerPage < this.employees.length) {
+      this.currentPage++;
+      this.updatePaginatedEmployees();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePaginatedEmployees();
+    }
   }
 
   viewEmployee(id: number) {
-    this.router.navigate(['view-employee', id])
+    this.router.navigate(['view-employee', id]);
   }
 
   updateEmployee(id: number) {
-    this.router.navigate(['update-employees', id])
+    this.router.navigate(['update-employees', id]);
   }
+
   deleteEmployee(id: number) {
     Swal.fire({
       title: "Are you sure?",
@@ -87,12 +82,10 @@ export class EmployeeListComponent implements OnInit {
         })
         Swal.fire({
           title: "Deleted!",
-          text: "Employee has been successfully .",
+          text: "Employee has been successfully deleted.",
           icon: "success"
         });
       }
     });
-
   }
-
 }

@@ -8,20 +8,24 @@ import { ViewEmployeeComponent } from './components/view-employee/view-employee.
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from '../app/components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuard } from './auth-guard';
+import { AuthRedirectGuard } from './auth-redirect-guard.service';
+
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'employees', component: EmployeeListComponent },
-  { path: 'createEmployees', component: CreateEmployeeComponent },
-  { path: 'searchEmployees', component: SearchEmployeeComponent },
-  { path: 'update-employees/:id', component: UpdateEmployeeComponent },
-  { path: 'view-employee/:id', component: ViewEmployeeComponent },
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'login', component: LoginComponent, canActivate: [AuthRedirectGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectGuard] },
 
+  { path: 'employees', component: EmployeeListComponent, canActivate: [AuthGuard] },
+  { path: 'createEmployees', component: CreateEmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'searchEmployees', component: SearchEmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'update-employees/:id', component: UpdateEmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'view-employee/:id', component: ViewEmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

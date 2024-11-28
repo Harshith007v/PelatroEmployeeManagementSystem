@@ -173,3 +173,38 @@
     margin-bottom: 20px;
   }
 }
+
+
+/* Employee list container */
+.employee-list-container {
+  position: relative;
+  height: 100%; /* Allow it to take full height of the content */
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  padding-bottom: 50px; /* Add space at the bottom for the pagination buttons */
+}
+
+/* Fixed position for pagination buttons at left and right */
+.pagination-buttons {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Distribute buttons to the left and right */
+  padding: 0 10px; /* Add padding to ensure the buttons are not too close to the edges */
+  z-index: 9999;
+}
+
+/* Styling for the pagination buttons */
+.pagination-buttons button {
+  padding: 10px 20px;
+  font-size: 1.5rem; /* Increase font size */
+  border-radius: 50%; /* Make buttons circular */
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.pagination-buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
