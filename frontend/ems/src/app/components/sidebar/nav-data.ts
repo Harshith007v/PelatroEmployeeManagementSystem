@@ -14,5 +14,10 @@ export const navBarData = [
         icon: "fa-solid fa-user",
         label: 'Add employees'
     },
+    {
+        routeLink: '/daily-time-log',
+        icon: "fa-solid fa-hourglass-start",
+        label: 'Time Log'   
+    }
 
 ];
