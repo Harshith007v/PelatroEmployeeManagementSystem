@@ -48,7 +48,7 @@ export class DailyTimeLogComponent implements OnInit {
         employee.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
         employee.emailId.toLowerCase().includes(this.searchText.toLowerCase()) ||
         employee.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.department.departmentName.toLowerCase().includes(this.searchText.toLowerCase()) || 
+        employee.department.departmentName.toLowerCase().includes(this.searchText.toLowerCase()) ||
         `pel${employee.id}`.toLowerCase().includes(this.searchText.toLowerCase())
       );
       this.showDropdown = true;
@@ -158,7 +158,6 @@ export class DailyTimeLogComponent implements OnInit {
       !row.startTime && !row.endTime && !row.project
     );
 
-
     if (allRowsEmpty) {
       Swal.fire({
         position: 'center',
@@ -175,46 +174,47 @@ export class DailyTimeLogComponent implements OnInit {
       return;
     }
 
-    //   const validTimeLogs = this.timeLogs.filter(row => row.startTime && row.endTime && row.project);
-    //     // If no valid rows, show a warning
-    //   if (validTimeLogs.length === 0) {
-    //   Swal.fire({
-    //     position: 'center',
-    //     icon: 'warning',
-    //     title: 'Please fill in all fields before submitting.',
-    //     showConfirmButton: false,
-    //     timer: 1500
-    //   });
-    //   return;
-    // }
-    // else{
-    //   console.log(validTimeLogs)
-    // }
 
-
-
-    const timeLogData = {
-      employee: this.selectedEmployee,  // Employee details
-      date: this.date,
-      logs: this.timeLogs
+    const timeLogData: { [key: string]: any } = {
+      "emp_id": `emp${String(this.selectedEmployee.id)}`,
+      "time_details": {
+        "start_time": String(this.timeLogs[0].startTime),
+        "end_time": String(this.timeLogs[0].endTime),
+        "total_hours": String(this.timeLogs[0].totalHours)
+      },
+      "project_details": {
+        "project_name": String(this.timeLogs[0].project),
+        "points": String(this.timeLogs[0].points)
+      }
     };
 
 
-    console.log('Form submitted with data:', {
-      timeLogData
-    });
+    console.log('Form submitted with data:', timeLogData);
 
-
-    // If form submission is successful
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Time log for the employee has been successfully submitted.',
-      showConfirmButton: false,
-      timer: 1500
-    });
-
-    this.resetForm();
+    // Call the method to send the data to the backend
+    this.employeeService.addEmployeeTimeLog(timeLogData).subscribe(
+      (response) => {
+        // If the response is successful, show success message
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Time log for the employee has been successfully submitted.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.resetForm(); // Reset the form after submission
+      },
+      (error) => {
+        // Handle any errors here
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'There was an error submitting the time log.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    );
   }
 
   // Handle the actual time log submission
