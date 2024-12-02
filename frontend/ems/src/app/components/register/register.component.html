@@ -53,7 +53,6 @@
                 </p>
               </div>
 
-              <!-- Username Input -->
               <div class="input-group mb-3">
                 <input
                   type="text"
@@ -62,6 +61,19 @@
                   id="username"
                   [(ngModel)]="username"
                   name="username"
+                  required
+                />
+              </div>
+
+              <!-- Email Input -->
+              <div class="input-group mb-3">
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control form-control-lg bg-light fs-6"
+                  placeholder="Enter email"
+                  [(ngModel)]="email"
+                  name="email"
                   required
                 />
               </div>
@@ -82,12 +94,12 @@
               <!-- Confirm Password Input -->
               <div class="input-group mb-3">
                 <input
-                  type="email"
-                  id="email"
+                  type="password"
+                  id="confirmPassword"
                   class="form-control form-control-lg bg-light fs-6"
-                  placeholder="Enter email"
-                  [(ngModel)]="email"
-                  name="email"
+                  placeholder="Confirm Password"
+                  [(ngModel)]="confirmPassword"
+                  name="confirmPassword"
                   required
                 />
               </div>

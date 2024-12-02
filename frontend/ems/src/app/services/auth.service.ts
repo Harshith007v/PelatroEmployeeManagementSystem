@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   registerUser(user: any): Observable<any> {
-    return this.http.post('http://localhost:8080/api/register', user).pipe(
+    return this.http.post('http://localhost:8080/auth/register', user).pipe(
       map((response: any) => {
         if (response.message === 'User registered successfully!') {
           console.log(response);
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   loginUser(user: any): Observable<any> {
-    return this.http.post('http://localhost:8080/api/login', user);
+    return this.http.post('http://localhost:8080/auth/login', user);
   }
 
   setToken(token: string): void {
