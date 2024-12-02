@@ -48,7 +48,8 @@ export class DailyTimeLogComponent implements OnInit {
         employee.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
         employee.emailId.toLowerCase().includes(this.searchText.toLowerCase()) ||
         employee.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.department.departmentName.toLowerCase().includes(this.searchText.toLowerCase())
+        employee.department.departmentName.toLowerCase().includes(this.searchText.toLowerCase()) || 
+        `pel${employee.id}`.toLowerCase().includes(this.searchText.toLowerCase())
       );
       this.showDropdown = true;
     } else {
@@ -74,7 +75,7 @@ export class DailyTimeLogComponent implements OnInit {
   // Select an employee from the dropdown
   selectEmployee(employee: Employee) {
     this.selectedEmployee = employee;
-    this.searchText = `${employee.firstName} ${employee.lastName}`;
+    this.searchText = `PEL${employee.id} - ${employee.firstName} ${employee.lastName}`;
     this.showDropdown = false;
   }
 
