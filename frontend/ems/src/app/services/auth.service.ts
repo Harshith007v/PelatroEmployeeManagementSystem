@@ -1,29 +1,39 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   registerUser(user: any): Observable<any> {
-    return this.http.post("http://localhost:8080/api/register", user).pipe(map((response: any) => {
-      if (response.status === "pass") {
-        Swal.fire('Registered!', 'User Registration Successfull.', 'success');
-        return response.body;
-      } else {
-        throw new Error('Failed to register user');
-      }
-    }));;
+    return this.http.post('http://localhost:8080/auth/register', user).pipe(
+      map((response: any) => {
+        if (response.message === 'User registered successfully!') {
+          Swal.fire('Registered!', 'User Registration Successful.', 'success');
+          return response; 
+        } else {
+          throw new Error(response.error || 'Failed to register user');
+        }
+      }),
+      catchError((error) => {
+        // Handle any HTTP errors that occur (e.g., network issues)
+        Swal.fire(
+          'Error',
+          'Registration failed: ' + (error.message || 'Unknown error'),
+          'error'
+        );
+        return throwError(error); // Return the error to propagate it
+      })
+    );
   }
 
   loginUser(user: any): Observable<any> {
-    return this.http.post("http://localhost:8080/api/login", user);
+    return this.http.post('http://localhost:8080/auth/login', user);
   }
 
   setToken(token: string): void {
@@ -31,9 +41,8 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('authToken')
+    return localStorage.getItem('authToken');
   }
-
 
   isLoggedIn(): boolean {
     return this.getToken() !== null;
