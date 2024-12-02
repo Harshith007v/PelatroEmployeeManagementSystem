@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../employee';
 import { map } from 'rxjs/operators';
@@ -66,6 +66,10 @@ export class EmployeeService {
         throw new Error('Failed to fetch employees');
       }
     }));
+  }
+
+  submitTimeLog(timeLogData: any): Observable<any> {
+    return this.httpClient.post(`http://localhost:8080/api/workhours`, timeLogData);
   }
 
 }
