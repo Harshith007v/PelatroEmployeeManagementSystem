@@ -1,121 +1,143 @@
 <div class="time-log-container">
-    <!-- Top Section: Search Employee and Date -->
-    <div class="close-button">
-        <button type="button" class="btn btn-secondary" (click)="goBackToDashboard()">×</button>
-      </div>
+  <!-- Top Section: Search Employee and Date -->
+  <div class="close-button">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="goBackToDashboard()"
+    >
+      ×
+    </button>
+  </div>
 
-    <div class="top-date-employee d-flex justify-content-between align-items-center mb-3">
-
-      <!-- Search Employee -->
-      <div class="search-container">
-        <label for="searchInput" class="search-label">Select Employee</label>
-        <div class="search-input-container">
-          <input 
-            id="searchInput" 
-            type="text" 
-            [(ngModel)]="searchText" 
-            (input)="onSearchChange()" 
-            (focus)="onFocus()" 
-            (blur)="onBlur()" 
-            placeholder="Search by name, email, role, or department" 
-            class="search-input" />
-            
-          <!-- Dropdown list inside the input field -->
-          <div *ngIf="filteredEmployees.length > 0 && showDropdown" class="dropdown-list">
-            <ul>
-              <li *ngFor="let employee of filteredEmployees" (click)="selectEmployee(employee)">
-                {{ employee.firstName }} {{ employee.lastName }} {{ employee.role }} {{ employee.department.departmentName }}  {{ employee.email }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Date Picker -->
-      <div class="date-container">
-        <label for="date" class="date-label">Date</label>
+  <div
+    class="top-date-employee d-flex justify-content-between align-items-center mb-3"
+  >
+    <!-- Search Employee -->
+    <div class="search-container">
+      <label for="searchInput" class="search-label">Select Employee</label>
+      <div class="search-input-container">
         <input
-          type="date"
-          id="date"
-          [(ngModel)]="date"
-          name="date"
-          required
-          class="date-input"
+          id="searchInput"
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="onSearchChange()"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
+          placeholder="Search by name, email, role, or department"
+          class="search-input"
         />
-      </div>
-    </div>
-  
-    <!-- Table Section -->
-    <div class="table-container">
-      <table class="table table-bordered mt-3">
-        <thead>
-          <tr>
-            <th>Sl.No</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Project</th>
-            <th>Total Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of timeLogs; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>
-              <input
-                type="time"
-                [(ngModel)]="row.startTime"
-                name="startTime-{{ i }}"
-                class="form-control"
-                (change)="calculateRowHours(i)"
-                [disabled]="!selectedEmployee"
-                required
-              />
-            </td>
-            <td>
-              <input
-                type="time"
-                [(ngModel)]="row.endTime"
-                name="endTime-{{ i }}"
-                class="form-control"
-                (change)="calculateRowHours(i)"
-                [disabled]="!selectedEmployee"
-                [min]="row.startTime" 
-                required
-              />
-            </td>
-            <td>
-              <select
-                [(ngModel)]="row.project"
-                name="project-{{ i }}"
-                class="form-control"
-                [disabled]="!selectedEmployee"
-                required
-              >
-                <option value="" disabled>Select Project</option>
-                <option value="mviva-server">Mviva Server</option>
-                <option value="mviva-client">Mviva Client</option>
-                <option value="mviva-hadoop">Mviva Hadoop</option>
-              </select>
-            </td>
-            <td>{{ row.totalHours || 0 }} hrs</td>
-          </tr>
-        </tbody>
-      </table>
-  
-      <div class="d-flex justify-content-between mt-3">
-        <div class="total-hours text-left">
-          <strong>Total Hours Worked: {{ totalHoursWorked }} hrs</strong>
-        </div>
-        <div class="add-row text-right">
-          <button type="button" class="btn btn-success" (click)="addRow()">Add Row</button>
+
+        <!-- Dropdown list inside the input field -->
+        <div
+          *ngIf="filteredEmployees.length > 0 && showDropdown"
+          class="dropdown-list"
+        >
+          <ul>
+            <li
+              *ngFor="let employee of filteredEmployees"
+              (click)="selectEmployee(employee)"
+            >
+              {{ employee.firstName }} {{ employee.lastName }}
+              {{ employee.role }} {{ employee.department.departmentName }}
+              {{ employee.email }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  
-    <!-- Reset and Submit Buttons -->
-    <div class="reset-submit d-flex justify-content-end mt-3">
-      <button type="button" class="btn btn-danger mr-2" (click)="resetForm()">Reset</button>
-      <button type="button" class="btn btn-primary" (click)="submitForm()">Submit</button>
+
+    <!-- Date Picker -->
+    <div class="date-container">
+      <label for="date" class="date-label">Date</label>
+      <input
+        type="date"
+        id="date"
+        [(ngModel)]="date"
+        name="date"
+        required
+        class="date-input"
+      />
     </div>
   </div>
-  
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>Sl.No</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Project</th>
+          <th>Total Hours</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of timeLogs; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <input
+              type="time"
+              [(ngModel)]="row.startTime"
+              name="startTime-{{ i }}"
+              class="form-control"
+              (change)="calculateRowHours(i)"
+              [disabled]="!selectedEmployee"
+              required
+            />
+          </td>
+          <td>
+            <input
+              type="time"
+              [(ngModel)]="row.endTime"
+              name="endTime-{{ i }}"
+              class="form-control"
+              (change)="calculateRowHours(i)"
+              [disabled]="!selectedEmployee"
+              [min]="row.startTime"
+              required
+            />
+          </td>
+          <td>
+            <select
+              [(ngModel)]="row.project"
+              name="project-{{ i }}"
+              class="form-control"
+              [disabled]="!selectedEmployee"
+              required
+            >
+              <option value="" disabled>Select Project</option>
+              <option value="mviva-server">Mviva Server</option>
+              <option value="mviva-client">Mviva Client</option>
+              <option value="mviva-hadoop">Mviva Hadoop</option>
+            </select>
+          </td>
+          <td>{{ row.totalHours || 0 }} hrs</td>
+          <td>
+            <input
+              type="number"
+              [(ngModel)]="row.points"
+              name="points-{{ i }}"
+              class="form-control"
+              [disabled]="!selectedEmployee"
+              min="0"
+              placeholder="Enter points"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Reset and Submit Buttons -->
+    <div class="reset-submit d-flex justify-content-end mt-3">
+      <button type="button" class="btn btn-danger mr-2" (click)="resetForm()">
+        Reset
+      </button>
+      <button type="button" class="btn btn-primary" (click)="submitForm()">
+        Submit
+      </button>
+    </div>
+  </div>
+</div>

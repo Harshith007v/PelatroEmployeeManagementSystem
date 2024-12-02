@@ -21,7 +21,7 @@ export class DailyTimeLogComponent implements OnInit {
   filteredEmployees: Employee[] = []; // Filtered list for search results
   selectedEmployee: Employee | null = null; // Selected employee
 
-  constructor(private router: Router, private employeeService: EmployeeService) {}
+  constructor(private router: Router, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.initializeTimeLogs();
@@ -81,9 +81,7 @@ export class DailyTimeLogComponent implements OnInit {
   // Initialize the time log rows
   initializeTimeLogs() {
     this.timeLogs = [
-      { startTime: '', endTime: '', project: '', totalHours: 0 },
-      { startTime: '', endTime: '', project: '', totalHours: 0 },
-      { startTime: '', endTime: '', project: '', totalHours: 0 },
+      { startTime: '', endTime: '', project: '', totalHours: 0, points: 0 },
     ];
     this.calculateTotalHoursWorked(); // Update total hours
   }
@@ -101,7 +99,7 @@ export class DailyTimeLogComponent implements OnInit {
       return;
     }
 
-    this.timeLogs.push({ startTime: '', endTime: '', project: '', totalHours: 0 });
+    this.timeLogs.push({ startTime: '', endTime: '', project: '', totalHours: 0, points: 0 });
   }
 
   // Calculate hours worked for a specific row
@@ -153,13 +151,13 @@ export class DailyTimeLogComponent implements OnInit {
       });
       return;
     }
-  
+
     // Check if every row's fields (startTime, endTime, project) are empty
-    const allRowsEmpty = this.timeLogs.every(row => 
+    const allRowsEmpty = this.timeLogs.every(row =>
       !row.startTime && !row.endTime && !row.project
     );
 
-  
+
     if (allRowsEmpty) {
       Swal.fire({
         position: 'center',
@@ -176,23 +174,23 @@ export class DailyTimeLogComponent implements OnInit {
       return;
     }
 
-  //   const validTimeLogs = this.timeLogs.filter(row => row.startTime && row.endTime && row.project);
-  //     // If no valid rows, show a warning
-  //   if (validTimeLogs.length === 0) {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Please fill in all fields before submitting.',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   });
-  //   return;
-  // }
-  // else{
-  //   console.log(validTimeLogs)
-  // }
+    //   const validTimeLogs = this.timeLogs.filter(row => row.startTime && row.endTime && row.project);
+    //     // If no valid rows, show a warning
+    //   if (validTimeLogs.length === 0) {
+    //   Swal.fire({
+    //     position: 'center',
+    //     icon: 'warning',
+    //     title: 'Please fill in all fields before submitting.',
+    //     showConfirmButton: false,
+    //     timer: 1500
+    //   });
+    //   return;
+    // }
+    // else{
+    //   console.log(validTimeLogs)
+    // }
 
-  
+
 
     const timeLogData = {
       employee: this.selectedEmployee,  // Employee details
@@ -205,7 +203,7 @@ export class DailyTimeLogComponent implements OnInit {
       timeLogData
     });
 
-  
+
     // If form submission is successful
     Swal.fire({
       position: 'center',
@@ -217,11 +215,11 @@ export class DailyTimeLogComponent implements OnInit {
 
     this.resetForm();
   }
-  
+
   // Handle the actual time log submission
   submitTimeLog() {
     console.log('Time log submitted');
- 
+
   }
 
   // Reset the form
@@ -234,6 +232,6 @@ export class DailyTimeLogComponent implements OnInit {
 
   // Navigate back to the dashboard
   goBackToDashboard() {
-    this.router.navigate(['dashboard']); 
+    this.router.navigate(['dashboard']);
   }
 }
