@@ -8,12 +8,12 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   registerUser(user: any): Observable<any> {
     return this.http.post('http://localhost:8080/api/register', user).pipe(
       map((response: any) => {
-        if (response.status === 'pass') {
+        if (response.message === 'User registered successfully!') {
           console.log(response);
           Swal.fire('Registered!', 'User Registration Successful.', 'success');
           return response;
