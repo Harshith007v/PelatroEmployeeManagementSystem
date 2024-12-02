@@ -38,7 +38,7 @@
               *ngFor="let employee of filteredEmployees"
               (click)="selectEmployee(employee)"
             >
-              {{ employee.firstName }} {{ employee.lastName }}
+            PEL{{ employee.id }} - {{ employee.firstName }} {{ employee.lastName }}
               {{ employee.role }} {{ employee.department.departmentName }}
               {{ employee.email }}
             </li>
