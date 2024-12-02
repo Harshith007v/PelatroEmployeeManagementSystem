@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from 'src/app/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { Chart } from 'chart.js'
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-view-employee',
@@ -11,121 +11,97 @@ import { Chart } from 'chart.js'
 })
 export class ViewEmployeeComponent implements OnInit {
 
-
   id: number;
   employee: Employee = new Employee();
+  performanceData: any;
 
-  constructor(private employeeService: EmployeeService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private employeeService: EmployeeService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-
-    this.createTaskCompletionChart();
-    this.createAttendanceChart();
-    this.createReviewScoreChart();
-    this.createLeadershipScoreChart();
-
     this.id = this.route.snapshot.params['id'];
+
+    // Fetch employee details
     this.employeeService.getEmployeeById(this.id).subscribe(data => {
-      this.employee = data
-    })
+      this.employee = data;
+    });
 
-
-  }
-
-  createTaskCompletionChart() {
-    new Chart('taskCompletionChart', {
-      type: 'doughnut',
-      data: {
-        labels: ['Completed', 'Pending'],
-        datasets: [{
-          label: 'Task Completion',
-          data: [95, 5],
-          backgroundColor: ['#4caf50', '#f44336'],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        animation: {
-          animateScale: true,
-          animateRotate: true
-        }
-      }
+    // Fetch performance data and create chart
+    const filePath = "hdfs://localhost:9000/user/hadoop/performance_output/part-r-00000";
+    this.employeeService.getPerformanceData(filePath).subscribe(data => {
+      this.performanceData = data.body; // Assuming the data structure from the response
+      this.createPerformanceChart();
     });
   }
 
-  createAttendanceChart() {
-    new Chart('attendanceChart', {
-      type: 'bar',
-      data: {
-        labels: ['Attendance'],
-        datasets: [{
-          label: 'Attendance Rate',
-          data: [98],
-          backgroundColor: '#2196f3',
-          borderColor: '#1976d2',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        animation: {
-          duration: 1500, // Animation duration
-          easing: 'easeOutBounce' // Bounce effect
-        }
-      }
-    });
-  }
+  createPerformanceChart() {
+    // Convert the employee ID from number to the string format (e.g., 'emp1', 'emp2', etc.)
+    const employeeId = `emp${this.id}`;
 
-  createReviewScoreChart() {
-    new Chart('reviewScoreChart', {
-      type: 'radar',
-      data: {
-        labels: ['Teamwork', 'Leadership', 'Efficiency', 'Innovation', 'Communication'],
-        datasets: [{
-          label: 'Review Score',
-          data: [4.7, 4.6, 4.8, 4.5, 4.9],
-          backgroundColor: 'rgba(63, 81, 181, 0.2)',
-          borderColor: '#3f51b5',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        scale: {
-          ticks: { beginAtZero: true, max: 5 }
+    // If the performance data for the employee exists
+    if (this.performanceData && this.performanceData[employeeId] !== undefined) {
+      const performanceScore = this.performanceData[employeeId]; // Individual performance score
+
+      new Chart('performanceChart', {
+        type: 'pie',  // Using pie chart
+        data: {
+          labels: ['Employee Performance', 'Remaining'],  // Pie chart segments
+          datasets: [{
+            data: [performanceScore, 100 - performanceScore],  // Showing the individual performance vs remaining
+            backgroundColor: ['#4caf50', '#e0e0e0'],  // Green for performance, gray for remaining
+            borderColor: '#fff',
+            borderWidth: 1
+          }]
         },
-        animation: {
-          duration: 1000, // Animation duration
-          easing: 'easeOutQuad'
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top'
+            },
+            tooltip: {
+              callbacks: {
+                label: (tooltipItem) => {
+                  const value = tooltipItem.raw;
+                  return `${tooltipItem.label}: ${value}%`;  // Show percentage in tooltip
+                }
+              }
+            }
+          }
         }
-      }
-    });
-  }
-
-  createLeadershipScoreChart() {
-    new Chart('leadershipScoreChart', {
-      type: 'pie',
-      data: {
-        labels: ['Leadership Score'],
-        datasets: [{
-          label: 'Leadership',
-          data: [87, 13],
-          backgroundColor: ['#ffeb3b', '#e0e0e0'],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        animation: {
-          animateScale: true
+      });
+    } else {
+      // Empty pie chart if no data found for the employee
+      new Chart('performanceChart', {
+        type: 'pie',
+        data: {
+          labels: ['No Data Available'],
+          datasets: [{
+            data: [100],  // Empty pie chart with no performance data
+            backgroundColor: ['#e0e0e0'],  // Gray color indicating no data
+            borderColor: '#fff',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top'
+            },
+            tooltip: {
+              enabled: false  // Disable tooltip for empty chart
+            }
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   backToEmployeeList() {
     this.router.navigate(['employees']);
   }
-
 }

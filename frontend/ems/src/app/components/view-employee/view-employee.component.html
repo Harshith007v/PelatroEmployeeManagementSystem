@@ -1,69 +1,54 @@
-<h3 class="page-title">View Employee Details</h3>
-<div class="container">
+<h3 class="page-title text-center">View Employee Details</h3>
+<div class="container mt-4">
   <div class="row">
     <!-- Left Side: Employee Details -->
-    <div class="col-md-6 employee-details">
-      <div class="section section-1">
+    <div class="col-lg-6 col-md-6 col-12 employee-details">
+      <div class="section section-1 mb-3">
         <div class="detail-item">
-          <label><b>Employee ID : </b></label> PEL{{ employee.id }}
+          <label><b>Employee ID:</b></label> PEL{{ employee.id }}
         </div>
         <div class="detail-item">
-          <label><b>First Name : </b></label> {{ employee.firstName }}
+          <label><b>First Name:</b></label> {{ employee.firstName }}
         </div>
         <div class="detail-item">
-          <label><b>Last Name : </b></label> {{ employee.lastName }}
+          <label><b>Last Name:</b></label> {{ employee.lastName }}
         </div>
       </div>
 
-      <div class="section section-2">
+      <div class="section section-2 mb-3">
         <div class="detail-item">
-          <label><b>Email ID : </b></label> {{ employee.emailId }}
+          <label><b>Email ID:</b></label> {{ employee.emailId }}
         </div>
         <div class="detail-item">
-          <label><b>Role : </b></label> {{ employee.role }}
+          <label><b>Role:</b></label> {{ employee.role }}
         </div>
         <div class="detail-item">
-          <label><b>Department ID : </b></label> {{ employee.department.id }}
+          <label><b>Department ID:</b></label> {{ employee.department.id }}
         </div>
         <div class="detail-item">
-          <label><b>Department Name : </b></label>
+          <label><b>Department Name:</b></label>
           {{ employee.department.departmentName }}
         </div>
       </div>
     </div>
 
     <!-- Right Side: Performance Report -->
-    <div class="col-md-6 performance-report">
+    <div class="col-lg-6 col-md-6 col-12 performance-report">
       <div class="section section-3">
-        <h4 style="font-size: 2rem">Performance Report</h4>
+        <h4 class="text-center">Performance Report</h4>
         <div class="charts-container">
-          <div class="row">
-            <!-- First Row of Performance Charts -->
-            <div class="col-md-6 chart-item">
-              <canvas id="taskCompletionChart"></canvas>
-            </div>
-            <div class="col-md-6 chart-item">
-              <canvas id="attendanceChart"></canvas>
-            </div>
-          </div>
-
-          <div class="row">
-            <!-- Second Row of Performance Charts -->
-            <div class="col-md-6 chart-item">
-              <canvas id="reviewScoreChart"></canvas>
-            </div>
-            <div class="col-md-6 chart-item">
-              <canvas id="leadershipScoreChart"></canvas>
-            </div>
-          </div>
+          <canvas id="performanceChart"></canvas>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="section" style="text-align: center">
-    <button (click)="backToEmployeeList()" class="btn btn-secondary">
-      Back
-    </button>
+  <!-- Back Button -->
+  <div class="row mt-4">
+    <div class="col-12 text-center">
+      <button (click)="backToEmployeeList()" class="btn btn-secondary">
+        Back
+      </button>
+    </div>
   </div>
 </div>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Employee } from '../employee';
 import { catchError, map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -104,4 +105,12 @@ export class EmployeeService {
       })
     );
   }
+
+
+  getPerformanceData(filePath: string): Observable<any> {
+    const performanceUrl = "http://localhost:8080/api/workhours/performance";
+    const params = new HttpParams().set('filePath', filePath); // Add the query parameter
+    return this.httpClient.get<any>(performanceUrl, { params });
+  }
+
 }
