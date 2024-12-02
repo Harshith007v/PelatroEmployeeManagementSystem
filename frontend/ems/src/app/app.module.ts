@@ -18,12 +18,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BodyComponent } from './components/body/body.component';
-<<<<<<< HEAD
 import { AuthInterceptor } from './provider/auth.interceptor';
-=======
 import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-log.component';
-
->>>>>>> b648d34b9009b54ef34947943a17bdcfd27aa403
 
 // import { CommonModule } from '@angular/common';
 
