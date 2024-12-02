@@ -8,14 +8,15 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   registerUser(user: any): Observable<any> {
-    return this.http.post('http://localhost:8080/auth/register', user).pipe(
+    return this.http.post('http://localhost:8080/api/register', user).pipe(
       map((response: any) => {
-        if (response.message === 'User registered successfully!') {
+        if (response.status === 'pass') {
+          console.log(response);
           Swal.fire('Registered!', 'User Registration Successful.', 'success');
-          return response; 
+          return response;
         } else {
           throw new Error(response.error || 'Failed to register user');
         }
@@ -33,7 +34,7 @@ export class AuthService {
   }
 
   loginUser(user: any): Observable<any> {
-    return this.http.post('http://localhost:8080/auth/login', user);
+    return this.http.post('http://localhost:8080/api/login', user);
   }
 
   setToken(token: string): void {

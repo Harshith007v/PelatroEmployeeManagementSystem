@@ -13,7 +13,7 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   onLogin() {
     const user = { userName: this.userName, password: this.password };
@@ -21,10 +21,10 @@ export class LoginComponent {
     this.authService.loginUser(user).subscribe(
       (response) => {
         // Check if the response contains a token
-        if (response && response.token) {
+        if (response.body.password) {
           // Store the JWT token
-          this.authService.setToken(response.token);
-          console.log(response.token); // Log the token for debugging
+          this.authService.setToken(response.body.password);
+          console.log(response.body.password); // Log the token for debugging
 
           // Show success alert
           Swal.fire('Logged In!', 'User LogIn Successful.', 'success');
