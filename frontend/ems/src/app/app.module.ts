@@ -18,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BodyComponent } from './components/body/body.component';
+import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-log.component';
 
 
 // import { CommonModule } from '@angular/common';
@@ -37,6 +38,7 @@ import { BodyComponent } from './components/body/body.component';
     DashboardComponent,
     SidebarComponent,
     BodyComponent,
+    DailyTimeLogComponent,
   ],
   imports: [
     BrowserModule,

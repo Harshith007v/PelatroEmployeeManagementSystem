@@ -7,6 +7,7 @@ import { UpdateEmployeeComponent } from './components/update-employee/update-emp
 import { ViewEmployeeComponent } from './components/view-employee/view-employee.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from '../app/components/register/register.component';
+import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-log.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './auth-guard';
 import { AuthRedirectGuard } from './auth-redirect-guard.service';
@@ -24,6 +25,8 @@ const routes: Routes = [
   { path: 'update-employees/:id', component: UpdateEmployeeComponent, canActivate: [AuthGuard] },
   { path: 'view-employee/:id', component: ViewEmployeeComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'daily-time-log', component: DailyTimeLogComponent, canActivate: [AuthGuard] },
+
 
   { path: '**', redirectTo: 'login' },
 ];
