@@ -39,32 +39,47 @@ public class AuthenticationService {
     private TokenService tokenService;
 
 
-    public ApplicationUser registerUser(String username, String password){
+    public ApplicationUser registerUser(String username, String password) {
+        try {
+            // Check if the username already exists
+//            if (userRepository.findByUsername(username)!=null) {
+//                throw new IllegalArgumentException("Username already exists");
+//            }
 
-        String encodedPassword = passwordEncoder.encode(password);
-        Role userRole = roleRepository.findByAuthority("USER").get();
+            // Encode the password
+            String encodedPassword = passwordEncoder.encode(password);
 
-        Set<Role> authorities = new HashSet<>();
+            // Assign the "USER" role
+            Role userRole = roleRepository.findByAuthority("USER").get();
+            Set<Role> authorities = new HashSet<>();
+            authorities.add(userRole);
 
-        authorities.add(userRole);
-
-        return userRepository.save(new ApplicationUser(null, username, encodedPassword, authorities));
+            // Save the new user
+            return userRepository.save(new ApplicationUser(null, username, encodedPassword, authorities));
+        } catch (IllegalArgumentException e) {
+            throw e; // Rethrow exception with a specific message
+        } catch (Exception e) {
+            // Handle other exceptions (e.g., database issues)
+            throw new RuntimeException("Registration failed: " + e.getMessage());
+        }
     }
-    public LoginResponseDTO loginUser(String username, String password){
 
-        try{
+    public String loginUser(String userName, String password){
+        try {
             Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
+                new UsernamePasswordAuthenticationToken(userName, password)
             );
 
             String token = tokenService.generateJwt(auth);
 
-            return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
+            return token;
 
-        } catch(AuthenticationException e){
-            return new LoginResponseDTO(null, "");
+        } catch (AuthenticationException e) {
+            // Authentication failed, return an empty token or handle as needed
+            return "";
         }
     }
+
 
 
 }

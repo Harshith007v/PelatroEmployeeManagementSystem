@@ -7,6 +7,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -32,30 +34,31 @@ import com.project.pelatroEmployeeManagementSystem.utils.RSAKeyProperties;
 public class SecurityConfig {
 	
 	private final RSAKeyProperties keys;
-
+	 
     public SecurityConfig(RSAKeyProperties keys){
         this.keys = keys;
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> {
-            	auth.requestMatchers("/auth/**").permitAll();
-                auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
-                auth.anyRequest().authenticated();
-            });
-        http.oauth2ResourceServer()
-        	.jwt()
-        	.jwtAuthenticationConverter(jwtAuthenticationConverter());
-        http.sessionManagement(
-        		session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        		);
+            .cors(Customizer.withDefaults()) // Enables CORS using defaults or a custom configuration
+            .csrf(AbstractHttpConfigurer::disable) // Disables CSRF
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated()
+            )
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            );
 
-            return http.build();
+        return http.build();
     }
-
     @Bean
     public AuthenticationManager authManager(UserDetailsService detailsService) {
         DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
