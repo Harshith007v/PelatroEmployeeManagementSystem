@@ -42,12 +42,17 @@ public class HBaseServiceImp implements HBaseService{
 		
 		try (Table table = hbaseConnection.getTable(TableName.valueOf(TABLE_NAME))) {
 			
-            String rowKey = (String) requestData.get("row_key");
-            if (rowKey == null || rowKey.isEmpty()) {
-                return "Row key (emp_id) is required.";
-            }
-            
-            Put put = new Put(Bytes.toBytes(rowKey));
+	        String empId = (String) requestData.get("emp_id");
+	        if (empId == null || empId.isEmpty()) {
+	            return "Employee ID (emp_id) is required.";
+	        }
+
+	        long currentTimeMillis = System.currentTimeMillis();
+	        String rowKey = empId + "_" + currentTimeMillis;  // Concatenate emp_id with timestamp
+	        
+	        Put put = new Put(Bytes.toBytes(rowKey));
+
+	        put.addColumn(Bytes.toBytes(CF_PROJECT_DETAILS), Bytes.toBytes("emp_id"), Bytes.toBytes(empId));
             
             Map<String, String> timeDetails = (Map<String, String>) requestData.get("time_details");
             if (timeDetails != null) {

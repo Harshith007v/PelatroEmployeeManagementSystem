@@ -38,7 +38,6 @@ public class PerformanceReducer extends Reducer<Text, Text, Text, Text>{
     protected void cleanup(Context context) throws IOException, InterruptedException {
         super.cleanup(context);
         
-        // Calculate the overall performance after processing all employees
         if (totalHoursOverall > 0.0) {
             double overallPerformance = totalPointsOverall / totalHoursOverall;
             context.write(new Text("Overall Performance"), new Text("Total Hours: " + totalHoursOverall + ", Total Points: " + totalPointsOverall + ", Overall Performance: " + overallPerformance));

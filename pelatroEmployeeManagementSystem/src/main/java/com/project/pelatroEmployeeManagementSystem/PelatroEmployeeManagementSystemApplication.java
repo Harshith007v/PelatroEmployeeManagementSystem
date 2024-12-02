@@ -11,7 +11,7 @@ import com.project.pelatroEmployeeManagementSystem.configuration.SecurityConfig;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class PelatroEmployeeManagementSystemApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
 		
 		
 		SpringApplication.run(PelatroEmployeeManagementSystemApplication.class, args);

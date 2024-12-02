@@ -8,16 +8,18 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.project.pelatroEmployeeManagementSystem.model.Department;
 import com.project.pelatroEmployeeManagementSystem.model.Employee;
 import com.project.pelatroEmployeeManagementSystem.repository.EmployeeRepository;
 import com.project.pelatroEmployeeManagementSystem.service.EmployeeService;
 
-
+@ExtendWith(MockitoExtension.class)
 class TestEmployeeService {
 
 	@Mock
@@ -25,11 +27,6 @@ class TestEmployeeService {
 	
 	@InjectMocks
 	private EmployeeServiceImp employeeServiceImp;
-	
-	@BeforeEach
-	void setUp() {
-		MockitoAnnotations.openMocks( this );
-	}
 	
 	@Test
 	void testGetAllEmployeesSuccess() {
