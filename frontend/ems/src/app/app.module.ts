@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -18,8 +18,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BodyComponent } from './components/body/body.component';
+import { AuthInterceptor } from './provider/auth.interceptor';
 import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-log.component';
-
 
 // import { CommonModule } from '@angular/common';
 
@@ -46,9 +46,11 @@ import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-lo
     HttpClientModule,
     FormsModule,
     Ng2SearchPipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

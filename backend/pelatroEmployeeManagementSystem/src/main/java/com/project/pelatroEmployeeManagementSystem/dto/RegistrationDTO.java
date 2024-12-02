@@ -1,27 +1,38 @@
 package com.project.pelatroEmployeeManagementSystem.dto;
 
 public class RegistrationDTO {
-    private String username;
-    private String password;
+    private String userName;
+	private String password;
+	private String userEmail;
 
-    public RegistrationDTO(){
+	public RegistrationDTO(){
         super();
     }
 
-    public RegistrationDTO(String username, String password){
+    public RegistrationDTO(String userName, String userEmail, String password){
         super();
-        this.username = username;
+        this.userName = userName;
+        this.userEmail = userEmail;
         this.password = password;
     }
 
-    public String getUsername(){
-        return this.username;
+    public String getUserName(){
+        return this.userName;
     }
 
-    public void setUsername(String username){
-        this.username = username;
+    public void setUserName(String userName){
+        this.userName = userName;
     }
 
+    public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	
     public String getPassword(){
         return this.password;
     }
@@ -30,7 +41,8 @@ public class RegistrationDTO {
         this.password = password;
     }
 
-    public String toString(){
-        return "Registration info: username: " + this.username + " password: " + this.password;
-    }
+    @Override
+	public String toString() {
+		return "RegistrationDTO [username=" + userName + ", password=" + password + ", email=" + userEmail + "]";
+	}
 }
