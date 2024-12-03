@@ -19,6 +19,7 @@
   margin: 10px auto;
   margin-left: 83px;
   padding: 0;
+  position: relative;
 }
 
 /* Card Deck Styling */
@@ -207,4 +208,11 @@
 .pagination-buttons button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+
+.search{
+  position: absolute;
+  top:0.2rem;
+  left: 74rem;
 }

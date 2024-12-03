@@ -49,7 +49,7 @@ export class DailyTimeLogComponent implements OnInit {
         employee.emailId.toLowerCase().includes(this.searchText.toLowerCase()) ||
         employee.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
         employee.department.departmentName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        `pel${employee.id}`.toLowerCase().includes(this.searchText.toLowerCase())
+        `PEL${employee.id}`.toLowerCase().includes(this.searchText.toLowerCase())
       );
       this.showDropdown = true;
     } else {

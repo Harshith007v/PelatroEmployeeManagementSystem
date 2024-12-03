@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from '../../employee';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
-import { error } from '@angular/compiler/src/util';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,13 +10,12 @@ import Swal from 'sweetalert2';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-
   employees: Employee[] = [];
-  searchText: any;
-
+  filteredEmployees: Employee[] = [];
   paginatedEmployees: Employee[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 8;
+  searchText: string = '';
 
   constructor(private employeeService: EmployeeService, private router: Router) { }
 
@@ -29,6 +27,7 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getEmployeeList().subscribe(
       (data) => {
         this.employees = data;
+        this.filteredEmployees = [...this.employees]; // Initially show all employees
         this.updatePaginatedEmployees();
       },
       (error) => {
@@ -37,14 +36,28 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
+  onSearch(): void {
+    if (this.searchText.trim() === '') {
+      this.filteredEmployees = [...this.employees];
+    } else {
+      this.filteredEmployees = this.employees.filter((employee) =>
+        employee.firstName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        employee.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        employee.emailId.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+    this.currentPage = 1; // Reset to first page when search is updated
+    this.updatePaginatedEmployees();
+  }
+
   updatePaginatedEmployees(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedEmployees = this.employees.slice(startIndex, endIndex);
+    this.paginatedEmployees = this.filteredEmployees.slice(startIndex, endIndex);
   }
 
   nextPage(): void {
-    if (this.currentPage * this.itemsPerPage < this.employees.length) {
+    if (this.currentPage * this.itemsPerPage < this.filteredEmployees.length) {
       this.currentPage++;
       this.updatePaginatedEmployees();
     }
@@ -79,7 +92,7 @@ export class EmployeeListComponent implements OnInit {
         this.employeeService.deleteEmployee(id).subscribe(data => {
           console.log(data);
           this.getEmployees();
-        })
+        });
         Swal.fire({
           title: "Deleted!",
           text: "Employee has been successfully deleted.",
