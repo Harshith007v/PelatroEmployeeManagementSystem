@@ -176,7 +176,7 @@ export class DailyTimeLogComponent implements OnInit {
 
 
     const timeLogData: { [key: string]: any } = {
-      "emp_id": `emp${String(this.selectedEmployee.id)}`,
+      "emp_id": `PEL${String(this.selectedEmployee.id)}`,
       "time_details": {
         "start_time": String(this.timeLogs[0].startTime),
         "end_time": String(this.timeLogs[0].endTime),
