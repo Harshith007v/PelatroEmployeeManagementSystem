@@ -46,9 +46,11 @@ dependencies {
     implementation 'org.apache.hbase:hbase-mapreduce:2.6.1'
 
     // Logging with Log4j2
-    implementation 'org.apache.logging.log4j:log4j-core:2.24.2'
-    implementation 'org.apache.logging.log4j:log4j-api:2.24.2'
-    testImplementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.24.2'
+    implementation('org.springframework.boot:spring-boot-starter-logging') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    
 
     // Apache Tomcat Embed (for JSP support)
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:11.0.1'
