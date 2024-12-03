@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   topPerformance: number = 0;
   overallPerformance: number = 0;
   topPerformerDetails: any = {};
+  asOfDate: string = '';
 
   constructor(
     private router: Router,
@@ -24,10 +25,12 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch the performance data from the API
-    const filePath = "hdfs://localhost:9000/user/hadoop/performance_output/part-r-00000";
+    const filePath = "/home/pelatro/HdfsOutput/part-r-00000";
     this.employeeService.getPerformanceData(filePath).subscribe((response: any) => {
       if (response.status === 'pass') {
-        this.performanceData = response.body;
+        this.performanceData = response.body.employeePerformance; // Accessing employeePerformance
+        this.asOfDate = response.body.extractionDate;  // Extract the extraction date
+        this.overallPerformance = response.body.overallPerformance;  // Overall company performance
 
         // Calculate performance data once it's fetched
         this.calculateDevelopmentPerformance();
@@ -44,10 +47,10 @@ export class DashboardComponent implements OnInit {
 
   // Calculate Development department performance (emp1, emp2, emp3)
   calculateDevelopmentPerformance() {
-    const devEmployees = [1, 2, 3];
+    const devEmployees = ['emp1', 'emp2', 'emp3'];  // Assuming emp1, emp2, emp3 are development employees
     let totalPerformance = 0;
     devEmployees.forEach(empId => {
-      const performance = this.performanceData[`emp${empId}`];
+      const performance = this.performanceData[empId];
       if (performance) {
         totalPerformance += performance;
       }
@@ -60,17 +63,14 @@ export class DashboardComponent implements OnInit {
     let maxPerformance = 0;
     let topEmp = '';
     for (let empId in this.performanceData) {
-      if (empId !== 'Overall Performance') {
-        const performance = this.performanceData[empId];
-        if (performance > maxPerformance) {
-          maxPerformance = performance;
-          topEmp = empId;
-        }
+      const performance = this.performanceData[empId];
+      if (performance > maxPerformance) {
+        maxPerformance = performance;
+        topEmp = empId;
       }
     }
     this.topPerformer = topEmp;
     this.topPerformance = maxPerformance;
-    this.overallPerformance = this.performanceData['Overall Performance']; // Get overall company performance
 
     // Mocked employee details (for demonstration purposes)
     this.topPerformerDetails = {
@@ -99,7 +99,7 @@ export class DashboardComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true,
-            max: 5  // Assuming the performance score ranges from 0 to 5
+            max: 250  // Assuming the performance score can be up to 250
           }
         }
       }
@@ -126,6 +126,6 @@ export class DashboardComponent implements OnInit {
 
   // Navigate to the top performer's detailed view page
   viewTopPerformer() {
-    this.router.navigate([`/employee/${this.topPerformer}`]);  // Navigate to the top performer's page
+    this.router.navigate([`/view-employee/${this.topPerformer}`]);  // Navigate to the top performer's page
   }
 }

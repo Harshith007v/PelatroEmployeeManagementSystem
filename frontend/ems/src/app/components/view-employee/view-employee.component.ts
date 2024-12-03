@@ -14,6 +14,7 @@ export class ViewEmployeeComponent implements OnInit {
   id: number;
   employee: Employee = new Employee();
   performanceData: any;
+  asOfDate: any;
 
   constructor(
     private employeeService: EmployeeService,
@@ -30,9 +31,10 @@ export class ViewEmployeeComponent implements OnInit {
     });
 
     // Fetch performance data and create chart
-    const filePath = "hdfs://localhost:9000/user/hadoop/performance_output/part-r-00000";
+    const filePath = "/home/pelatro/HdfsOutput/part-r-00000";
     this.employeeService.getPerformanceData(filePath).subscribe(data => {
-      this.performanceData = data.body; // Assuming the data structure from the response
+      this.performanceData = data.body.employeePerformance; // Assuming the data structure from the response
+      this.asOfDate = data.body.extractionDate;
       this.createPerformanceChart();
     });
   }
