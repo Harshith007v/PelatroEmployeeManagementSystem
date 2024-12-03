@@ -55,6 +55,8 @@ public class HBaseController {
             // Step 3: Read the data from the file and print it to the console
             Map<String, Object> readData = objectMapper.readValue(file, Map.class);
             System.out.println("Data read from file: " + readData);
+            System.out.println("Absolute Path: " + file.getAbsolutePath());
+
 
             // Step 4: Return response
             ApiResponse<String> response = new ApiResponse<>("pass", "Data saved to file and read successfully.");
