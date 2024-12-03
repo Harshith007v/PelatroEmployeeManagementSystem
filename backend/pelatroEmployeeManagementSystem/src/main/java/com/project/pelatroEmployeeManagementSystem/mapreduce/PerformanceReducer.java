@@ -29,7 +29,7 @@ public class PerformanceReducer extends Reducer<Text, Text, Text, Text>{
             totalPoints += points;
 		}
 		
-        double performance = totalPoints / totalHours;
+        double performance = (totalPoints / totalHours)*100;
         
         context.write( key, new Text("Total Hours: " + totalHours + ", Total Points: " + totalPoints + ", Performance: " + performance) );
         
