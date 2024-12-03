@@ -1,36 +1,70 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.0'
-	id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.project'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.postgresql:postgresql'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation "org.springframework.boot:spring-boot-starter-security"
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-resource-server', version: '3.4.0'
-	implementation group: 'org.apache.hbase', name: 'hbase-client', version: '2.2.3'
-	
-	
+    // Core Spring Boot Dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+
+    // Spring Security and JWT
+    implementation 'io.jsonwebtoken:jjwt:0.12.6'
+    implementation 'org.springframework.security:spring-security-crypto:6.4.1'
+    implementation 'org.springframework.security:spring-security-web:6.4.1'
+    implementation 'org.springframework.security:spring-security-core:6.4.1'
+    implementation 'org.springframework.security:spring-security-config:6.4.1'
+
+    // Apache Hadoop and HBase
+    implementation 'org.apache.hadoop:hadoop-common:3.4.1'
+    implementation 'org.apache.hadoop:hadoop-client:3.4.1'
+    implementation 'org.apache.hadoop:hadoop-mapreduce-client-core:3.4.1'
+    implementation 'org.apache.hbase:hbase-client:2.5.10'
+    implementation 'org.apache.hbase:hbase-common:2.5.10'
+    implementation 'org.apache.hbase:hbase-server:2.5.10'
+    implementation 'org.apache.hbase:hbase-protocol:2.5.10'
+    implementation 'org.apache.hbase:hbase-mapreduce:2.6.1'
+
+    // Logging with Log4j2
+    implementation 'org.apache.logging.log4j:log4j-core:2.24.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.24.2'
+    testImplementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.24.2'
+
+    // Apache Tomcat Embed (for JSP support)
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:11.0.1'
+
+    // Testing dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Exclusions to resolve conflicts
+    configurations.all {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
