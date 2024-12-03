@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { EmployeeService } from '../../services/employee.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit {
   testEmployees: string[] = [];
   supportEmployees: string[] = [];
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private router: Router) { }
 
   ngOnInit(): void {
     const filePath = '/home/pelatro/HdfsOutput/part-r-00000';
@@ -44,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
   calculateDepartmentPerformance() {
     Object.keys(this.performanceData).forEach((empId) => {
-      const id = parseInt(empId.replace('emp', ''), 10);
+      const id = parseInt(empId.replace('PEL', ''), 10);
       this.employeeService.getEmployeeById(id).subscribe(
         (data) => {
           const department = data.department.departmentName;
@@ -89,6 +90,11 @@ export class DashboardComponent implements OnInit {
         ? empId
         : top;
     }, Object.keys(this.performanceData)[0]);
+  }
+
+  goToEmployee() {
+    const employeeId = this.topPerformer.replace('PEL', '');
+    this.router.navigate([`/view-employee/${employeeId}`]);
   }
 
   createCharts() {
@@ -145,15 +151,38 @@ export class DashboardComponent implements OnInit {
     });
 
     new Chart('overallPerformanceChart', {
-      type: 'pie',
+      type: 'bar',
       data: {
-        labels: ['Completed', 'Remaining'],
+        labels: [...Object.keys(this.performanceData), 'Overall Performance'],  // Employee IDs + Overall Performance label
         datasets: [
           {
-            data: [this.overallPerformance, 100 - this.overallPerformance],
-            backgroundColor: ['#ff5722', '#e0e0e0'],
+            label: 'Employee Performance',
+            data: [
+              ...Object.keys(this.performanceData).map((empId) => this.performanceData[empId]),
+              this.overallPerformance, // Overall performance for last bar
+            ],
+            backgroundColor: '#ff5722',
           },
         ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Employee ID / Overall',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Performance (%)',
+            },
+            beginAtZero: true,
+            max: 100,
+          },
+        },
       },
     });
   }

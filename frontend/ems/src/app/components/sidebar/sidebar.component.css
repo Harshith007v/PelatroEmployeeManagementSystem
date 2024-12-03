@@ -203,6 +203,16 @@
     color: white;
   }
   
+  .sidenav-nav-link.active {
+    background-color: #B85042; /* Highlight background color */
+    color: white; /* Highlight text color */
+    transform: translateX(5px); /* Optional slide effect */
+  }
+  
+  .sidenav-nav-link.active .sidenav-link-icon {
+    color: white; /* Highlight icon color */
+  }
+  
   /* Styling for the close button */
 .btn-close {
     background-color: transparent; /* Transparent background for subtlety */

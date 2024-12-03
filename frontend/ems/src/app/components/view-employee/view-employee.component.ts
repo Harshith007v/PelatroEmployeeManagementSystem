@@ -41,7 +41,7 @@ export class ViewEmployeeComponent implements OnInit {
 
   createPerformanceChart() {
     // Convert the employee ID from number to the string format (e.g., 'emp1', 'emp2', etc.)
-    const employeeId = `emp${this.id}`;
+    const employeeId = `PEL${this.id}`;
 
     // If the performance data for the employee exists
     if (this.performanceData && this.performanceData[employeeId] !== undefined) {
