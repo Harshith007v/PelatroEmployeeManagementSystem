@@ -39,26 +39,33 @@ public class HBaseController {
 	@Value("${file.storage.path:~/Desktop/New Folder}")
     private String fileStoragePath;
 
-    private AtomicBoolean isProcessing = new AtomicBoolean(false);
 
     @PostMapping("/addEmployeeData")
     public ResponseEntity<ApiResponse<String>> addEmployeeData(@RequestBody Map<String, Object> requestData) throws IOException {
         try {
-            // Step 1: Save the incoming data to a local file
+        	
+        	String folderPath = "EmployeeTimeLogFolder";
+        	
+        	 File folder = new File(folderPath);
+             if (!folder.exists()) {
+                 if (folder.mkdirs()) {
+                     System.out.println("Folder created successfully: " + folderPath);
+                 } else {
+                     System.out.println("Failed to create folder: " + folderPath);
+                     ApiResponse<String> response = new ApiResponse<>("fail", "Folder Creation Failed");
+                     return ResponseEntity.status(500).body(response); // Exit if folder creation failed
+                 }
+             }
+        	
             String fileName = "employee_data_" + System.currentTimeMillis() + ".json";
-            File file = new File(fileName);
+            File file = new File(folder,fileName);
             
-            // Step 2: Write the data to the file
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(file, requestData);
             
-            // Step 3: Read the data from the file and print it to the console
             Map<String, Object> readData = objectMapper.readValue(file, Map.class);
             System.out.println("Data read from file: " + readData);
             System.out.println("Absolute Path: " + file.getAbsolutePath());
-
-
-            // Step 4: Return response
             ApiResponse<String> response = new ApiResponse<>("pass", "Data saved to file and read successfully.");
             return ResponseEntity.ok(response);
 
