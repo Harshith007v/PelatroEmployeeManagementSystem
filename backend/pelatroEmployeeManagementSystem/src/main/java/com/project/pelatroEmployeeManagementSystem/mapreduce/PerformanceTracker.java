@@ -22,6 +22,7 @@ public class PerformanceTracker {
 	    config.set("hbase.zookeeper.property.clientPort", "2181");
 	    
         Path outputPath = new Path("hdfs://localhost:9000/user/hadoop/performance_output");
+        Path localOutputPath = new Path("file:///home/pelatro/HdfsOutput");
         
         FileSystem fs = FileSystem.get(config);
         if (fs.exists(outputPath)) {
@@ -48,6 +49,15 @@ public class PerformanceTracker {
         }
 
         System.out.println("Job completed successfully.");
+        
+        FileSystem localFs = FileSystem.getLocal(config);
+        if (localFs.exists(localOutputPath)) {
+            localFs.delete(localOutputPath, true);
+            System.out.println("Existing local output folder deleted.");
+        }
+
+        fs.copyToLocalFile(outputPath, localOutputPath);
+        System.out.println("Output copied to local file system: " + localOutputPath);
         
 	}
 	

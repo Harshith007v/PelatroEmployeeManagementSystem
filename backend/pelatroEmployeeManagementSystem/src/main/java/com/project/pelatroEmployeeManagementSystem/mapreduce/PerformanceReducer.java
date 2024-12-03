@@ -2,6 +2,8 @@ package com.project.pelatroEmployeeManagementSystem.mapreduce;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -37,11 +39,14 @@ public class PerformanceReducer extends Reducer<Text, Text, Text, Text>{
 	
 	@Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
-        super.cleanup(context);
-        
+		super.cleanup(context);
+
+		String extractionDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        // Calculate overall performance
         if (totalHoursOverall > 0.0) {
-            double overallPerformance = totalPointsOverall / totalHoursOverall;
-            context.write(new Text("Overall Performance"), new Text("Total Hours: " + totalHoursOverall + ", Total Points: " + totalPointsOverall + ", Overall Performance: " + overallPerformance));
+            double overallPerformance = (totalPointsOverall / totalHoursOverall) * 100;
+            context.write(new Text("Overall Performance"), new Text("Total Hours: " + totalHoursOverall + ", Total Points: " + totalPointsOverall + ", Overall Performance: " + overallPerformance+ ", Extraction Date: " + extractionDate));
         } else {
             context.write(new Text("Overall Performance"), new Text("No data available for overall performance."));
         }

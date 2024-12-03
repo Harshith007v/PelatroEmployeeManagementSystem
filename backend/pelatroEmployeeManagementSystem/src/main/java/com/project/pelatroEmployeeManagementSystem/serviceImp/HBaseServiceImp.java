@@ -1,6 +1,8 @@
 package com.project.pelatroEmployeeManagementSystem.serviceImp;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -74,32 +76,51 @@ public class HBaseServiceImp implements HBaseService{
 		
 	}
 	
-	public Map<String, Double> getEmployeePerformance(String filePath) throws IOException {
+	public Map<String, Object> getEmployeePerformance(String filePath) throws IOException {
         Map<String, Double> employeePerformance = new HashMap<>();
- 
-        Configuration hadoopConfig = new Configuration();
-        hadoopConfig.set("fs.defaultFS", "hdfs://localhost:9000");
-        FileSystem fs = FileSystem.get(hadoopConfig);
+        String extractionDate = "";
+        double overallPerformance=0.0;
+        
+        File file = new File(filePath);
 
-        Path path = new Path(filePath);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(path)))) {
+        if (!file.exists()) {
+            throw new IOException("File not found at the specified path: " + filePath);
+        }
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // Assuming data format: emp_id Total Hours: value, Total Points: value, Performance: value
+                // Assuming data format: emp_id Total Hours: value, Total Points: value, Performance: value, Extraction Date: value
                 String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    String empId = parts[0].split("\t")[0].trim();  
-                    String performancePart = parts[2].split(":")[1].trim(); 
-                    double performance = Double.parseDouble(performancePart);
-                    employeePerformance.put(empId, performance);
+                if (parts.length >= 3) {
+                    if (line.contains("Overall Performance")) {
+                        // Extract extraction date from the overall performance line
+                        for (String part : parts) {
+                            if (part.contains("Extraction Date")) {
+                                extractionDate = part.split(":")[1].trim();
+                            }
+                            
+                            String overallPerformancePart = parts[2].split(":")[1].trim();
+                            overallPerformance = Double.parseDouble(overallPerformancePart);
+                        }
+                    } else {
+                        String empId = parts[0].split("\t")[0].trim();
+                        String performancePart = parts[2].split(":")[1].trim();
+                        double performance = Double.parseDouble(performancePart);
+                        employeePerformance.put(empId, performance);
+                    }
                 }
             }
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
-            throw new IOException("Error reading file from HDFS", e);
+            throw new IOException("Error reading file from local file system", e);
         }
 
-        return employeePerformance;
+        Map<String, Object> result = new HashMap<>();
+        result.put("employeePerformance", employeePerformance);
+        result.put("extractionDate", extractionDate); // Include extraction date in the result
+        result.put( "overallPerformance", overallPerformance );
+        return result;
     }
 	
 

@@ -47,15 +47,15 @@ public class HBaseController {
     }
     
     @GetMapping("/performance")
-    public ResponseEntity<ApiResponse<Map<String, Double>>> getEmployeePerformance(@RequestParam(name = "filePath") String filePath) {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getEmployeePerformance(@RequestParam(name = "filePath") String filePath) {
     	
         try {
         	
-            Map<String, Double> employeePerformance = hBaseServiceImp.getEmployeePerformance(filePath);
-            ApiResponse<Map<String, Double>> response = new ApiResponse<Map<String, Double>>( "pass", employeePerformance );
+            Map<String, Object> employeePerformance = hBaseServiceImp.getEmployeePerformance(filePath);
+            ApiResponse<Map<String, Object>> response = new ApiResponse<Map<String, Object>>( "pass", employeePerformance );
             return ResponseEntity.ok(response);
         } catch (IOException e) {
-            ApiResponse<Map<String, Double>> response = new ApiResponse<Map<String, Double>>( "fail", null );
+            ApiResponse<Map<String, Object>> response = new ApiResponse<Map<String, Object>>( "fail", null );
             return ResponseEntity.status(500).body(response);
         }
     }
