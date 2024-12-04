@@ -10,8 +10,12 @@ import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
 
+@Component
 public class PerformanceTracker {
 	
 	public void performaceDriver() throws IOException, ClassNotFoundException, InterruptedException {
@@ -61,13 +65,19 @@ public class PerformanceTracker {
         
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException {
-		
-		PerformanceTracker performanceTracker = new PerformanceTracker();
-		while(true) {
-			performanceTracker.performaceDriver();
-			Thread.sleep( 20000 );
-		}
-		
-	}
+	@Scheduled(fixedRate = 86400000) // Runs every 24 hours
+    public void scheduledPerformanceDriver() {
+        try {
+            performaceDriver();
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
+            e.printStackTrace();
+            System.err.println("Error executing scheduled performance job: " + e.getMessage());
+        }
+    }
+	
+	@PostConstruct // Runs immediately after the application starts
+    public void runOnStartup() {
+        System.out.println("Running performance driver on startup...");
+        scheduledPerformanceDriver();
+    }
 }
