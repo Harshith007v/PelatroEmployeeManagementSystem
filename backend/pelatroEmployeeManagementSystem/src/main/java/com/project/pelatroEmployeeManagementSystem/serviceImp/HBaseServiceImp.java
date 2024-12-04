@@ -35,55 +35,55 @@ public class HBaseServiceImp implements HBaseService {
 
     private Connection hbaseConnection;
 
-    public HBaseServiceImp() throws IOException {
-        logger.info("Initializing HBaseServiceImp...");
-        Configuration config = HBaseConfiguration.create();
-        config.set("fs.defaultFS", "hdfs://localhost:9000");
-        config.set("hbase.zookeeper.quorum", "localhost");
-        config.set("hbase.zookeeper.property.clientPort", "2181");
-        this.hbaseConnection = ConnectionFactory.createConnection(config);
-        logger.info("HBase connection established.");
-    }
-
-    public String addEmployeeData(Map<String, Object> requestData) throws IOException {
-        logger.info("Adding employee data...");
-
-        String empId = (String) requestData.get("emp_id");
-        if (empId == null || empId.isEmpty()) {
-            logger.warn("Employee ID (emp_id) is missing in the request data.");
-            return "Employee ID (emp_id) is required.";
-        }
-
-        long currentTimeMillis = System.currentTimeMillis();
-        String rowKey = empId + "_" + currentTimeMillis;  // Concatenate emp_id with timestamp
-
-        try (Table table = hbaseConnection.getTable(TableName.valueOf(TABLE_NAME))) {
-            Put put = new Put(Bytes.toBytes(rowKey));
-
-            put.addColumn(Bytes.toBytes(CF_PROJECT_DETAILS), Bytes.toBytes("emp_id"), Bytes.toBytes(empId));
-
-            // Logging time details
-            Map<String, String> timeDetails = (Map<String, String>) requestData.get("time_details");
-            if (timeDetails != null) {
-                logger.info("Adding time details for employee ID: {}", empId);
-                timeDetails.forEach((key, value) -> put.addColumn(Bytes.toBytes(CF_TIME_DETAILS), Bytes.toBytes(key), Bytes.toBytes(value)));
-            }
-
-            // Logging project details
-            Map<String, String> projectDetails = (Map<String, String>) requestData.get("project_details");
-            if (projectDetails != null) {
-                logger.info("Adding project details for employee ID: {}", empId);
-                projectDetails.forEach((key, value) -> put.addColumn(Bytes.toBytes(CF_PROJECT_DETAILS), Bytes.toBytes(key), Bytes.toBytes(value)));
-            }
-
-            table.put(put);
-            logger.info("Employee data added successfully for row key: {}", rowKey);
-            return "Employee data added successfully for row key: " + rowKey;
-        } catch (IOException e) {
-            logger.error("Error adding employee data for emp_id: {}", empId, e);
-            throw e;
-        }
-    }
+//    public HBaseServiceImp() throws IOException {
+//        logger.info("Initializing HBaseServiceImp...");
+//        Configuration config = HBaseConfiguration.create();
+//        config.set("fs.defaultFS", "hdfs://localhost:9000");
+//        config.set("hbase.zookeeper.quorum", "localhost");
+//        config.set("hbase.zookeeper.property.clientPort", "2181");
+//        this.hbaseConnection = ConnectionFactory.createConnection(config);
+//        logger.info("HBase connection established.");
+//    }
+//
+//    public String addEmployeeData(Map<String, Object> requestData) throws IOException {
+//        logger.info("Adding employee data...");
+//
+//        String empId = (String) requestData.get("emp_id");
+//        if (empId == null || empId.isEmpty()) {
+//            logger.warn("Employee ID (emp_id) is missing in the request data.");
+//            return "Employee ID (emp_id) is required.";
+//        }
+//
+//        long currentTimeMillis = System.currentTimeMillis();
+//        String rowKey = empId + "_" + currentTimeMillis;  // Concatenate emp_id with timestamp
+//
+//        try (Table table = hbaseConnection.getTable(TableName.valueOf(TABLE_NAME))) {
+//            Put put = new Put(Bytes.toBytes(rowKey));
+//
+//            put.addColumn(Bytes.toBytes(CF_PROJECT_DETAILS), Bytes.toBytes("emp_id"), Bytes.toBytes(empId));
+//
+//            // Logging time details
+//            Map<String, String> timeDetails = (Map<String, String>) requestData.get("time_details");
+//            if (timeDetails != null) {
+//                logger.info("Adding time details for employee ID: {}", empId);
+//                timeDetails.forEach((key, value) -> put.addColumn(Bytes.toBytes(CF_TIME_DETAILS), Bytes.toBytes(key), Bytes.toBytes(value)));
+//            }
+//
+//            // Logging project details
+//            Map<String, String> projectDetails = (Map<String, String>) requestData.get("project_details");
+//            if (projectDetails != null) {
+//                logger.info("Adding project details for employee ID: {}", empId);
+//                projectDetails.forEach((key, value) -> put.addColumn(Bytes.toBytes(CF_PROJECT_DETAILS), Bytes.toBytes(key), Bytes.toBytes(value)));
+//            }
+//
+//            table.put(put);
+//            logger.info("Employee data added successfully for row key: {}", rowKey);
+//            return "Employee data added successfully for row key: " + rowKey;
+//        } catch (IOException e) {
+//            logger.error("Error adding employee data for emp_id: {}", empId, e);
+//            throw e;
+//        }
+//    }
 
     public Map<String, Object> getEmployeePerformance(String filePath) throws IOException {
         logger.info("Fetching employee performance data from file: {}", filePath);

@@ -12,7 +12,7 @@ public class ProducerImp {
 	
 	private static final int MAX_LOGS_PER_FILE = 5;
 	private static final String LOG_DIR = "EmployeeTimeLogFolder";
-	private static final long TIME_LIMIT = 20000L;
+	private static final long TIME_LIMIT = 300000L;
 	
 	private int logCount=0;
 	private String currentFile;
@@ -38,7 +38,7 @@ public class ProducerImp {
     }
 	
 	private String createNewLogFile() {
-		return LOG_DIR+"/file"+System.currentTimeMillis()+".json";
+		return LOG_DIR+"/file"+System.currentTimeMillis()+".txt";
 	}
 	
 	public void storeLogs(String logEntry) throws IOException{
@@ -67,7 +67,7 @@ public class ProducerImp {
 	
 	private void completeCurrentFile() throws IOException {
 		if (new File(currentFile).length() > 0) {
-			String completedFile = currentFile.replace(".json", "_completed.json");
+			String completedFile = currentFile.replace(".txt", "_completed.txt");
 			Files.move(Paths.get(currentFile), Paths.get(completedFile));
 			System.out.println("Renamed the file to: " + completedFile);
 		}

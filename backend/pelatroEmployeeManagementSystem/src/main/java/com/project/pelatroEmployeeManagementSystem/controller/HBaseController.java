@@ -36,41 +36,41 @@ public class HBaseController {
 	@Autowired
 	private HBaseServiceImp hBaseServiceImp;
 
-    @PostMapping("/addEmployeeData")
-    public ResponseEntity<ApiResponse<String>> addEmployeeData(@RequestBody Map<String, Object> requestData) throws IOException {
-        try {
-        	
-        	String folderPath = "EmployeeTimeLogFolder";
-        	
-        	 File folder = new File(folderPath);
-             if (!folder.exists()) {
-                 if (folder.mkdirs()) {
-                     System.out.println("Folder created successfully: " + folderPath);
-                 } else {
-                     System.out.println("Failed to create folder: " + folderPath);
-                     ApiResponse<String> response = new ApiResponse<>("fail", "Folder Creation Failed");
-                     return ResponseEntity.status(500).body(response); // Exit if folder creation failed
-                 }
-             }
-        	
-            String fileName = "employee_data_" + System.currentTimeMillis() + ".json";
-            File file = new File(folder,fileName);
-            
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(file, requestData);
-            
-            Map<String, Object> readData = objectMapper.readValue(file, Map.class);
-            System.out.println("Data read from file: " + readData);
-            System.out.println("Absolute Path: " + file.getAbsolutePath());
-            ApiResponse<String> response = new ApiResponse<>("pass", "Data saved to file and read successfully.");
-            return ResponseEntity.ok(response);
-
-        } catch (IOException e) {
-            // Handle error
-            ApiResponse<String> response = new ApiResponse<>("fail", "Error saving or reading data from file.");
-            return ResponseEntity.status(500).body(response);
-        }
-    }
+//    @PostMapping("/addEmployeeData")
+//    public ResponseEntity<ApiResponse<String>> addEmployeeData(@RequestBody Map<String, Object> requestData) throws IOException {
+//        try {
+//        	
+//        	String folderPath = "EmployeeTimeLogFolder";
+//        	
+//        	 File folder = new File(folderPath);
+//             if (!folder.exists()) {
+//                 if (folder.mkdirs()) {
+//                     System.out.println("Folder created successfully: " + folderPath);
+//                 } else {
+//                     System.out.println("Failed to create folder: " + folderPath);
+//                     ApiResponse<String> response = new ApiResponse<>("fail", "Folder Creation Failed");
+//                     return ResponseEntity.status(500).body(response); // Exit if folder creation failed
+//                 }
+//             }
+//        	
+//            String fileName = "employee_data_" + System.currentTimeMillis() + ".json";
+//            File file = new File(folder,fileName);
+//            
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            objectMapper.writeValue(file, requestData);
+//            
+//            Map<String, Object> readData = objectMapper.readValue(file, Map.class);
+//            System.out.println("Data read from file: " + readData);
+//            System.out.println("Absolute Path: " + file.getAbsolutePath());
+//            ApiResponse<String> response = new ApiResponse<>("pass", "Data saved to file and read successfully.");
+//            return ResponseEntity.ok(response);
+//
+//        } catch (IOException e) {
+//            // Handle error
+//            ApiResponse<String> response = new ApiResponse<>("fail", "Error saving or reading data from file.");
+//            return ResponseEntity.status(500).body(response);
+//        }
+//    }
     
     @GetMapping("/performance")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getEmployeePerformance(@RequestParam(name = "filePath") String filePath) {

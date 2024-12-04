@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface HBaseService {
 	
-	public String addEmployeeData(Map<String, Object> requestData) throws IOException;
+//	public String addEmployeeData(Map<String, Object> requestData) throws IOException;
 	public Map<String, Object> getEmployeePerformance(String filePath) throws IOException;
 
 }
