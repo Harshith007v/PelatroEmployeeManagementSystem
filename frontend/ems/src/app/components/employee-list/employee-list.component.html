@@ -1,5 +1,5 @@
 <div class="custom-container">
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
     <h2
       class="page-title font-weight-bold"
       style="color: #b85042; font-size: 2rem; margin-bottom: 0"
@@ -77,24 +77,24 @@
         </div>
       </div>
     </div>
-
-    <!-- Pagination Buttons (Fixed at left and right) -->
-    <div class="pagination-buttons">
-      <button
-        class="btn btn-secondary"
-        (click)="prevPage()"
-        [disabled]="currentPage === 1"
-      >
-        &lt;
-      </button>
-      <button
-        class="btn btn-secondary"
-        (click)="nextPage()"
-        [disabled]="currentPage * itemsPerPage >= filteredEmployees.length"
-        style="margin-right: 100px"
-      >
-        &gt;
-      </button>
-    </div>
   </div>
+  <!-- Pagination Buttons (Fixed at left and right) -->
+</div>
+
+<div class="pagination-buttons">
+  <button
+    class="btn btn-secondary"
+    (click)="prevPage()"
+    [disabled]="currentPage === 1"
+  >
+    &lt;
+  </button>
+  <button
+    class="btn btn-secondary"
+    (click)="nextPage()"
+    [disabled]="currentPage * itemsPerPage >= filteredEmployees.length"
+    style="margin-right: 100px"
+  >
+    &gt;
+  </button>
 </div>

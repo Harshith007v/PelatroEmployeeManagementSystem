@@ -33,6 +33,9 @@ public class Employee {
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
     
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean isActive = true;
+    
     public Employee() {
     	
     }
@@ -46,7 +49,14 @@ public class Employee {
 		this.role = role;
 		this.department = department;
 	}
+	
+	public boolean isActive() {
+        return isActive;
+    }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
 	public Long getId() {
 		return id;
