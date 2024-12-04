@@ -12,7 +12,7 @@ public class ProducerImp {
 	
 	private static final int MAX_LOGS_PER_FILE = 5;
 	private static final String LOG_DIR = "EmployeeTimeLogFolder";
-	private static final long TIME_LIMIT = 300000L;
+	private static final long TIME_LIMIT = 60000L;
 	
 	private int logCount=0;
 	private String currentFile;

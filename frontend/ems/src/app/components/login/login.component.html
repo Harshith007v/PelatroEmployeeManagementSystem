@@ -59,7 +59,7 @@
               </div>
               <div class="input-group mb-3">
                 <input
-                  type="password"
+                  [type]="showPassword ? 'text' : 'password'"
                   id="password"
                   class="form-control form-control-lg"
                   placeholder="Password"
@@ -67,6 +67,14 @@
                   name="password"
                   required
                 />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="togglePasswordVisibility()"
+                >
+                  <span *ngIf="showPassword">Hide</span>
+                  <span *ngIf="!showPassword">Show</span>
+                </button>
               </div>
               <div class="input-group mb-4 d-flex justify-content-between">
                 <div class="form-check">

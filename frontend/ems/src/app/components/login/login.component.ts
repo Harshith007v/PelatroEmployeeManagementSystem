@@ -9,11 +9,16 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  showPassword = false; // Property to track password visibility
   userName: string = '';
   password: string = '';
   errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) { }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword; // Toggle the visibility state
+  }
 
   onLogin() {
     const user = { userName: this.userName, password: this.password };

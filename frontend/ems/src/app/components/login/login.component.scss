@@ -77,3 +77,17 @@ body {
 .rounded-custom {
   border-radius: 0.5rem;
 }
+
+
+.btn-outline-secondary {
+  color: #ffffff; 
+  background-color: #103cbe; 
+  border-color: #103cbe; 
+  transition: all 0.3s ease; 
+}
+
+.btn-outline-secondary:hover {
+  color: #103cbe; 
+  background-color: #ffffff; 
+  border-color: #103cbe; 
+}
