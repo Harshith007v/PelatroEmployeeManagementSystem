@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class EmployeeService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getEmployeeList(): Observable<Employee[]> {
     return this.httpClient.get<any>('http://localhost:8080/api/employees').pipe(
@@ -95,7 +95,7 @@ export class EmployeeService {
 
     return this.httpClient
       .post<any>(
-        'http://localhost:8080/api/workhours/addEmployeeData',
+        'http://localhost:8080/api/logs',
         timeLogData
       )
       .pipe(

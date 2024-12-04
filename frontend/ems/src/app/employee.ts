@@ -7,4 +7,6 @@ export class Employee {
     emailId: string;
     role: string;
     department: Department;
+    image: string | File;
+
 }
