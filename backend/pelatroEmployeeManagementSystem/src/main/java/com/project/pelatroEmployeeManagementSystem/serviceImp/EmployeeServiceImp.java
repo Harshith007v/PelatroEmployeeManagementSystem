@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.logging.log4j.LogManager;
@@ -31,7 +33,7 @@ public class EmployeeServiceImp implements EmployeeService {
 	
     public List<Employee> getAllEmployees() {
         logger.debug("Fetching all employees");
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findByIsActiveTrue();
         logger.info("Retrieved {} employees", employees.size());
         return employees;
     } 
@@ -110,13 +112,13 @@ public class EmployeeServiceImp implements EmployeeService {
         try {
             logger.debug("Attempting to delete employee with ID: {}", id);
             
-            Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> {
-                    logger.error("Employee not found for deletion with ID: {}", id);
-                    return new ResourceNotFoundException("No employee with id: " + id);
-                });
+            Optional<Employee> employee = employeeRepository.findById(id);
             
-            employeeRepository.delete(employee);
+            if (employee.isPresent()) {
+                Employee emp = employee.get();
+                emp.setActive(false); 
+                employeeRepository.save(emp); 
+            }
             
             logger.info("Employee deleted successfully with ID: {}", id);
         } catch (Exception e) {
