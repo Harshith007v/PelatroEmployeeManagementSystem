@@ -21,7 +21,10 @@ export class DailyTimeLogComponent implements OnInit {
   filteredEmployees: Employee[] = []; // Filtered list for search results
   selectedEmployee: Employee | null = null; // Selected employee
 
-  constructor(private router: Router, private employeeService: EmployeeService) { }
+  constructor(
+    private router: Router,
+    private employeeService: EmployeeService
+  ) {}
 
   ngOnInit(): void {
     this.initializeTimeLogs();
@@ -43,13 +46,24 @@ export class DailyTimeLogComponent implements OnInit {
   // Handle search input change
   onSearchChange() {
     if (this.searchText) {
-      this.filteredEmployees = this.employees.filter((employee) =>
-        employee.firstName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.emailId.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.department.departmentName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        `PEL${employee.id}`.toLowerCase().includes(this.searchText.toLowerCase())
+      this.filteredEmployees = this.employees.filter(
+        (employee) =>
+          employee.firstName
+            .toLowerCase()
+            .includes(this.searchText.toLowerCase()) ||
+          employee.lastName
+            .toLowerCase()
+            .includes(this.searchText.toLowerCase()) ||
+          employee.emailId
+            .toLowerCase()
+            .includes(this.searchText.toLowerCase()) ||
+          employee.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          employee.department.departmentName
+            .toLowerCase()
+            .includes(this.searchText.toLowerCase()) ||
+          `PEL${employee.id}`
+            .toLowerCase()
+            .includes(this.searchText.toLowerCase())
       );
       this.showDropdown = true;
     } else {
@@ -95,12 +109,18 @@ export class DailyTimeLogComponent implements OnInit {
         icon: 'warning',
         title: 'Please select an employee before adding working hours.',
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
       return;
     }
 
-    this.timeLogs.push({ startTime: '', endTime: '', project: '', totalHours: 0, points: 0 });
+    this.timeLogs.push({
+      startTime: '',
+      endTime: '',
+      project: '',
+      totalHours: 0,
+      points: 0,
+    });
   }
 
   // Calculate hours worked for a specific row
@@ -117,7 +137,7 @@ export class DailyTimeLogComponent implements OnInit {
           icon: 'error',
           title: 'End Time must be after Start Time.',
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
         row.endTime = '';
         row.totalHours = 0;
@@ -140,7 +160,6 @@ export class DailyTimeLogComponent implements OnInit {
     );
   }
 
-
   submitForm() {
     if (!this.selectedEmployee) {
       Swal.fire({
@@ -148,14 +167,14 @@ export class DailyTimeLogComponent implements OnInit {
         icon: 'warning',
         title: 'Please select an employee before submitting.',
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
       return;
     }
 
     // Check if every row's fields (startTime, endTime, project) are empty
-    const allRowsEmpty = this.timeLogs.every(row =>
-      !row.startTime && !row.endTime && !row.project
+    const allRowsEmpty = this.timeLogs.every(
+      (row) => !row.startTime && !row.endTime && !row.project
     );
 
     if (allRowsEmpty) {
@@ -165,7 +184,7 @@ export class DailyTimeLogComponent implements OnInit {
         title: 'Working hours are empty. Do you still want to submit?',
         showCancelButton: true,
         confirmButtonText: 'Yes, Submit',
-        cancelButtonText: 'No, Cancel'
+        cancelButtonText: 'No, Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
           this.submitTimeLog();
@@ -174,25 +193,27 @@ export class DailyTimeLogComponent implements OnInit {
       return;
     }
 
+    // const timeLogData: { [key: string]: any } = {
+    //   "emp_id": `PEL${String(this.selectedEmployee.id)}`,
+    //   "time_details": {
+    //     "start_time": String(this.timeLogs[0].startTime),
+    //     "end_time": String(this.timeLogs[0].endTime),
+    //     "total_hours": String(this.timeLogs[0].totalHours)
+    //   },
+    //   "project_details": {
+    //     "project_name": String(this.timeLogs[0].project),
+    //     "points": String(this.timeLogs[0].points)
+    //   }
+    // };
 
-    const timeLogData: { [key: string]: any } = {
-      "emp_id": `PEL${String(this.selectedEmployee.id)}`,
-      "time_details": {
-        "start_time": String(this.timeLogs[0].startTime),
-        "end_time": String(this.timeLogs[0].endTime),
-        "total_hours": String(this.timeLogs[0].totalHours)
-      },
-      "project_details": {
-        "project_name": String(this.timeLogs[0].project),
-        "points": String(this.timeLogs[0].points)
-      }
-    };
+    const timeLogString = `emp_id:"PEL${this.selectedEmployee.id}",start_time:"${this.timeLogs[0].startTime}",end_time:"${this.timeLogs[0].endTime}",total_hours:"${this.timeLogs[0].totalHours}",project_name:"${this.timeLogs[0].project}",points:"${this.timeLogs[0].points}"`;
 
+    console.log('Form submitted with data:', timeLogString);
 
-    console.log('Form submitted with data:', timeLogData);
+    //console.log('Form submitted with data:', timeLogData);
 
     // Call the method to send the data to the backend
-    this.employeeService.addEmployeeTimeLog(timeLogData).subscribe(
+    this.employeeService.addEmployeeTimeLog(timeLogString).subscribe(
       (response) => {
         // If the response is successful, show success message
         Swal.fire({
@@ -200,7 +221,7 @@ export class DailyTimeLogComponent implements OnInit {
           icon: 'success',
           title: 'Time log for the employee has been successfully submitted.',
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
         this.resetForm(); // Reset the form after submission
       },
@@ -211,7 +232,7 @@ export class DailyTimeLogComponent implements OnInit {
           icon: 'error',
           title: 'There was an error submitting the time log.',
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       }
     );
@@ -220,7 +241,6 @@ export class DailyTimeLogComponent implements OnInit {
   // Handle the actual time log submission
   submitTimeLog() {
     console.log('Time log submitted');
-
   }
 
   // Reset the form

@@ -19,7 +19,7 @@ public class JsonFileProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonFileProcessor.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final HBaseServiceImp hbaseService; // Inject your HBase service
+    private HBaseServiceImp hbaseService; 
 
     private static final String FOLDER_PATH = "EmployeeTimeLogFolder";
 
@@ -31,7 +31,6 @@ public class JsonFileProcessor {
     public void processJsonFiles() {
     	
     	System.out.println("Scheduled task running here");
-    	
     	
         logger.info("Starting scheduled task to process JSON files...");
 
@@ -55,21 +54,19 @@ public class JsonFileProcessor {
             // Retry logic
             while (!saved) {
                 try {
-                    // Read JSON data from file
+                
                     Map<String, Object> requestData = objectMapper.readValue(file, Map.class);
 
-                    // Save to HBase using the provided method
                     String result = hbaseService.addEmployeeData(requestData);
                     logger.info("Result: {}", result);
 
-                    // If successful, delete the file
                     Files.delete(file.toPath());
                     logger.info("Successfully processed and deleted file: {}", file.getName());
                     saved = true;
 
                 } catch (IOException e) {
                     logger.error("Error processing file: {}. Retrying in the next cycle...", file.getName(), e);
-                    break; // Exit loop for this cycle; retry in the next scheduled execution
+                    break;
                 }
             }
         }
