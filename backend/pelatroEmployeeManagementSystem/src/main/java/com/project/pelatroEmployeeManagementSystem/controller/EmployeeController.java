@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.pelatroEmployeeManagementSystem.apiResponseWrapper.ApiResponse;
+import com.project.pelatroEmployeeManagementSystem.model.Department;
 import com.project.pelatroEmployeeManagementSystem.model.Employee;
 import com.project.pelatroEmployeeManagementSystem.serviceImp.EmployeeServiceImp;
 
@@ -46,18 +49,40 @@ public class EmployeeController {
 		
 	}
 	
-
-	
-	//to create an employee
-	@PostMapping("/employees")
-	public ResponseEntity<ApiResponse<Employee>> createEmployee(@RequestBody Employee employee){
-		try {
-			ApiResponse<Employee> response = new ApiResponse<>("pass",employeeServiceImp.createEmployee( employee ));
-			return ResponseEntity.ok( response );
-		}catch(Exception e) {
-			ApiResponse<Employee> response = new ApiResponse<>("fail", null);
-			return ResponseEntity.status( 500 ).body( response );
-		}
+		@PostMapping("/employees")
+		public ResponseEntity<ApiResponse<Employee>> createEmployee
+		(
+				@RequestParam("firstName") String firstName,
+	            @RequestParam("lastName") String lastName,
+	            @RequestParam("emailId") String emailId,
+	            @RequestParam("role") String role,
+	            @RequestParam("departmentId") String departmentId,
+	            @RequestParam("departmentName") String departmentName,
+	            @RequestParam("profilePicture") MultipartFile profilePicture
+	    )
+		{
+			try 
+			{
+				Department department = new Department(Long.parseLong(departmentId),departmentName);
+				Employee employee = new Employee();
+				employee.setFirstName(firstName);
+				employee.setLastName(lastName);
+				employee.setEmailId(emailId);
+				employee.setRole(role);
+				employee.setDepartment(department);
+				
+				System.out.println(employee);
+			
+			
+				ApiResponse<Employee> response = new ApiResponse<>("pass",employeeServiceImp.createEmployee( employee,profilePicture ));
+				return ResponseEntity.ok( response );
+			}
+			catch(Exception e) 
+			{
+				System.out.println(e.getMessage());
+				ApiResponse<Employee> response = new ApiResponse<>("fail", null);
+				return ResponseEntity.status( 500 ).body( response );
+			}
 	}
 	
 	

@@ -193,26 +193,10 @@ export class DailyTimeLogComponent implements OnInit {
       return;
     }
 
-    // const timeLogData: { [key: string]: any } = {
-    //   "emp_id": `PEL${String(this.selectedEmployee.id)}`,
-    //   "time_details": {
-    //     "start_time": String(this.timeLogs[0].startTime),
-    //     "end_time": String(this.timeLogs[0].endTime),
-    //     "total_hours": String(this.timeLogs[0].totalHours)
-    //   },
-    //   "project_details": {
-    //     "project_name": String(this.timeLogs[0].project),
-    //     "points": String(this.timeLogs[0].points)
-    //   }
-    // };
-
     const timeLogString = `emp_id:"PEL${this.selectedEmployee.id}",start_time:"${this.timeLogs[0].startTime}",end_time:"${this.timeLogs[0].endTime}",total_hours:"${this.timeLogs[0].totalHours}",project_name:"${this.timeLogs[0].project}",points:"${this.timeLogs[0].points}"`;
 
     console.log('Form submitted with data:', timeLogString);
 
-    //console.log('Form submitted with data:', timeLogData);
-
-    // Call the method to send the data to the backend
     this.employeeService.addEmployeeTimeLog(timeLogString).subscribe(
       (response) => {
         // If the response is successful, show success message

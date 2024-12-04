@@ -1,7 +1,12 @@
 package com.project.pelatroEmployeeManagementSystem.serviceImp;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +19,8 @@ import com.project.pelatroEmployeeManagementSystem.service.EmployeeService;
 public class EmployeeServiceImp implements EmployeeService {
     
     private static final Logger logger = LogManager.getLogger(EmployeeServiceImp.class);
+    
+    private final String UPLOAD_DIR = "uploads/";
 	
     private EmployeeRepository employeeRepository;
 	
@@ -29,10 +36,26 @@ public class EmployeeServiceImp implements EmployeeService {
         return employees;
     } 
 	
-    public Employee createEmployee(Employee employee) {
+    public Employee createEmployee(Employee employee,MultipartFile profilePicture) throws Exception {
         try {
             logger.debug("Attempting to create new employee: {}", employee);
+            
+            
+            String fileName = profilePicture.getOriginalFilename();
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+            
+            employee.setProfilePicturePath(UPLOAD_DIR+fileName);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath); // Create the directory if it doesn't exist
+            }
+            
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(profilePicture.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            
+            
             Employee savedEmployee = employeeRepository.save(employee);
+            
+            
             logger.info("Employee created successfully with ID: {}", savedEmployee.getId());
             return savedEmployee;
         } catch (Exception e) {

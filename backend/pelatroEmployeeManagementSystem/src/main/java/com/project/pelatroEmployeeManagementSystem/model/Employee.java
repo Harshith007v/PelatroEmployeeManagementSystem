@@ -13,7 +13,13 @@ import jakarta.persistence.Table;
 @Table(name = "employees")
 public class Employee {
 
-    @Id
+    @Override
+	public String toString() {
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
+				+ ", role=" + role + ", profilePicturePath=" + profilePicturePath + ", department=" + department + "]";
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,8 +34,20 @@ public class Employee {
     
     @Column(name="role", nullable = false) 
     private String role;
+    
+    @Column(name="profile_picture_path")
+    private String profilePicturePath;
 
-    @ManyToOne
+    public String getProfilePicturePath() {
+		return profilePicturePath;
+	}
+
+
+	public void setProfilePicturePath(String profilePicturePath) {
+		this.profilePicturePath = profilePicturePath;
+	}
+
+	@ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
     
@@ -106,6 +124,7 @@ public class Employee {
 	public void setDepartment( Department department ) {
 		this.department = department;
 	}
+	
     
 
 }

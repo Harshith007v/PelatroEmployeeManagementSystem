@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class EmployeeService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getEmployeeList(): Observable<Employee[]> {
     return this.httpClient.get<any>('http://localhost:8080/api/employees').pipe(
@@ -23,20 +23,20 @@ export class EmployeeService {
     );
   }
 
-  createEmployee(employee: Employee): Observable<Object> {
+  createEmployee(formData: FormData): Observable<Object> {
     return this.httpClient
-      .post('http://localhost:8080/api/employees', employee)
+      .post('http://localhost:8080/api/employees', formData)
       .pipe(
         map((response: any) => {
           if (response.status === 'pass') {
             Swal.fire(
               'Added!',
-              'Employee has been successfully Added.',
+              'Employee has been successfully added.',
               'success'
             );
             return response.body;
           } else {
-            throw new Error('Failed to fetch employees');
+            throw new Error('Failed to add employee');
           }
         })
       );
@@ -94,10 +94,7 @@ export class EmployeeService {
     console.log('Sending data to backend:', JSON.stringify(timeLogData));
 
     return this.httpClient
-      .post<any>(
-        'http://localhost:8080/api/logs',
-        timeLogData
-      )
+      .post<any>('http://localhost:8080/api/logs', timeLogData)
       .pipe(
         map((response: any) => {
           // Log the status for debugging
