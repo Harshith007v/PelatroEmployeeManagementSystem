@@ -35,10 +35,6 @@ public class HBaseController {
 	
 	@Autowired
 	private HBaseServiceImp hBaseServiceImp;
-	
-	@Value("${file.storage.path:~/Desktop/New Folder}")
-    private String fileStoragePath;
-
 
     @PostMapping("/addEmployeeData")
     public ResponseEntity<ApiResponse<String>> addEmployeeData(@RequestBody Map<String, Object> requestData) throws IOException {
