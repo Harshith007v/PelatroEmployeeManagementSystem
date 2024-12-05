@@ -8,7 +8,7 @@
   width: 5rem;
   height: 85.8vh; /* Adjust height */
   box-shadow: black;
-  color: #ffffff; /* White text color */
+  color: blue; 
   overflow: hidden;
   border-radius: 11px;
   margin-left: 8px;
@@ -49,7 +49,7 @@
   margin-left: 1rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: rgb(255, 255, 255); 
+  color: black; 
   transition: opacity 0.3s ease;
 }
 
@@ -85,7 +85,7 @@
 
 .sidenav-nav-link:hover {
   background-color: #97a9f0; 
-  /* color: mediumpurple;  */
+   color: white;  
   transform: translateX(5px); /* Subtle sliding effect */
 }
 
@@ -95,7 +95,7 @@
 }
 
 .sidenav-nav-link.active {
-  background-color: #f4f5f7; /* Highlight with the same blue */
+  background-color: #3355d1; /* Highlight with the same blue */
    /* color: white;  */
   transform: translateX(5px); /* Optional slide effect */
   color: #97a9f0;
