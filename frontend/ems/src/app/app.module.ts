@@ -20,6 +20,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { BodyComponent } from './components/body/body.component';
 import { AuthInterceptor } from './provider/auth.interceptor';
 import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-log.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 
 // import { CommonModule } from '@angular/common';
 
@@ -39,6 +40,7 @@ import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-lo
     SidebarComponent,
     BodyComponent,
     DailyTimeLogComponent,
+    AddEmployeeComponent,
   ],
   imports: [
     BrowserModule,
