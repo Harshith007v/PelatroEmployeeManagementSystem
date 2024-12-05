@@ -65,7 +65,7 @@ public class PerformanceTracker {
         
 	}
 	
-	@Scheduled(fixedRate = 86400000) // Runs every 24 hours
+	@Scheduled(fixedRate = 30000) // Runs every 24 hours 86400000
     public void scheduledPerformanceDriver() {
         try {
             performaceDriver();

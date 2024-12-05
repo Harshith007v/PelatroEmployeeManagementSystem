@@ -33,8 +33,6 @@ public class EmployeeController {
 		this.employeeServiceImp=employeeServiceImp;
 	}
 	
-	
-	//to get all employees
 	@GetMapping("/employees")
 	public ResponseEntity<ApiResponse<List<Employee>>> getAllEmployees(){
 		try {
@@ -58,7 +56,7 @@ public class EmployeeController {
 	            @RequestParam("role") String role,
 	            @RequestParam("departmentId") String departmentId,
 	            @RequestParam("departmentName") String departmentName,
-	            @RequestParam("profilePicture") MultipartFile profilePicture
+	            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture
 	    )
 		{
 			try 
@@ -112,7 +110,6 @@ public class EmployeeController {
 		}
 	}
 	
-	  //delete emp
 		@DeleteMapping("/employees/{id}")
 		public ResponseEntity<ApiResponse<String>> deleteEmployee(@PathVariable("id") Long id){
 			try {
