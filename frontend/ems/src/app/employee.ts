@@ -7,5 +7,6 @@ export class Employee {
   emailId: string;
   role: string;
   department: Department;
-  profilePicture: string | File; // Changed 'image' to 'profilePicture' to match the form field name
+  profilePicture: string | File | null;
+  profilePicturePath: string;
 }

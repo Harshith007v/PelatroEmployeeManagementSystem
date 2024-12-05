@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.css']
+  styleUrls: ['./employee-list.component.css'],
 })
 export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
@@ -17,7 +17,10 @@ export class EmployeeListComponent implements OnInit {
   itemsPerPage: number = 8;
   searchText: string = '';
 
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+  constructor(
+    private employeeService: EmployeeService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getEmployees();
@@ -26,8 +29,26 @@ export class EmployeeListComponent implements OnInit {
   getEmployees(): void {
     this.employeeService.getEmployeeList().subscribe(
       (data) => {
-        this.employees = data;
-        this.filteredEmployees = [...this.employees]; // Initially show all employees
+        this.employees = data.map((employee) => {
+          const profilePictureUrl = employee.profilePicturePath
+            ? `http://localhost:8080/api/photos?profilePicturePath=${encodeURIComponent(
+                employee.profilePicturePath
+              )}`
+            : '/assets/images/default_profile.jpg'; // Default profile picture if not provided
+
+          console.log(
+            `Profile Picture URL for ${
+              employee.firstName || 'Employee'
+            }: ${profilePictureUrl}`
+          );
+
+          return {
+            ...employee,
+            profilePictureUrl,
+          };
+        });
+
+        this.filteredEmployees = [...this.employees];
         this.updatePaginatedEmployees();
       },
       (error) => {
@@ -40,10 +61,15 @@ export class EmployeeListComponent implements OnInit {
     if (this.searchText.trim() === '') {
       this.filteredEmployees = [...this.employees];
     } else {
-      this.filteredEmployees = this.employees.filter((employee) =>
-        employee.firstName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        employee.emailId.toLowerCase().includes(this.searchText.toLowerCase())
+      this.filteredEmployees = this.employees.filter(
+        (employee) =>
+          employee.firstName
+            .toLowerCase()
+            .includes(this.searchText.toLowerCase()) ||
+          employee.lastName
+            .toLowerCase()
+            .includes(this.searchText.toLowerCase()) ||
+          employee.emailId.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
     this.currentPage = 1; // Reset to first page when search is updated
@@ -53,7 +79,10 @@ export class EmployeeListComponent implements OnInit {
   updatePaginatedEmployees(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedEmployees = this.filteredEmployees.slice(startIndex, endIndex);
+    this.paginatedEmployees = this.filteredEmployees.slice(
+      startIndex,
+      endIndex
+    );
   }
 
   nextPage(): void {
@@ -80,23 +109,23 @@ export class EmployeeListComponent implements OnInit {
 
   deleteEmployee(id: number) {
     Swal.fire({
-      title: "Are you sure?",
+      title: 'Are you sure?',
       text: "You won't be able to revert this!",
-      icon: "warning",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.employeeService.deleteEmployee(id).subscribe(data => {
+        this.employeeService.deleteEmployee(id).subscribe((data) => {
           console.log(data);
           this.getEmployees();
         });
         Swal.fire({
-          title: "Deleted!",
-          text: "Employee has been successfully deleted.",
-          icon: "success"
+          title: 'Deleted!',
+          text: 'Employee has been successfully deleted.',
+          icon: 'success',
         });
       }
     });
