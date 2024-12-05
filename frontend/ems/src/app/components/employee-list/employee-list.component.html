@@ -33,12 +33,19 @@
         class="col-lg-3 col-md-4 col-sm-6 mb-4"
       >
         <div class="card small-card">
-          <span
-            class="material-icons"
-            style="font-size: 100px; color: #2c3e50; text-align: center"
-          >
-            account_circle
-          </span>
+          <div style="text-align: center; margin-top: 10px">
+            <img
+              [src]="employee.profilePictureUrl"
+              alt="Profile Picture"
+              class="rounded-circle"
+              style="
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border: 2px solid #2c3e50;
+              "
+            />
+          </div>
           <div class="card-body">
             <h5 class="card-title" style="text-align: center">
               PEL{{ employee.id }}

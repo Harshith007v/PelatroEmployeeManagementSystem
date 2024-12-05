@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     height: 100vh; /* Full viewport height */
+    background-color: white;
+    
   }
   
   /* Body (content area) should scroll without affecting the footer */
@@ -19,7 +21,7 @@
     left: 0;
     width: 100%;
     height: 60px;
-    background-color: #A7BEAE; /* Match navbar color */
+    background-color: #090c9b; /* Match navbar color */
     color: white;
     text-align: center;
     line-height: 60px;

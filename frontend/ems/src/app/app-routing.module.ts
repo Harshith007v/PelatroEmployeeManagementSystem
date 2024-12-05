@@ -11,22 +11,58 @@ import { DailyTimeLogComponent } from './components/daily-time-log/daily-time-lo
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './auth-guard';
 import { AuthRedirectGuard } from './auth-redirect-guard.service';
-
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  { path: 'login', component: LoginComponent, canActivate: [AuthRedirectGuard] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectGuard] },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [AuthRedirectGuard],
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [AuthRedirectGuard],
+  },
 
-  { path: 'employees', component: EmployeeListComponent, canActivate: [AuthGuard] },
-  { path: 'createEmployees', component: CreateEmployeeComponent, canActivate: [AuthGuard] },
-  { path: 'searchEmployees', component: SearchEmployeeComponent, canActivate: [AuthGuard] },
-  { path: 'update-employees/:id', component: UpdateEmployeeComponent, canActivate: [AuthGuard] },
-  { path: 'view-employee/:id', component: ViewEmployeeComponent, canActivate: [AuthGuard] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'daily-time-log', component: DailyTimeLogComponent, canActivate: [AuthGuard] },
-
+  {
+    path: 'employees',
+    component: EmployeeListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'createEmployees',
+    component: CreateEmployeeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'searchEmployees',
+    component: SearchEmployeeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'update-employees/:id',
+    component: UpdateEmployeeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-employee/:id',
+    component: ViewEmployeeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'daily-time-log',
+    component: DailyTimeLogComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'test', component: AddEmployeeComponent },
 
   { path: '**', redirectTo: 'login' },
 ];
@@ -35,4 +71,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

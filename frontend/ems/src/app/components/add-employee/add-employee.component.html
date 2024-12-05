@@ -1,0 +1,149 @@
+<div class="container mt-5">
+  <div class="box">
+    <button
+      type="button"
+      class="btn-close close-btn"
+      aria-label="Close"
+      (click)="closeForm()"
+    >X</button>
+    <h2>New Employee</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="row">
+        <!-- Left Column for Image Upload -->
+        <div class="col-md-4 text-center">
+          <div class="image-upload">
+            <!-- Image Preview Above File Input -->
+            <div *ngIf="imageSrc" class="image-preview">
+              <img
+                [src]="imageSrc"
+                alt="Uploaded Image"
+                class="img-fluid passport-photo"
+              />
+            </div>
+
+            <!-- Choose File Input Below Image Preview -->
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelect($event)"
+              class="form-control mt-3 p-2"
+            />
+
+            <!-- Upload Image Button Below the Input -->
+            <button
+              type="button"
+              class="btn btn-primary mt-2 p-2"
+              (click)="onUploadImage()"
+            >
+              Upload Image
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column for Employee Info with Border -->
+        <div class="col-md-8 input-fields-container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  [(ngModel)]="employee.firstName"
+                  name="firstName"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  [(ngModel)]="employee.lastName"
+                  name="lastName"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  [(ngModel)]="employee.email"
+                  name="email"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="role">Role</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="role"
+                  [(ngModel)]="employee.role"
+                  name="role"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="department">Department</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="department"
+                  [(ngModel)]="employee.department"
+                  name="department"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phone"
+                  [(ngModel)]="employee.phone"
+                  name="phone"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="joiningDate">Joining Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="joiningDate"
+                  [(ngModel)]="employee.joiningDate"
+                  name="joiningDate"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Button Container -->
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-secondary clear-fields"
+          (click)="clearFields()"
+        >
+          Clear Fields
+        </button>
+        <button type="submit" class="btn btn-primary fixed-size">
+          Save Employee
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

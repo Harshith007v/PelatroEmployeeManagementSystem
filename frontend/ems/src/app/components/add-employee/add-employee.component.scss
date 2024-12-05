@@ -1,0 +1,122 @@
+/* add-employee.component.scss */
+
+.container {
+  padding: 20px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px; /* Adjust spacing as needed */
+  right: 15px; /* Adjust spacing as needed */
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center; /* Vertically center */
+  justify-content: center; /* Horizontally center */
+  line-height: 1; /* Ensure the content doesn't overflow */
+  padding: 0;
+}
+
+.close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Optional hover effect */
+}
+.box {
+  position: relative; /* Ensure relative positioning for the close button */
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: left;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Faint line below the heading */
+  padding-bottom: 10px; /* Optional: Adds space between heading and the line */
+  color: black;
+}
+label {
+  color: black;
+}
+
+.image-upload {
+  position: relative;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+button {
+  border-radius: 0.25rem;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+.input-fields-container {
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Faint border for the input fields container */
+  padding: 20px; /* Padding inside the bordered container */
+  border-radius: 8px; /* Rounded corners for the container */
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 15px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+button.fixed-size {
+  width: 150px; /* Fixed size for Save Employee button */
+  padding: 10px; /* Sufficient padding */
+}
+
+button.clear-fields {
+  width: 150px; /* Fixed size for Clear Fields button */
+  padding: 10px; /* Sufficient padding */
+}
+
+.image-upload {
+  .image-preview {
+    width: 150px; /* Passport photo size */
+    height: 200px; /* Passport photo size */
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .passport-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+  }
+
+  input[type="file"] {
+    margin-top: 15px; /* Space between the image preview and file input */
+  }
+
+  button {
+    width: 100%; /* Full width button */
+    margin-top: 10px; /* Space between file input and the button */
+  }
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+}

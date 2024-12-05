@@ -40,7 +40,6 @@ body, html {
     box-sizing: border-box;
   }
   
-  
 
 
   /* Body Styling */
@@ -48,7 +47,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background: #E7E8D1; /* Subtle dark gradient */
+  background: #fff; 
   color: #ecf0f1; /* Light text color */
   min-height: 100vh;
   display: flex;

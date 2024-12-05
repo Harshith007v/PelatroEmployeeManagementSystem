@@ -41,20 +41,19 @@ public class EmployeeServiceImp implements EmployeeService {
     public Employee createEmployee(Employee employee,MultipartFile profilePicture) throws Exception {
         try {
             logger.debug("Attempting to create new employee: {}", employee);
-            
-            
-            String fileName = profilePicture.getOriginalFilename();
-            Path uploadPath = Paths.get(UPLOAD_DIR);
-            
-            employee.setProfilePicturePath(UPLOAD_DIR+fileName);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath); // Create the directory if it doesn't exist
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+            	String fileName = profilePicture.getOriginalFilename();
+                Path uploadPath = Paths.get(UPLOAD_DIR); 
+                employee.setProfilePicturePath(UPLOAD_DIR+fileName);
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath); // Create the directory if it doesn't exist
+                }
+                
+                Path filePath = uploadPath.resolve(fileName);
+                Files.copy(profilePicture.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            } else {
+                employee.setProfilePicturePath(null);
             }
-            
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(profilePicture.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            
-            
             Employee savedEmployee = employeeRepository.save(employee);
             
             
