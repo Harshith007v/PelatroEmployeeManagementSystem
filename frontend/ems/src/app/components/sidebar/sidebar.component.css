@@ -1,271 +1,166 @@
-/* .sidenav{
-    background: #263238;
-    transition: all .5s ease;
-    position: fixed;
-    margin-top: 4.5rem;
-    z-index: 1;
-    top: 0;
-    width: 5rem;
-    height: 100vh;
-    box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
-}
-
-.logo-container{
-    display: flex;
-    align-items: center;
-    padding: 0.938rem 0.938rem 0 0.938rem ;
-    width: 100%;
-
-    .logo{
-        background: white;
-        text-align: center;
-        width: 3rem;
-        min-width: 3rem;
-        border-radius: 0.3rem;
-        padding: 0.3rem;
-        font-size: 24px;
-        font-weight: 900;
-        cursor: pointer;
-        border: none;
-    }
-
-    .logo-text{
-        margin-left: 1.5rem;
-        font-size: 24px;
-        font-weight: 700;
-        color: white;
-    }
-
-    .btn-close{
-        margin-left: auto;
-        cursor: pointer;
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-        background-color: transparent;
-        border: none;
-    }
-
-}
-
-.sidenav-collapsed{
-    width: 16.5rem;
-}
-
-.sidenav-nav{
-    list-style: none;
-    padding: 0.938rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: calc(100% - 3.65rem);
-    cursor: pointer;
-
-    .sidenav-nav-item{
-        width: 100%;
-        margin-bottom: 0.625rem;
-
-
-        .sidenav-nav-link{
-            display: flex;
-            align-items: center;
-            height: 3rem;
-            color: #f3f3f3;
-            text-decoration: none;
-            transition: all .3s ease;
-            border-radius: 0.625rem;
-
-
-            .sidenav-link-icon{
-                font-size: 22px;
-                width: 2rem;
-                min-width: 2rem;
-                margin: 0 0.5rem;
-                text-align: center;
-                color: white;
-            }
-
-            .sidenav-link-text{
-                margin-left: 1.5rem;
-            }
-        }
-    }
-
-    .sidenav-nav-item:hover{
-        .sidenav-nav-link{
-            background-color: white;
-            color: #000;
-        }
-        .sidenav-link-icon{
-            color: #000;
-        }
-    }
-} */
-
-
 /* General Sidebar Styles */
 .sidenav {
-    background: #A7BEAE; /* Matches navbar background */
-    transition: all 0.4s ease;
-    position: fixed;
-    z-index: 1;
-    top: 4.3rem; /* Add a gap here to separate navbar from sidebar */
-    left: 0;
-    width: 5rem;
-    height: 85.8vh; /* Adjust height so it fits after navbar gap */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: #f4f4f4;
-    overflow: hidden;
-    border-radius: 11px;
-    margin-left: 8px;
-  }
-  
-  /* Adjusted for when collapsed */
-  .sidenav-collapsed {
-    width: 16.5rem;
-  }
-  
-  /* Logo Section */
-  .logo-container {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-  }
-  
-  .logo {
-    background: #B85042; /* Orangish highlight for logo button */
-    color: white;
-    text-align: center;
-    width: 3rem;
-    min-width: 3rem;
-    border-radius: 0.3rem;
-    padding: 0.5rem;
-    font-size: 24px;
-    cursor: pointer;
-    border: none;
-    transition: all 0.3s ease;
-  }
-  
-  .logo:hover {
-    background: #B85042; /* Slightly darker orange on hover */
-  }
-  
-  .logo-text {
-    margin-left: 1rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-    transition: opacity 0.3s ease;
-  }
-  
-  /* Nav Links */
-  .sidenav-nav {
-    list-style: none;
-    padding: 1rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
-  
-  .sidenav-nav-item {
-    width: 100%;
-  }
-  
-  .sidenav-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    height: 3rem;
-    color: #f4f4f4;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-  }
-  
-  .sidenav-nav-link:hover {
-    background-color: #B85042; /* Orangish hover effect */
-    color: white;
-    transform: translateX(5px); /* Subtle sliding effect */
-  }
-  
-  .sidenav-nav-link .sidenav-link-icon {
-    font-size: 1.2rem;
-    color: white;
-  }
-  
-  .sidenav-nav-link:hover .sidenav-link-icon {
-    color: white;
-  }
-  
-  .sidenav-nav-link.active {
-    background-color: #B85042; /* Highlight background color */
-    color: white; /* Highlight text color */
-    transform: translateX(5px); /* Optional slide effect */
-  }
-  
-  .sidenav-nav-link.active .sidenav-link-icon {
-    color: white; /* Highlight icon color */
-  }
-  
-  /* Styling for the close button */
-.btn-close {
-    background-color: transparent; /* Transparent background for subtlety */
-    border: none; /* Remove any border */
-    padding: 0.5rem;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease; /* Smooth transition for color, background, and size */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Icon styling inside the button */
-  .btn-close i {
-    font-size: 1.5rem; /* Adjust size for better visibility */
-    color: #f4f4f4; /* Light color for subtlety */
-    transition: all 0.3s ease; /* Smooth transition */
-  }
-  
-  /* Hover effect */
-  .btn-close:hover {
-    background-color: #B85042; /* Background color on hover (orange) */
-    transform: scale(1.25); /* Slight zoom effect on hover */
-  }
-  
-  /* Icon hover effect */
-  .btn-close:hover i {
-    color: white; /* Change icon color to white when hovered */
-    transform: rotate(90deg); /* Smooth rotation effect on hover */
-  }
-  
-  /* Focus effect for accessibility */
-  .btn-close:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #B85042; /* Orange outline for focus state */
-  }
-  
-  /* Adjust when sidebar is collapsed */
-  .sidenav-collapsed .btn-close {
-    margin-left: auto;
-  }
-  
+  background: #f4f5f7;
+  position: fixed;
+  z-index: 1;
+  top: 4.3rem; /* Gap to separate navbar */
+  left: 0;
+  width: 5rem;
+  height: 85.8vh; /* Adjust height */
+  box-shadow: black;
+  color: #ffffff; /* White text color */
+  overflow: hidden;
+  border-radius: 11px;
+  margin-left: 8px;
+}
 
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .sidenav {
+/* Adjusted for when collapsed */
+.sidenav-collapsed {
+  width: 16.5rem;
+}
+
+/* Logo Section */
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo {
+  background: #77a6f7; 
+  color: black;
+  text-align: center;
+  width: 3rem;
+  min-width: 3rem;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  background: #3066be; 
+  color: white;
+}
+
+.logo-text {
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgb(255, 255, 255); 
+  transition: opacity 0.3s ease;
+}
+
+
+/* Nav Links */
+.sidenav-nav {
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.sidenav-nav-item {
+  width: 100%;
+}
+
+.sidenav-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 3rem;
+  color: #000000; 
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.sidenav-nav-link:hover {
+  background-color: #97a9f0; 
+  /* color: mediumpurple;  */
+  transform: translateX(5px); /* Subtle sliding effect */
+}
+
+.sidenav-nav-link .sidenav-link-icon {
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+.sidenav-nav-link.active {
+  background-color: #f4f5f7; /* Highlight with the same blue */
+   /* color: white;  */
+  transform: translateX(5px); /* Optional slide effect */
+  color: #97a9f0;
+}
+
+.sidenav-nav-link.active .sidenav-link-icon {
+  color: white; 
+
+}
+
+.sidenav-nav-link:hover .sidenav-link-icon {
+  color: white; /* Highlight icon color on hover */
+}
+
+/* Styling for the close button */
+.btn-close {
+  background-color: transparent; /* Transparent background */
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Icon styling inside the button */
+.btn-close i {
+  font-size: 1.5rem;
+  color: #f4f4f4; /* Light color */
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.btn-close:hover {
+  background-color: #0056b3; /* Blue background on hover */
+  transform: scale(1.25); /* Slight zoom effect */
+}
+
+/* Icon hover effect */
+.btn-close:hover i {
+  color: white; /* Change icon color to white on hover */
+  transform: rotate(90deg); /* Smooth rotation effect on hover */
+}
+
+/* Focus effect for accessibility */
+.btn-close:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0056b3; /* Blue outline */
+}
+
+/* Adjust when sidebar is collapsed */
+.sidenav-collapsed .btn-close {
+  margin-left: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidenav {
       width: 5rem;
-    }
-  
-    .sidenav-collapsed {
+  }
+
+  .sidenav-collapsed {
       width: 100%;
       height: auto;
-    }
   }
-  
+}

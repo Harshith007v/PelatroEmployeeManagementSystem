@@ -26,10 +26,10 @@
 /* General Body Styles */
 .body {
   width: calc(100% - 4.6rem);
-  height: 85.5vh;
+  height: 100vh;
   margin-left: 5rem;
   margin-top: 54px; /* Matches Navbar height */
-  background: #A7BEAE; /* Subtle light gray background */
+  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
   overflow: hidden; /* Prevents content from spilling outside */
   overflow-y: scroll; /* Allows vertical scrolling */
   box-sizing: border-box; /* Includes padding in width/height calculations */
@@ -54,9 +54,10 @@
 
 /* Content Box Style */
 .body-content {
-  background: #A7BEAE; /* Clean white background */
+  background: #f4f5f7; /* Clean white background */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden; /* Ensures content stays within the box */
+  height: 100vh;
 }
 
 

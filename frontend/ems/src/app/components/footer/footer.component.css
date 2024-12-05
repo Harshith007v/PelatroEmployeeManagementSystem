@@ -1,5 +1,8 @@
 /* Footer Styles */
 
+.footer{
+  background-color: cornflowerblue;
+}
 
 .footer-content {
   max-width: 1200px;
@@ -23,13 +26,13 @@
 
 .social-icons i {
   font-size: 1.5rem;
-  color: #B85042; /* Match the orange color from navbar */
+  color: white; 
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .social-icons i:hover {
-  color: #B85042; /* Lighter orange on hover */
+  color: blue; /* Lighter orange on hover */
 }
 
 /* Responsive Styling */

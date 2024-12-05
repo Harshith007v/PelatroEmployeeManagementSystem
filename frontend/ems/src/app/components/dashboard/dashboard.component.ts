@@ -105,12 +105,12 @@ export class DashboardComponent implements OnInit {
         datasets: [
           {
             data: [this.developmentPerformance, 100 - this.developmentPerformance],
-            backgroundColor: ['#4caf50', '#e0e0e0'],
+            backgroundColor: ['green', '#C5D3E8'], 
           },
         ],
       },
     });
-
+  
     new Chart('testPerformanceChart', {
       type: 'pie',
       data: {
@@ -118,12 +118,12 @@ export class DashboardComponent implements OnInit {
         datasets: [
           {
             data: [this.testingPerformance, 100 - this.testingPerformance],
-            backgroundColor: ['#2196f3', '#e0e0e0'],
+            backgroundColor: ['yellow', '#E5E3D4'], // Medium blue and lighter blue
           },
         ],
       },
     });
-
+  
     new Chart('supportPerformanceChart', {
       type: 'pie',
       data: {
@@ -131,12 +131,12 @@ export class DashboardComponent implements OnInit {
         datasets: [
           {
             data: [this.supportPerformance, 100 - this.supportPerformance],
-            backgroundColor: ['#ff9800', '#e0e0e0'],
+            backgroundColor: ['#DFD7F9', '#F8F4EC'], // Darker blue and medium-light blue
           },
         ],
       },
     });
-
+  
     new Chart('topPerformerChart', {
       type: 'pie',
       data: {
@@ -144,16 +144,16 @@ export class DashboardComponent implements OnInit {
         datasets: [
           {
             data: [this.topPerformanceValue, 100 - this.topPerformanceValue],
-            backgroundColor: ['#9c27b0', '#e0e0e0'],
+            backgroundColor: ['#D63484', '#C5D3E8'], // Deep blue and soft blue
           },
         ],
       },
     });
-
+  
     new Chart('overallPerformanceChart', {
       type: 'bar',
       data: {
-        labels: [...Object.keys(this.performanceData), 'Overall Performance'],  // Employee IDs + Overall Performance label
+        labels: [...Object.keys(this.performanceData), 'Overall Performance'], // Employee IDs + Overall Performance label
         datasets: [
           {
             label: 'Employee Performance',
@@ -161,7 +161,11 @@ export class DashboardComponent implements OnInit {
               ...Object.keys(this.performanceData).map((empId) => this.performanceData[empId]),
               this.overallPerformance, // Overall performance for last bar
             ],
-            backgroundColor: '#ff5722',
+            backgroundColor: [
+
+                '#4FFFB0', 
+                 '#DFD7F9','#00A9FF', '#FF2929','#EFB6C8', '#A0E9FF', '#CDF5FD', '#37AFE1', '#4CC9FE', '#008DDA', '#41C9E2', // Shades of blue
+            ],
           },
         ],
       },
@@ -186,4 +190,5 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
+  
 }
