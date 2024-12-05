@@ -1,7 +1,8 @@
 /* Footer Styles */
 
 .footer{
-  background-color: cornflowerblue;
+  /* background-color: cornflowerblue; */
+  background: #082567;
 }
 
 .footer-content {
