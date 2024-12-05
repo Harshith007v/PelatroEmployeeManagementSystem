@@ -2,14 +2,14 @@
 #!/bin/bash
 
 # Set environment variables for Hadoop and Java
-JAVA_HOME="/usr/lib/jvm/jdk-23.0.1-oracle-x64"
-HADOOP_HOME="/home/pelatro/hadoop-3.4.1"  
+JAVA_HOME="/usr/lib/jvm/java-21-openjdk-amd64"
+HADOOP_HOME="/home/pelatro/Hadoop-Hbase/Hadoop/hadoop-3.1.1"  
 HADOOP_CONF_DIR="$HADOOP_HOME/etc/hadoop"
-HBASE_HOME="/home/pelatro/hbase-2.5.10-bin/hbase-2.5.10"    
+HBASE_HOME="/home/pelatro/Hadoop-Hbase/Hbase/hbase-2.2.3-bin/hbase-2.2.3"    
 HADOOP_BIN="$HADOOP_HOME/bin"
 HBASE_BIN="$HBASE_HOME/bin"
 
-JAR_PATH="/home/pelatro/DemoMapReduce/build/libs/DemoMapReduce-0.0.1-SNAPSHOT-all.jar"
+JAR_PATH="/home/pelatro/NewPelatroProject/PelatroEmployeeManagementSystem/backend/DemoMapReduce/build/libs/DemoMapReduce-0.0.1-SNAPSHOT-all.jar"
 
 # Set Hadoop and Java home in the environment
 export JAVA_HOME

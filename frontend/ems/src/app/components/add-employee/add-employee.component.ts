@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-employee.component.scss'],
 })
 export class AddEmployeeComponent implements OnInit {
-closeForm() {
-throw new Error('Method not implemented.');
-}
+  closeForm() {
+    throw new Error('Method not implemented.');
+  }
   onUploadImage() {
     throw new Error('Method not implemented.');
   }
