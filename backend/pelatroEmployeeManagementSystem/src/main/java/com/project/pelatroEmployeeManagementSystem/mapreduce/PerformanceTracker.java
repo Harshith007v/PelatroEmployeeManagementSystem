@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 
-@Component
 public class PerformanceTracker {
 	
 	public void performaceDriver() throws IOException, ClassNotFoundException, InterruptedException {
@@ -65,7 +64,7 @@ public class PerformanceTracker {
         
 	}
 	
-	@Scheduled(fixedRate = 30000) // Runs every 24 hours 86400000
+	
     public void scheduledPerformanceDriver() {
         try {
             performaceDriver();
@@ -75,9 +74,5 @@ public class PerformanceTracker {
         }
     }
 	
-	@PostConstruct // Runs immediately after the application starts
-    public void runOnStartup() {
-        System.out.println("Running performance driver on startup...");
-        scheduledPerformanceDriver();
-    }
+	
 }

@@ -1,0 +1,13 @@
+arguments=
+auto.sync=false
+build.scans.enabled=false
+connection.gradle.distribution=GRADLE_DISTRIBUTION(VERSION(8.11.1))
+connection.project.dir=
+eclipse.preferences.version=1
+gradle.user.home=/home/pelatro/Downloads/gradle-4.9-bin/gradle-4.9
+java.home=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=false
+show.console.view=false
+show.executions.view=false

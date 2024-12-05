@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class ProducerImp {
 	
 	private static final int MAX_LOGS_PER_FILE = 5;
-	private static final String LOG_DIR = "EmployeeTimeLogFolder";
+	private static final String LOG_DIR = "/home/pelatro/EmployeeTimeLogFolder";
 	private static final long TIME_LIMIT = 60000L;
 	
 	private int logCount=0;
