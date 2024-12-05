@@ -8,7 +8,7 @@
   width: 5rem;
   height: 85.8vh; /* Adjust height */
   box-shadow: black;
-  color: blue; 
+  /* color: #082567;  */
   overflow: hidden;
   border-radius: 11px;
   margin-left: 8px;
@@ -24,15 +24,16 @@
   display: flex;
   align-items: center;
   padding: 1rem;
+  border: none;
 }
 
 .logo {
-  background: #77a6f7; 
-  color: black;
+  color:#082567 ;
   text-align: center;
   width: 3rem;
   min-width: 3rem;
-  border-radius: 0.3rem;
+  /* border-radius: 0.3rem; */
+  border-color: #73C2FB;
   padding: 0.5rem;
   font-size: 24px;
   cursor: pointer;
@@ -44,6 +45,8 @@
   background: #3066be; 
   color: white;
 }
+
+
 
 .logo-text {
   margin-left: 1rem;
@@ -74,17 +77,18 @@
   align-items: center;
   gap: 1rem;
   height: 3rem;
-  color: #000000; 
+  color: #082567; 
   text-decoration: none;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 800;
   transition: all 0.3s ease;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
 }
 
 .sidenav-nav-link:hover {
-  background-color: #97a9f0; 
+  /* background-color: #76ABDF;  */
+  background-color: #3B5998;
    color: white;  
   transform: translateX(5px); /* Subtle sliding effect */
 }
@@ -95,10 +99,10 @@
 }
 
 .sidenav-nav-link.active {
-  background-color: #3355d1; /* Highlight with the same blue */
+  background-color: #082567; /* Highlight with the same blue */
    /* color: white;  */
   transform: translateX(5px); /* Optional slide effect */
-  color: #97a9f0;
+  color: white;
 }
 
 .sidenav-nav-link.active .sidenav-link-icon {
