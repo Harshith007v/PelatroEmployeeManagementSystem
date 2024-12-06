@@ -21,6 +21,7 @@
   padding: 0;
   position: relative;
   height: 83vh;
+  z-index: 11;
 }
 
 /* Card Deck Styling */

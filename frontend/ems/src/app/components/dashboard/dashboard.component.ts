@@ -14,12 +14,12 @@ export class DashboardComponent implements OnInit {
   testingPerformance: number = 0;
   supportPerformance: number = 0;
   overallPerformance: number = 0;
-  topPerformer: string = '';
-  topPerformanceValue: number = 0;
 
   devEmployees: string[] = [];
   testEmployees: string[] = [];
   supportEmployees: string[] = [];
+  topPerformers: string[] = [];
+  topPerformanceValues: number[] = [];
 
   constructor(private employeeService: EmployeeService, private router: Router) { }
 
@@ -61,18 +61,12 @@ export class DashboardComponent implements OnInit {
   }
 
   updateDepartmentPerformance() {
-    this.developmentPerformance = this.calculateAveragePerformance(
-      this.devEmployees
-    );
-    this.testingPerformance = this.calculateAveragePerformance(
-      this.testEmployees
-    );
-    this.supportPerformance = this.calculateAveragePerformance(
-      this.supportEmployees
-    );
+    this.developmentPerformance = this.calculateAveragePerformance(this.devEmployees);
+    this.testingPerformance = this.calculateAveragePerformance(this.testEmployees);
+    this.supportPerformance = this.calculateAveragePerformance(this.supportEmployees);
 
-    this.topPerformer = this.findTopPerformer();
-    this.topPerformanceValue = this.performanceData[this.topPerformer] || 0;
+    this.topPerformers = this.findTopPerformers();
+    this.topPerformanceValues = this.topPerformers.map((empId) => this.performanceData[empId] || 0);
 
     this.createCharts();
   }
@@ -84,87 +78,177 @@ export class DashboardComponent implements OnInit {
     return employeeArray.length ? totalPerformance / employeeArray.length : 0;
   }
 
-  findTopPerformer(): string {
-    return Object.keys(this.performanceData).reduce((top, empId) => {
-      return this.performanceData[empId] > this.performanceData[top]
-        ? empId
-        : top;
-    }, Object.keys(this.performanceData)[0]);
+  findTopPerformers(): string[] {
+    const sortedEmployees = Object.keys(this.performanceData).sort(
+      (a, b) => this.performanceData[b] - this.performanceData[a]
+    );
+    return sortedEmployees.slice(0, 5); // Get top 5 performers
   }
 
   goToEmployee() {
-    const employeeId = this.topPerformer.replace('PEL', '');
+    const employeeId = this.topPerformers[0].replace('PEL', '');
     this.router.navigate([`/view-employee/${employeeId}`]);
   }
 
   createCharts() {
+    // Department-wise Bar Charts
+
+    // Development Performance Chart
     new Chart('devPerformanceChart', {
-      type: 'pie',
+      type: 'bar',
       data: {
-        labels: ['Completed', 'Remaining'],
+        labels: this.devEmployees,
         datasets: [
           {
-            data: [this.developmentPerformance, 100 - this.developmentPerformance],
-            backgroundColor: ['green', '#C5D3E8'], 
+            label: 'Employee Performance (%)',
+            data: this.devEmployees.map((empId) => this.performanceData[empId]),
+            backgroundColor: '#4CAF50', // Green
           },
         ],
       },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Employee IDs',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Performance (%)',
+            },
+            beginAtZero: true,
+            max: 100,
+          },
+        },
+      },
     });
-  
+
+    // Testing Performance Chart
     new Chart('testPerformanceChart', {
-      type: 'pie',
+      type: 'bar',
       data: {
-        labels: ['Completed', 'Remaining'],
+        labels: this.testEmployees,
         datasets: [
           {
-            data: [this.testingPerformance, 100 - this.testingPerformance],
-            backgroundColor: ['yellow', '#E5E3D4'], // Medium blue and lighter blue
+            label: 'Employee Performance (%)',
+            data: this.testEmployees.map((empId) => this.performanceData[empId]),
+            backgroundColor: '#FFC107', // Yellow
           },
         ],
       },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Employee IDs',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Performance (%)',
+            },
+            beginAtZero: true,
+            max: 100,
+          },
+        },
+      },
     });
-  
+
+    // Support Performance Chart
     new Chart('supportPerformanceChart', {
-      type: 'pie',
+      type: 'bar',
       data: {
-        labels: ['Completed', 'Remaining'],
+        labels: this.supportEmployees,
         datasets: [
           {
-            data: [this.supportPerformance, 100 - this.supportPerformance],
-            backgroundColor: ['#DFD7F9', '#F8F4EC'], // Darker blue and medium-light blue
+            label: 'Employee Performance (%)',
+            data: this.supportEmployees.map((empId) => this.performanceData[empId]),
+            backgroundColor: '#03A9F4', // Blue
           },
         ],
       },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Employee IDs',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Performance (%)',
+            },
+            beginAtZero: true,
+            max: 100,
+          },
+        },
+      },
     });
-  
-    new Chart('topPerformerChart', {
-      type: 'pie',
+
+    // Top 5 Performers Bar Chart
+    new Chart('topPerformersChart', {
+      type: 'line',  // Change this to 'line' for a line chart
       data: {
-        labels: [this.topPerformer, 'Others'],
+        labels: Object.keys(this.performanceData), // All employees
         datasets: [
           {
-            data: [this.topPerformanceValue, 100 - this.topPerformanceValue],
-            backgroundColor: ['#D63484', '#C5D3E8'], // Deep blue and soft blue
+            label: 'Employee Performance (%)',
+            data: Object.keys(this.performanceData).map((empId) => this.performanceData[empId]),  // All performance data
+            borderColor: '#673AB7', // Purple for the line color
+            fill: false,  // No fill under the line
+            tension: 0.1, // Smooth curve for the line
+            pointBackgroundColor: '#673AB7', // Color for the points on the line
+            pointRadius: 5,  // Size of the points
           },
         ],
       },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Employee IDs',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Performance (%)',
+            },
+            beginAtZero: true,
+            max: 100,
+          },
+        },
+      },
     });
-  
+
+
+    // Overall Performance Chart
     new Chart('overallPerformanceChart', {
       type: 'bar',
       data: {
-        labels: [...Object.keys(this.performanceData), 'Overall Performance'], // Employee IDs + Overall Performance label
+        labels: [...Object.keys(this.performanceData), 'Overall Performance'],
         datasets: [
           {
-            label: 'Employee Performance',
+            label: 'Performance (%)',
             data: [
               ...Object.keys(this.performanceData).map((empId) => this.performanceData[empId]),
-              this.overallPerformance, // Overall performance for last bar
+              this.overallPerformance,
             ],
             backgroundColor: [
-
-                '#4FFFB0', 
-                 '#DFD7F9','#00A9FF', '#FF2929','#EFB6C8', '#A0E9FF', '#CDF5FD', '#37AFE1', '#4CC9FE', '#008DDA', '#41C9E2', // Shades of blue
+              ...Object.keys(this.performanceData).map(() => '#4CAF50'), // Green for individual employees
+              '#FFC107', // Yellow for overall performance
             ],
           },
         ],
@@ -175,7 +259,7 @@ export class DashboardComponent implements OnInit {
           x: {
             title: {
               display: true,
-              text: 'Employee ID / Overall',
+              text: 'Employee ID / Overall Performance',
             },
           },
           y: {
@@ -190,5 +274,4 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
-  
 }

@@ -68,13 +68,12 @@
       .bottom-section {
         padding: 20px;
         flex-grow: 1;
-        background-color:fff;
+        background-color: fff;
         border-radius: 0.5rem;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         display: flex;
         align-items: center;
         justify-content: center;
-        
       }
 
       canvas {
@@ -107,10 +106,10 @@
             <canvas id="supportPerformanceChart"></canvas>
           </div>
         </div>
-        <div class="box" (click)="goToEmployee()">
-          <p>Top Performer</p>
+        <div class="box">
+          <p>Top 5 Performers</p>
           <div class="chart-container">
-            <canvas id="topPerformerChart"></canvas>
+            <canvas id="topPerformersChart"></canvas>
           </div>
         </div>
       </div>
