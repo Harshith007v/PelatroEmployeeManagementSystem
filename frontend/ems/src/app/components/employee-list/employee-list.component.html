@@ -1,107 +1,126 @@
 <div class="custom-container">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2
-      class="page-title font-weight-bold"
-      style="color: #b85042; font-size: 2rem; margin-bottom: 0"
-    >
-      Employee List
-    </h2>
-    <div class="search">
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+    <h2 class="page-title">Employee List</h2>
+    <div class="search-container d-flex align-items-center gap-2">
       <input
         type="text"
         name="search"
         [(ngModel)]="searchText"
-        placeholder="Search by first name, last name, or email"
-        class="form-control rounded-pill shadow-sm"
-        style="
-          margin-right: 8rem;
-          width: 320px;
-          height: 40px;
-          border: 1px solid #ced4da;
-          font-size: 1rem;
-        "
+        placeholder="Search Employee"
+        class="form-control search-input"
         (input)="onSearch()"
+        aria-label="Search Employee"
       />
+      <button
+        class="btn btn-success add-employee-btn"
+        (click)="addEmployee()"
+        aria-label="Add Employee"
+      >
+        Add Employee
+      </button>
     </div>
   </div>
 
-  <!-- Container for employee list and pagination -->
+  <!-- Add Employee Modal -->
+  <div
+    *ngIf="isAddEmployeeModalVisible"
+    class="modal-overlay"
+    (click)="closeModal()"
+    aria-labelledby="modalTitle"
+  >
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title">New Employee</h3>
+        <button
+          type="button"
+          class="btn-close close-btn"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          X
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <app-add-employee (closeModal)="closeModal()"></app-add-employee>
+      </div>
+    </div>
+  </div>
+
+  <!-- Employee List Section -->
   <div class="employee-list-container">
-    <div class="row">
+    <div class="row g-3">
       <div
         *ngFor="let employee of paginatedEmployees"
-        class="col-lg-3 col-md-4 col-sm-6 mb-4"
+        class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
       >
-        <div class="card small-card">
-          <div style="text-align: center; margin-top: 10px">
+        <div
+          class="card small-card clickable-card h-100"
+          (click)="viewEmployee(employee.id)"
+        >
+          <div class="profile-picture">
             <img
               [src]="employee.profilePictureUrl"
-              alt="Profile Picture"
-              class="rounded-circle"
-              style="
-                width: 100px;
-                height: 100px;
-                object-fit: cover;
-                border: 2px solid #2c3e50;
-              "
+              alt="{{ employee.firstName }} {{
+                employee.lastName
+              }}'s Profile Picture"
             />
           </div>
           <div class="card-body">
-            <h5 class="card-title" style="text-align: center">
-              PEL{{ employee.id }}
+            <h5 class="card-title text-center">
+              {{ employee.firstName }} {{ employee.lastName }}
             </h5>
-            <p class="card-text">
-              <strong>Name:</strong> {{ employee.firstName }}
-              {{ employee.lastName }}
-            </p>
+            <p class="card-text-id text-center">PEL{{ employee.id }}</p>
             <p class="card-text">
               <strong>Email:</strong> {{ employee.emailId }}
+            </p>
+            <p class="card-text">
+              <strong>Phone:</strong> {{ employee.phone }}
             </p>
             <p class="card-text">
               <strong>Department:</strong>
               {{ employee.department.departmentName }}
             </p>
           </div>
-          <div class="card-footer">
-            <button (click)="updateEmployee(employee.id)" class="btn btn-info">
+          <div class="card-footer d-flex justify-content-between">
+            <button
+              (click)="updateEmployee(employee.id); $event.stopPropagation()"
+              class="btn btn-info btn-sm"
+            >
               Update
             </button>
             <button
-              (click)="deleteEmployee(employee.id)"
-              class="btn btn-danger"
-              style="margin-left: 10px"
+              (click)="deleteEmployee(employee.id); $event.stopPropagation()"
+              class="btn btn-danger btn-sm"
             >
               Delete
-            </button>
-            <button
-              (click)="viewEmployee(employee.id)"
-              class="btn btn-primary"
-              style="margin-left: 10px"
-            >
-              View
             </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Pagination Buttons (Fixed at left and right) -->
-</div>
 
-<div class="pagination-buttons">
-  <button
-    class="btn btn-secondary"
-    (click)="prevPage()"
-    [disabled]="currentPage === 1"
-  >
-    &lt;
-  </button>
-  <button
-    class="btn btn-secondary"
-    (click)="nextPage()"
-    [disabled]="currentPage * itemsPerPage >= filteredEmployees.length"
-    style="margin-right: 100px"
-  >
-    &gt;
-  </button>
+    <!-- Pagination Buttons -->
+    <div class="pagination-buttons d-flex justify-content-center mt-3">
+      <button
+        class="btn btn-secondary me-2"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+        aria-label="Previous Page"
+      >
+        &lt;
+      </button>
+      <button
+        class="btn btn-secondary"
+        (click)="nextPage()"
+        [disabled]="currentPage * itemsPerPage >= filteredEmployees.length"
+        aria-label="Next Page"
+      >
+        &gt;
+      </button>
+    </div>
+  </div>
 </div>

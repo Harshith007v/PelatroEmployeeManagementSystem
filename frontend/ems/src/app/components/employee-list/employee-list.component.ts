@@ -7,15 +7,16 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.css'],
+  styleUrls: ['./employee-list.component.scss'],
 })
 export class EmployeeListComponent implements OnInit {
-  employees: Employee[] = [];
-  filteredEmployees: Employee[] = [];
-  paginatedEmployees: Employee[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 8;
-  searchText: string = '';
+  isAddEmployeeModalVisible = false; // Controls modal visibility
+  employees: Employee[] = []; // Original list of employees
+  filteredEmployees: Employee[] = []; // Filtered employees for search
+  paginatedEmployees: Employee[] = []; // Employees to display in the current page
+  currentPage: number = 1; // Tracks current page for pagination
+  itemsPerPage: number = 8; // Employees per page
+  searchText: string = ''; // Search query
 
   constructor(
     private employeeService: EmployeeService,
@@ -23,30 +24,21 @@ export class EmployeeListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getEmployees();
+    this.getEmployees(); // Fetch employee data on component initialization
   }
 
+  /** Fetch all employees and populate lists */
   getEmployees(): void {
     this.employeeService.getEmployeeList().subscribe(
       (data) => {
-        this.employees = data.map((employee) => {
-          const profilePictureUrl = employee.profilePicturePath
+        this.employees = data.map((employee) => ({
+          ...employee,
+          profilePictureUrl: employee.profilePicturePath
             ? `http://localhost:8080/api/photos?profilePicturePath=${encodeURIComponent(
                 employee.profilePicturePath
               )}`
-            : '/assets/images/default_profile.jpg'; // Default profile picture if not provided
-
-          console.log(
-            `Profile Picture URL for ${
-              employee.firstName || 'Employee'
-            }: ${profilePictureUrl}`
-          );
-
-          return {
-            ...employee,
-            profilePictureUrl,
-          };
-        });
+            : '/assets/images/default_profile.jpg',
+        }));
 
         this.filteredEmployees = [...this.employees];
         this.updatePaginatedEmployees();
@@ -57,25 +49,24 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
+  /** Handles search input */
   onSearch(): void {
-    if (this.searchText.trim() === '') {
-      this.filteredEmployees = [...this.employees];
-    } else {
-      this.filteredEmployees = this.employees.filter(
-        (employee) =>
-          employee.firstName
-            .toLowerCase()
-            .includes(this.searchText.toLowerCase()) ||
-          employee.lastName
-            .toLowerCase()
-            .includes(this.searchText.toLowerCase()) ||
-          employee.emailId.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    }
-    this.currentPage = 1; // Reset to first page when search is updated
+    const query = this.searchText.trim().toLowerCase();
+
+    this.filteredEmployees = query
+      ? this.employees.filter(
+          (employee) =>
+            employee.firstName.toLowerCase().includes(query) ||
+            employee.lastName.toLowerCase().includes(query) ||
+            employee.emailId.toLowerCase().includes(query)
+        )
+      : [...this.employees];
+
+    this.currentPage = 1; // Reset to the first page after search
     this.updatePaginatedEmployees();
   }
 
+  /** Updates the list of employees for the current page */
   updatePaginatedEmployees(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -85,6 +76,7 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
+  /** Navigates to the next page */
   nextPage(): void {
     if (this.currentPage * this.itemsPerPage < this.filteredEmployees.length) {
       this.currentPage++;
@@ -92,6 +84,7 @@ export class EmployeeListComponent implements OnInit {
     }
   }
 
+  /** Navigates to the previous page */
   prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -99,15 +92,28 @@ export class EmployeeListComponent implements OnInit {
     }
   }
 
-  viewEmployee(id: number) {
+  /** Opens the "Add Employee" modal */
+  addEmployee(): void {
+    this.isAddEmployeeModalVisible = true;
+  }
+
+  /** Closes the modal */
+  closeModal(): void {
+    this.isAddEmployeeModalVisible = false;
+  }
+
+  /** Navigates to view employee details */
+  viewEmployee(id: number): void {
     this.router.navigate(['view-employee', id]);
   }
 
-  updateEmployee(id: number) {
+  /** Navigates to the update employee page */
+  updateEmployee(id: number): void {
     this.router.navigate(['update-employees', id]);
   }
 
-  deleteEmployee(id: number) {
+  /** Deletes an employee with confirmation */
+  deleteEmployee(id: number): void {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -118,15 +124,20 @@ export class EmployeeListComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.employeeService.deleteEmployee(id).subscribe((data) => {
-          console.log(data);
-          this.getEmployees();
-        });
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'Employee has been successfully deleted.',
-          icon: 'success',
-        });
+        this.employeeService.deleteEmployee(id).subscribe(
+          () => {
+            Swal.fire(
+              'Deleted!',
+              'Employee has been successfully deleted.',
+              'success'
+            );
+            this.getEmployees(); // Refresh the employee list
+          },
+          (error) => {
+            console.error('Error deleting employee:', error);
+            Swal.fire('Error', 'Unable to delete the employee.', 'error');
+          }
+        );
       }
     });
   }

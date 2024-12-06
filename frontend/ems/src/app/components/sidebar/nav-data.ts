@@ -10,12 +10,6 @@ export const navBarData = [
     label: 'Employees',
   },
   {
-    routeLink: '/test',
-    icon: 'fa-solid fa-user',
-    label: 'Add employees',
-    color: '#3498db',
-  },
-  {
     routeLink: '/daily-time-log',
     icon: 'fa-solid fa-hourglass-start',
     label: 'Time Log',
