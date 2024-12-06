@@ -5,7 +5,9 @@
       class="btn-close close-btn"
       aria-label="Close"
       (click)="closeForm()"
-    >X</button>
+    >
+      X
+    </button>
     <h2>New Employee</h2>
     <form (ngSubmit)="onSubmit()">
       <div class="row">
@@ -74,7 +76,7 @@
                   type="email"
                   class="form-control"
                   id="email"
-                  [(ngModel)]="employee.email"
+                  [(ngModel)]="employee.emailId"
                   name="email"
                 />
               </div>
@@ -94,13 +96,24 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="department">Department</label>
-                <input
+                <select
+                  class="form-control"
+                  id="department"
+                  [(ngModel)]="employee.department"
+                  name="department"
+                  required
+                >
+                  <option *ngFor="let dept of departments" [ngValue]="dept">
+                    {{ dept.departmentName }}
+                  </option>
+                </select>
+                <!-- <input
                   type="text"
                   class="form-control"
                   id="department"
                   [(ngModel)]="employee.department"
                   name="department"
-                />
+                /> -->
               </div>
             </div>
             <div class="col-md-6">

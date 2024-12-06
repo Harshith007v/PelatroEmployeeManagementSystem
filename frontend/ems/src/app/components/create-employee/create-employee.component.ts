@@ -18,7 +18,7 @@ export class CreateEmployeeComponent implements OnInit {
     private employeeService: EmployeeService,
     private departmentService: DepartmentServiceService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getDepartments();

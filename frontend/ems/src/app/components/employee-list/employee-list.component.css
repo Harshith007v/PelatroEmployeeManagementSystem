@@ -1,5 +1,5 @@
 /* Page Container Styling */
-.page-title{
+.page-title {
   text-align: center;
   margin-top: 20px;
   margin-left: 12px;
@@ -9,7 +9,7 @@
   margin: 0 auto;
   width: 100vw;
   padding: 20px;
-  background: #A7BEAE; /* Match Navbar Background */
+  background: #a7beae; /* Match Navbar Background */
   border-radius: 8px;
   color: #f4f4f4; /* Text Color */
 }
@@ -38,7 +38,7 @@
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: #E7E8D1; /* Greyish-Black Gradient */
+  background: #e7e8d1; /* Greyish-Black Gradient */
   color: #f4f4f4;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
@@ -52,7 +52,7 @@
 .card-img-top {
   height: 200px;
   object-fit: cover;
-  border-bottom: 1px solid #B85042; /* Orangish Separator */
+  border-bottom: 1px solid #b85042; /* Orangish Separator */
 }
 
 /* Card Body Styling */
@@ -61,25 +61,25 @@
 }
 
 .card-title {
-  color: #3E4A47; /* Dark grayish-green for header and name */
+  color: #3e4a47; /* Dark grayish-green for header and name */
   font-size: 1.2rem;
   font-weight: bold;
 }
 .card-text {
-    color: #B85042; /* Reddish-brown for email and department */
-    font-size: 1rem;
+  color: #b85042; /* Reddish-brown for email and department */
+  font-size: 1rem;
   margin-bottom: 10px;
 }
 
 .card-text strong {
-  color: #B85042; /* Orangish Strong Text */
+  color: #b85042; /* Orangish Strong Text */
 }
 
 /* Card Footer Styling */
 .card-footer {
   padding: 15px 20px;
-  background-color: #E7E8D1; /* Match Card Background */
-  border-top: 1px solid #B85042; /* Orangish Border */
+  background-color: #e7e8d1; /* Match Card Background */
+  border-top: 1px solid #b85042; /* Orangish Border */
   text-align: center;
 }
 
@@ -91,7 +91,7 @@
 
 /* Buttons */
 .card-footer .btn-info {
-  background-color: #B85042; /* Orangish Button */
+  background-color: #b85042; /* Orangish Button */
   color: white; /* Greyish-Black Text */
   width: 80px;
 }
@@ -115,7 +115,6 @@
   color: #ffffff;
   width: 80px;
   margin-top: 10px;
-
 }
 
 .card-footer .btn-primary:hover {
@@ -152,15 +151,12 @@
   font-size: 16px;
 }
 
-
-.searchBar{
+.searchBar {
   display: flex;
-  
 }
 
-.form-control{
- 
-    margin-top: 20px;
+.form-control {
+  margin-top: 20px;
 }
 
 /* Mobile Responsiveness */
@@ -175,7 +171,6 @@
     margin-bottom: 20px;
   }
 }
-
 
 /* Employee list container */
 .employee-list-container {
@@ -195,7 +190,7 @@
   display: flex;
   justify-content: flex-start;
   padding: 0 10px;
-  z-index: 9999;
+  z-index: 10;
   margin-left: 20px;
 }
 
@@ -214,9 +209,8 @@
   cursor: not-allowed;
 }
 
-
-.search{
+.search {
   position: absolute;
-  top:0.2rem;
+  top: 0.2rem;
   left: 74rem;
 }

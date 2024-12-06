@@ -1,13 +1,22 @@
-arguments=
+arguments=--init-script /home/pelatro/.config/Code/User/globalStorage/redhat.java/1.37.0/config_linux/org.eclipse.osgi/58/0/.cp/gradle/init/init.gradle --init-script /home/pelatro/.config/Code/User/globalStorage/redhat.java/1.37.0/config_linux/org.eclipse.osgi/58/0/.cp/gradle/protobuf/init.gradle
 auto.sync=false
 build.scans.enabled=false
 connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
 connection.project.dir=
 eclipse.preferences.version=1
 gradle.user.home=
+<<<<<<< HEAD
 java.home=
 jvm.arguments=
 offline.mode=false
 override.workspace.settings=false
 show.console.view=false
 show.executions.view=false
+=======
+java.home=/usr/lib/jvm/java-21-openjdk-amd64
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=true
+show.console.view=true
+show.executions.view=true
+>>>>>>> 7a9ed7a3de04657ee2c35f481c3b2ef3348ad9df

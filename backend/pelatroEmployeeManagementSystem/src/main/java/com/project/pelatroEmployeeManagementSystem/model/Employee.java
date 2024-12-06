@@ -13,11 +13,9 @@ import jakarta.persistence.Table;
 @Table(name = "employees")
 public class Employee {
 
-    @Override
-	public String toString() {
-		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
-				+ ", role=" + role + ", profilePicturePath=" + profilePicturePath + ", department=" + department + "]";
-	}
+    
+
+	
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +33,48 @@ public class Employee {
     @Column(name="role", nullable = false) 
     private String role;
     
-    @Column(name="profile_picture_path")
+    @Column(name="phone", nullable = false)
+    private String phone;
+    
+    @Column(name="joining_date", nullable = false)
+    private String joiningDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
+    
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean isActive = true;
+    
+    
+    public Employee() {
+    	
+    }	
+	public Employee(Long id, String firstName, String lastName, String emailId, String role, String phone,
+			String joiningDate, String profilePicturePath, Department department, boolean isActive) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.emailId = emailId;
+		this.role = role;
+		this.phone = phone;
+		this.joiningDate = joiningDate;
+		this.profilePicturePath = profilePicturePath;
+		this.department = department;
+		this.isActive = isActive;
+	}
+    
+    public String getJoiningDate() {
+		return joiningDate;
+	}
+
+
+	public void setJoiningDate(String joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+
+	@Column(name="profile_picture_path")
     private String profilePicturePath;
 
     public String getProfilePicturePath() {
@@ -47,27 +86,13 @@ public class Employee {
 		this.profilePicturePath = profilePicturePath;
 	}
 
-	@ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
-    private Department department;
-    
-    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean isActive = true;
-    
-    public Employee() {
-    	
-    }
 
-	
-	public Employee( String firstName, String lastName, String emailId, String role, Department department ) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
-		this.role = role;
-		this.department = department;
+	public String getPhone() {
+		return phone;
 	}
-	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public boolean isActive() {
         return isActive;
     }
@@ -135,6 +160,11 @@ public class Employee {
 		this.department = department;
 	}
 	
-    
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
+				+ ", role=" + role + ", phone=" + phone + ", joiningDate=" + joiningDate + ", profilePicturePath="
+				+ profilePicturePath + ", department=" + department + ", isActive=" + isActive + "]";
+	}
 
 }

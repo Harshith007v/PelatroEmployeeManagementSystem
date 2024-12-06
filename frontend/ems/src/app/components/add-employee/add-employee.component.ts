@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Employee } from 'src/app/employee';
+import { DepartmentServiceService } from 'src/app/services/department-service.service';
+import { EmployeeService } from 'src/app/services/employee.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-employee',
@@ -6,32 +11,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-employee.component.scss'],
 })
 export class AddEmployeeComponent implements OnInit {
-closeForm() {
-throw new Error('Method not implemented.');
-}
+  departments: any[] = [];
+  employee: Employee = new Employee();
+
+  closeForm() {
+    throw new Error('Method not implemented.');
+  }
   onUploadImage() {
     throw new Error('Method not implemented.');
   }
   clearFields() {
     throw new Error('Method not implemented.');
   }
-  // Model to bind the form fields
-  employee = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    role: '',
-    department: '',
-    phone: '',
-    joiningDate: '',
-  };
-
   // For image preview
   imageSrc: string | ArrayBuffer | null = '/assets/images/default_profile.jpg';
 
-  constructor() {}
+  constructor(
+    private employeeService: EmployeeService,
+    private departmentService: DepartmentServiceService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getDepartments();
+  }
+
+  getDepartments() {
+    this.departmentService.getDepartments().subscribe(
+      (data) => {
+        this.departments = data;
+      },
+      (error) => {
+        console.error('There was an error!', error);
+      }
+    );
+  }
 
   // Handle file input and display preview
   onFileSelect(event: any) {
@@ -41,10 +55,100 @@ throw new Error('Method not implemented.');
       this.imageSrc = e.target.result;
     };
     reader.readAsDataURL(file);
+    if (file) {
+      this.employee.profilePicture = file; // Assign the file to the employee object
+    }
   }
 
   // Handle form submission (e.g., save employee data)
   onSubmit() {
-    console.log(this.employee); // You can replace this with actual submission logic
+    console.log(this.employee);
+
+    // Check if all required fields are filled
+    if (
+      !this.employee.firstName ||
+      !this.employee.lastName ||
+      !this.employee.emailId ||
+      !this.employee.role ||
+      !this.employee.department ||
+      !this.employee.joiningDate ||
+      !this.employee.phone
+    ) {
+      this.showValidationError();
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('firstName', this.employee.firstName);
+    formData.append('lastName', this.employee.lastName);
+    formData.append('emailId', this.employee.emailId);
+    formData.append('joiningDate', this.employee.joiningDate);
+    formData.append('phone', this.employee.phone);
+    formData.append('role', this.employee.role);
+    formData.append('departmentId', this.employee.department.id.toString()),
+      formData.append(
+        'departmentName',
+        this.employee.department.departmentName
+      ); // Assuming department is an object
+    if (this.employee.profilePicture) {
+      formData.append('profilePicture', this.employee.profilePicture); // Append the image file
+    }
+
+    this.employeeService.createEmployee(formData).subscribe(
+      (data) => {
+        console.log(data);
+        this.router.navigate(['/employees']);
+      },
+      (error) => {
+        console.error('There was an error!', error);
+        this.showValidationError();
+      }
+    );
+  }
+  showValidationError() {
+    if (!this.employee.firstName) {
+      const firstNameField = document.getElementById(
+        'firstName'
+      ) as HTMLInputElement;
+      firstNameField.placeholder = 'First Name is required';
+      firstNameField.classList.add('is-invalid');
+    }
+
+    if (!this.employee.lastName) {
+      const lastNameField = document.getElementById(
+        'lastName'
+      ) as HTMLInputElement;
+      lastNameField.placeholder = 'Last Name is required';
+      lastNameField.classList.add('is-invalid');
+    }
+
+    if (!this.employee.emailId) {
+      const emailIdField = document.getElementById(
+        'emailId'
+      ) as HTMLInputElement;
+      emailIdField.placeholder = 'Email Id is required';
+      emailIdField.classList.add('is-invalid');
+    }
+
+    if (!this.employee.role) {
+      const roleField = document.getElementById('role') as HTMLInputElement;
+      roleField.placeholder = 'Role is required';
+      roleField.classList.add('is-invalid');
+    }
+
+    if (!this.employee.department) {
+      const departmentField = document.getElementById(
+        'department'
+      ) as HTMLSelectElement;
+      departmentField.classList.add('is-invalid');
+    }
+
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please fill all the fields',
+      showConfirmButton: false,
+      timer: 1500,
+    });
   }
 }
