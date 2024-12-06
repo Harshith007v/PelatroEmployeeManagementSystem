@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 export class DailyTimeLogComponent implements OnInit {
   date: string; // Date for the time log
   timeLogs: any[] = []; // Holds rows for time log entries
-  //validTimeLogs: any[] = [];
   totalHoursWorked: number = 0; // Total hours worked
   showDropdown: boolean = false; // Controls the visibility of the dropdown
 
@@ -20,6 +19,35 @@ export class DailyTimeLogComponent implements OnInit {
   employees: Employee[] = []; // List of all employees
   filteredEmployees: Employee[] = []; // Filtered list for search results
   selectedEmployee: Employee | null = null; // Selected employee
+
+  // Task data based on projects
+  tasks = {
+    'mviva-server': ['Server Task 1', 'Server Task 2', 'Server Task 3', 'Server Task 4'],
+    'mviva-client': ['Client Task 1', 'Client Task 2', 'Client Task 3', 'Client Task 4'],
+    'mviva-hadoop': ['Hadoop Task 1', 'Hadoop Task 2', 'Hadoop Task 3', 'Hadoop Task 4'],
+  };
+
+  // Points mapping for each task
+  taskPoints = {
+    'mviva-server': {
+      'Server Task 1': 2.5,
+      'Server Task 2': 5,
+      'Server Task 3': 7.5,
+      'Server Task 4': 10
+    },
+    'mviva-client': {
+      'Client Task 1': 2.5,
+      'Client Task 2': 5,
+      'Client Task 3': 7.5,
+      'Client Task 4': 10
+    },
+    'mviva-hadoop': {
+      'Hadoop Task 1': 2.5,
+      'Hadoop Task 2': 5,
+      'Hadoop Task 3': 7.5,
+      'Hadoop Task 4': 10
+    },
+  };
 
   constructor(
     private router: Router,
@@ -35,7 +63,6 @@ export class DailyTimeLogComponent implements OnInit {
     this.date = today.toISOString().split('T')[0];
   }
 
-  // Fetch employees from the service
   private getEmployees() {
     this.employeeService.getEmployeeList().subscribe((data) => {
       this.employees = data;
@@ -96,31 +123,9 @@ export class DailyTimeLogComponent implements OnInit {
   // Initialize the time log rows
   initializeTimeLogs() {
     this.timeLogs = [
-      { startTime: '', endTime: '', project: '', totalHours: 0, points: 0 },
+      { startTime: '', endTime: '', project: '', task: '', totalHours: 0, points: 0 },
     ];
     this.calculateTotalHoursWorked(); // Update total hours
-  }
-
-  // Add a new time log row
-  addRow() {
-    if (!this.selectedEmployee) {
-      Swal.fire({
-        position: 'center',
-        icon: 'warning',
-        title: 'Please select an employee before adding working hours.',
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
-
-    this.timeLogs.push({
-      startTime: '',
-      endTime: '',
-      project: '',
-      totalHours: 0,
-      points: 0,
-    });
   }
 
   // Calculate hours worked for a specific row
@@ -144,21 +149,59 @@ export class DailyTimeLogComponent implements OnInit {
         return;
       }
 
-      const diffInMillis = endTime.getTime() - startTime.getTime();
-      row.totalHours = parseFloat((diffInMillis / (1000 * 60 * 60)).toFixed(2)); // Convert ms to hours
-    } else {
-      row.totalHours = 0;
+      const timeDiff = (endTime.getTime() - startTime.getTime()) / 1000 / 60 / 60;
+      row.totalHours = parseFloat(timeDiff.toFixed(2));
+
+      // Assign points based on project and task
+      if (row.project && row.task) {
+        row.points = this.getTaskPoints(row.project, row.task);
+      }
     }
-    this.calculateTotalHoursWorked();
+
+    this.calculateTotalHoursWorked(); // Update total hours worked
   }
 
   // Calculate total hours worked across all rows
   calculateTotalHoursWorked() {
     this.totalHoursWorked = this.timeLogs.reduce(
-      (sum, row) => sum + (row.totalHours || 0),
+      (acc, row) => acc + (row.totalHours || 0),
       0
     );
   }
+
+  // Get points based on task selection
+  getTaskPoints(project: string, task: string): number {
+    if (this.taskPoints[project] && this.taskPoints[project][task] !== undefined) {
+      return this.taskPoints[project][task];
+    }
+    return 0; // Default to 0 if no points are found for the task
+  }
+
+
+  // Handle form submission
+  // submitForm() {
+  //   if (!this.selectedEmployee) {
+  //     Swal.fire({
+  //       position: 'center',
+  //       icon: 'error',
+  //       title: 'Please select an employee.',
+  //       showConfirmButton: false,
+  //       timer: 1500,
+  //     });
+  //     return;
+  //   }
+
+
+
+  //   // Example: Handle submission logic here
+  //   Swal.fire({
+  //     position: 'center',
+  //     icon: 'success',
+  //     title: 'Form Submitted Successfully!',
+  //     showConfirmButton: false,
+  //     timer: 1500,
+  //   });
+  // }
 
   submitForm() {
     if (!this.selectedEmployee) {
@@ -193,7 +236,7 @@ export class DailyTimeLogComponent implements OnInit {
       return;
     }
 
-    const timeLogString = `emp_id:"PEL${this.selectedEmployee.id}",start_time:"${this.timeLogs[0].startTime}",end_time:"${this.timeLogs[0].endTime}",total_hours:"${this.timeLogs[0].totalHours}",project_name:"${this.timeLogs[0].project}",points:"${this.timeLogs[0].points}"`;
+    const timeLogString = `emp_id: "PEL${this.selectedEmployee.id}", start_time: "${this.timeLogs[0].startTime}", end_time: "${this.timeLogs[0].endTime}", total_hours: "${this.timeLogs[0].totalHours}", project_name: "${this.timeLogs[0].project}", points: "${this.timeLogs[0].points}"`;
 
     console.log('Form submitted with data:', timeLogString);
 
@@ -235,8 +278,32 @@ export class DailyTimeLogComponent implements OnInit {
     this.date = new Date().toISOString().split('T')[0]; // Reset to current date
   }
 
-  // Navigate back to the dashboard
+
+  // Go back to the dashboard
   goBackToDashboard() {
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['/dashboard']);
   }
+
+  // Update task options based on selected project
+  onProjectChange(index: number) {
+    const project = this.timeLogs[index].project;
+    this.timeLogs[index].task = ''; // Reset task when project changes
+    // Automatically calculate points when the project is changed and task is selected
+    if (project && this.timeLogs[index].task && this.timeLogs[index].totalHours) {
+      this.timeLogs[index].points = this.getTaskPoints(project, this.timeLogs[index].task);
+    }
+  }
+
+  // Update points when task is selected
+  onTaskChange(index: number) {
+    const row = this.timeLogs[index];
+    if (row.project && row.task) {
+      row.points = this.getTaskPoints(row.project, row.task);
+    }
+  }
+
+
+
 }
+
+

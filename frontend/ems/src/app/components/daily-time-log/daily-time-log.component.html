@@ -18,6 +18,7 @@
       <label for="searchInput" class="search-label">Select Employee</label>
       <div class="search-input-container">
         <input
+          autocomplete="off"
           id="searchInput"
           type="text"
           [(ngModel)]="searchText"
@@ -40,8 +41,7 @@
             >
               PEL{{ employee.id }} - {{ employee.firstName }}
               {{ employee.lastName }} {{ employee.role }}
-              {{ employee.department.departmentName }}
-              {{ employee.email }}
+              {{ employee.department.departmentName }} {{ employee.email }}
             </li>
           </ul>
         </div>
@@ -71,6 +71,7 @@
           <th>Start Time</th>
           <th>End Time</th>
           <th>Project</th>
+          <th>Task</th>
           <th>Points</th>
           <th>Total Hours</th>
         </tr>
@@ -107,6 +108,7 @@
               name="project-{{ i }}"
               class="form-control"
               [disabled]="!selectedEmployee"
+              (change)="onProjectChange(i)"
               required
             >
               <option value="" disabled>Select Project</option>
@@ -116,12 +118,27 @@
             </select>
           </td>
           <td>
+            <select
+              [(ngModel)]="row.task"
+              name="task-{{ i }}"
+              class="form-control"
+              [disabled]="!row.project"
+              (change)="onTaskChange(i)"
+              required
+            >
+              <option value="" disabled>Select Task</option>
+              <option *ngFor="let task of tasks[row.project]" [value]="task">
+                {{ task }}
+              </option>
+            </select>
+          </td>
+          <td style="width: 10vw">
             <input
               type="number"
               [(ngModel)]="row.points"
               name="points-{{ i }}"
               class="form-control"
-              [disabled]="!selectedEmployee"
+              [disabled]="true"
               min="0"
               placeholder="Enter points"
             />
