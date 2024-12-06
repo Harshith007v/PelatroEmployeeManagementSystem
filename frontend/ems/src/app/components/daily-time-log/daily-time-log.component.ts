@@ -24,7 +24,7 @@ export class DailyTimeLogComponent implements OnInit {
   constructor(
     private router: Router,
     private employeeService: EmployeeService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initializeTimeLogs();
