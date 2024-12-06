@@ -103,10 +103,10 @@
       </div>
     </div>
 
-    <!-- Pagination Buttons -->
+    Pagination Buttons
     <div class="pagination-buttons d-flex justify-content-center mt-3">
       <button
-        class="btn btn-secondary me-2"
+        class="btn btn-secondary me-2 pagination-left"
         (click)="prevPage()"
         [disabled]="currentPage === 1"
         aria-label="Previous Page"
@@ -114,7 +114,7 @@
         &lt;
       </button>
       <button
-        class="btn btn-secondary"
+        class="btn btn-secondary pagination-right"
         (click)="nextPage()"
         [disabled]="currentPage * itemsPerPage >= filteredEmployees.length"
         aria-label="Next Page"

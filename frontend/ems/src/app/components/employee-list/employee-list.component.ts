@@ -15,7 +15,7 @@ export class EmployeeListComponent implements OnInit {
   filteredEmployees: Employee[] = []; // Filtered employees for search
   paginatedEmployees: Employee[] = []; // Employees to display in the current page
   currentPage: number = 1; // Tracks current page for pagination
-  itemsPerPage: number = 8; // Employees per page
+  itemsPerPage: number = 6; // Employees per page
   searchText: string = ''; // Search query
 
   constructor(

@@ -58,6 +58,9 @@
       overflow: hidden;
       transition: transform 0.2s, box-shadow 0.2s;
       height: 100%; /* Uniform card height */
+      width: 100%; /* Ensures all cards take the width of their column */
+      max-width: 250px; /* Sets a maximum width for all cards */
+      margin: 0 auto;
 
       &.clickable-card {
         cursor: pointer;
@@ -113,6 +116,20 @@
           margin-left: 10px;
         }
       }
+    }
+    .pagination-left {
+      position: absolute;
+      top: 50%; /* Vertically center-align */
+      left: -60px; /* Adjust position to the left of the cards */
+      transform: translateY(-50%);
+    }
+  
+    /* Right Pagination Button */
+    .pagination-right {
+      position: absolute;
+      top: 50%; /* Vertically center-align */
+      right: -60px; /* Adjust position to the right of the cards */
+      transform: translateY(-50%);
     }
   }
 
