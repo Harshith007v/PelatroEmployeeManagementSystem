@@ -10,6 +10,15 @@ body{
     position: relative;
 }
 
+body {
+
+  background-image: url("file:///home/pelatro/Downloads/DALL·E%202024-12-06%2014.41.03%20-%20A%20visually%20appealing%20abstract%20background%20featuring%20two%20primary%20color%20palettes_%20one%20inspired%20by%20the%20color%20code%20%23103cbe%2C%20which%20represents%20a%20deep%20blue%20to.webp");
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+
 
 /* General Styling */
 body, html {
