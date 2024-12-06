@@ -9,4 +9,6 @@ export class Employee {
   department: Department;
   profilePicture: string | File | null;
   profilePicturePath: string;
+  phone: string;
+  joiningDate: string;
 }

@@ -56,7 +56,11 @@ public class EmployeeController {
 	            @RequestParam("role") String role,
 	            @RequestParam("departmentId") String departmentId,
 	            @RequestParam("departmentName") String departmentName,
+	            @RequestParam("joiningDate") String joiningDate,
+	            @RequestParam("phone") String phone,
 	            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture
+	            
+	            
 	    )
 		{
 			try 
@@ -68,6 +72,8 @@ public class EmployeeController {
 				employee.setEmailId(emailId);
 				employee.setRole(role);
 				employee.setDepartment(department);
+				employee.setPhone(phone);
+				employee.setJoiningDate(joiningDate);
 				
 				System.out.println(employee);
 			
