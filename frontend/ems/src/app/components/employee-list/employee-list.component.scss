@@ -1,0 +1,209 @@
+/* Responsive Page Container Styling */
+.custom-container {
+  padding: 1rem;
+
+  .page-title {
+    color: #b85042;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .search-input {
+      width: 100%;
+      max-width: 480px; /* Accommodate longer text */
+      height: 40px;
+      border: 1px solid #ced4da;
+      font-size: 1rem;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      padding: 0 15px;
+    }
+
+    .add-employee-btn {
+      height: 40px;
+      padding: 0 15px;
+      font-size: 1rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+  }
+
+  .employee-list-container {
+    margin-top: 20px;
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+
+      .col-xl-3,
+      .col-lg-4,
+      .col-md-6,
+      .col-sm-6 {
+        display: flex;
+        align-items: stretch; /* Ensures consistent card height */
+      }
+    }
+
+    .card {
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      height: 100%; /* Uniform card height */
+      width: 100%; /* Ensures all cards take the width of their column */
+      max-width: 250px; /* Sets a maximum width for all cards */
+      margin: 0 auto;
+
+      &.clickable-card {
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.03);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+      }
+
+      .profile-picture {
+        height: 150px; /* Top section image height */
+        width: 100%; /* Full width */
+
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover; /* Ensures proper image scaling */
+        }
+      }
+
+      .card-body {
+        text-align: left;
+        padding: 1rem;
+
+        .card-title {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: black;
+          text-align: center; /* Center-align name */
+          margin-bottom: 0.5rem;
+        }
+
+        .card-text-id,
+        .card-text {
+          font-size: 1rem;
+          margin: 0.3rem 0;
+          color: #333;
+        }
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+
+        button {
+          flex: 1;
+          font-size: 0.9rem;
+        }
+
+        button + button {
+          margin-left: 10px;
+        }
+      }
+    }
+    .pagination-left {
+      position: absolute;
+      top: 50%; /* Vertically center-align */
+      left: -60px; /* Adjust position to the left of the cards */
+      transform: translateY(-50%);
+    }
+  
+    /* Right Pagination Button */
+    .pagination-right {
+      position: absolute;
+      top: 50%; /* Vertically center-align */
+      right: -60px; /* Adjust position to the right of the cards */
+      transform: translateY(-50%);
+    }
+  }
+
+  .pagination-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+      min-width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1rem;
+      margin: 0 5px;
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%; /* Limit width to 90% of screen */
+  animation: popup 0.3s ease;
+}
+
+.close-btn {
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popup {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}

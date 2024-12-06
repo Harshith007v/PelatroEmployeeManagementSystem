@@ -4,6 +4,7 @@ import { Employee } from 'src/app/employee';
 import { DepartmentServiceService } from 'src/app/services/department-service.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-employee',
@@ -13,23 +14,20 @@ import Swal from 'sweetalert2';
 export class AddEmployeeComponent implements OnInit {
   departments: any[] = [];
   employee: Employee = new Employee();
+  clearFields(): void {
+    this.employee = new Employee();
+    this.imageSrc = '/assets/images/default_profile.jpg';
+    const invalidFields = document.querySelectorAll('.is-invalid');
+    invalidFields.forEach((field) => field.classList.remove('is-invalid'));
+  }
 
-  closeForm() {
-    throw new Error('Method not implemented.');
-  }
-  onUploadImage() {
-    throw new Error('Method not implemented.');
-  }
-  clearFields() {
-    throw new Error('Method not implemented.');
-  }
-  // For image preview
   imageSrc: string | ArrayBuffer | null = '/assets/images/default_profile.jpg';
 
   constructor(
     private employeeService: EmployeeService,
     private departmentService: DepartmentServiceService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -94,16 +92,14 @@ export class AddEmployeeComponent implements OnInit {
       formData.append('profilePicture', this.employee.profilePicture); // Append the image file
     }
 
-    this.employeeService.createEmployee(formData).subscribe(
-      (data) => {
-        console.log(data);
-        this.router.navigate(['/employees']);
-      },
-      (error) => {
-        console.error('There was an error!', error);
-        this.showValidationError();
-      }
-    );
+    this.employeeService.createEmployee(formData).subscribe((data) => {
+      console.log(data);
+      this.router.navigate(['/employees']).then(() => {
+        // Force a page reload to refresh the component
+        this.location.go(this.router.url);
+        window.location.reload();
+      });
+    });
   }
   showValidationError() {
     if (!this.employee.firstName) {

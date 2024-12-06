@@ -29,6 +29,10 @@
   height: 100vh;
   margin-left: 5rem;
   margin-top: 54px; /* Matches Navbar height */
+<<<<<<< HEAD
+=======
+  /*background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);*/
+>>>>>>> c7862832869d7625f21477ad1e0f9dfb834d83e8
   overflow: hidden; /* Prevents content from spilling outside */
   overflow-y: scroll; /* Allows vertical scrolling */
   box-sizing: border-box; /* Includes padding in width/height calculations */

@@ -62,8 +62,6 @@ const routes: Routes = [
     component: DailyTimeLogComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'test', component: AddEmployeeComponent },
-
   { path: '**', redirectTo: 'login' },
 ];
 
