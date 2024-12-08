@@ -81,7 +81,7 @@ public class EmployeeServiceImp implements EmployeeService {
         }
     }
 	
-    public Employee updateEmployee(Long id, Employee employee) {
+    public Employee updateEmployee(Long id, Employee employee,MultipartFile profilePicture) throws Exception  {
         try {
             logger.debug("Attempting to update employee with ID: {}", id);
             
@@ -96,6 +96,22 @@ public class EmployeeServiceImp implements EmployeeService {
             newEmployee.setEmailId(employee.getEmailId());
             newEmployee.setRole(employee.getRole());
             newEmployee.setDepartment(employee.getDepartment());
+            newEmployee.setPhone(employee.getPhone());
+            newEmployee.setJoiningDate(employee.getJoiningDate());
+            
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+                String fileName = profilePicture.getOriginalFilename();
+                Path uploadPath = Paths.get(UPLOAD_DIR);
+                
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath); 
+                }
+                
+                Path filePath = uploadPath.resolve(fileName);
+                Files.copy(profilePicture.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                
+                newEmployee.setProfilePicturePath(UPLOAD_DIR + fileName); 
+            }
 		
             Employee updatedEmployee = employeeRepository.save(newEmployee);
             

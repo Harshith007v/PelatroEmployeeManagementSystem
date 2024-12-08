@@ -56,7 +56,11 @@ public class EmployeeController {
 	            @RequestParam("role") String role,
 	            @RequestParam("departmentId") String departmentId,
 	            @RequestParam("departmentName") String departmentName,
+	            @RequestParam("joiningDate") String joiningDate,
+	            @RequestParam("phone") String phone,
 	            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture
+	            
+	            
 	    )
 		{
 			try 
@@ -68,8 +72,8 @@ public class EmployeeController {
 				employee.setEmailId(emailId);
 				employee.setRole(role);
 				employee.setDepartment(department);
-				
-				System.out.println(employee);
+				employee.setPhone(phone);
+				employee.setJoiningDate(joiningDate);
 			
 			
 				ApiResponse<Employee> response = new ApiResponse<>("pass",employeeServiceImp.createEmployee( employee,profilePicture ));
@@ -99,9 +103,30 @@ public class EmployeeController {
 	 
 	//update emp
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<ApiResponse<Employee>> updateEmployee(@PathVariable("id") Long id, @RequestBody Employee employee){
+	public ResponseEntity<ApiResponse<Employee>> updateEmployee(
+			@PathVariable("id") Long id, 
+			@RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("emailId") String emailId,
+            @RequestParam("role") String role,
+            @RequestParam("departmentId") String departmentId,
+            @RequestParam("departmentName") String departmentName,
+            @RequestParam("joiningDate") String joiningDate,
+            @RequestParam("phone") String phone,
+            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture){
 		try {
-			Employee updatedEmployee=employeeServiceImp.updateEmployee( id, employee );
+			
+			Department department = new Department(Long.parseLong(departmentId),departmentName);
+			Employee employee = new Employee();
+			employee.setFirstName(firstName);
+			employee.setLastName(lastName);
+			employee.setEmailId(emailId);
+			employee.setRole(role);
+			employee.setDepartment(department);
+			employee.setPhone(phone);
+			employee.setJoiningDate(joiningDate);
+			
+			Employee updatedEmployee=employeeServiceImp.updateEmployee( id, employee,profilePicture );
 			ApiResponse<Employee> response= new ApiResponse<>("pass",updatedEmployee);
 			return ResponseEntity.ok( response );
 		}catch(Exception e) {
