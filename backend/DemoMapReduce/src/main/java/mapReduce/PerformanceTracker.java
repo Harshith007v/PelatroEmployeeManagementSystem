@@ -21,7 +21,8 @@ public class PerformanceTracker{
         config.set("hbase.zookeeper.property.clientPort", "2181");
 
         Path outputPath = new Path("hdfs://localhost:9000/user/hadoop/performance_output");
-        Path localOutputPath = new Path("file:///home/pelatro/HdfsOutput");
+        Path localOutputPath1 = new Path("file:///home/pelatro/HdfsOutput");
+        Path localOutputPath2 = new Path("file:///home/pelatro/PelatroProject/frontend/ems/src/assets/Files");
 
         FileSystem fs = FileSystem.get(config);
         if (fs.exists(outputPath)) {
@@ -50,13 +51,21 @@ public class PerformanceTracker{
         System.out.println("Job completed successfully.");
 
         FileSystem localFs = FileSystem.getLocal(config);
-        if (localFs.exists(localOutputPath)) {
-            localFs.delete(localOutputPath, true);
-            System.out.println("Existing local output folder deleted.");
+        if (localFs.exists(localOutputPath1)) {
+            localFs.delete(localOutputPath1, true);
+            System.out.println("Existing local output 1 folder deleted.");
+        }
+        
+        if (localFs.exists(localOutputPath2)) {
+            localFs.delete(localOutputPath2, true);
+            System.out.println("Existing local output 2 folder deleted.");
         }
 
-        fs.copyToLocalFile(outputPath, localOutputPath);
-        System.out.println("Output copied to local file system: " + localOutputPath);
+        fs.copyToLocalFile(outputPath, localOutputPath1);
+        fs.copyToLocalFile(outputPath, localOutputPath2);
+        
+        System.out.println("Output copied to local file system: " + localOutputPath1);
+        System.out.println("Output copied to local file system: " + localOutputPath2);
     }
 
    
