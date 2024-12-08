@@ -15,7 +15,7 @@
 }
 
 .custom-container {
-  width: calc(100% - 9rem);
+  width: 70vw;
   margin: 10px auto;
   margin-left: 83px;
   padding: 0;
@@ -174,13 +174,6 @@
 }
 
 /* Employee list container */
-.employee-list-container {
-  position: relative;
-  height: 100%; /* Allow it to take full height of the content */
-  overflow-y: scroll; /* Enable scrolling if content overflows */
-  padding-bottom: 50px; /* Add space at the bottom for the pagination buttons */
-  margin-left: 30px;
-}
 
 /* Fixed position for pagination buttons at left and right */
 .pagination-buttons {

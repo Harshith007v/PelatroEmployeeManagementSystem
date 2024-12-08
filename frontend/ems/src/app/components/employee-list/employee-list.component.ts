@@ -15,13 +15,13 @@ export class EmployeeListComponent implements OnInit {
   filteredEmployees: Employee[] = []; // Filtered employees for search
   paginatedEmployees: Employee[] = []; // Employees to display in the current page
   currentPage: number = 1; // Tracks current page for pagination
-  itemsPerPage: number = 6; // Employees per page
+  itemsPerPage: number = 8; // Employees per page
   searchText: string = ''; // Search query
 
   constructor(
     private employeeService: EmployeeService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getEmployees(); // Fetch employee data on component initialization
@@ -35,8 +35,8 @@ export class EmployeeListComponent implements OnInit {
           ...employee,
           profilePictureUrl: employee.profilePicturePath
             ? `http://localhost:8080/api/photos?profilePicturePath=${encodeURIComponent(
-                employee.profilePicturePath
-              )}`
+              employee.profilePicturePath
+            )}`
             : '/assets/images/default_profile.jpg',
         }));
 
@@ -55,11 +55,11 @@ export class EmployeeListComponent implements OnInit {
 
     this.filteredEmployees = query
       ? this.employees.filter(
-          (employee) =>
-            employee.firstName.toLowerCase().includes(query) ||
-            employee.lastName.toLowerCase().includes(query) ||
-            employee.emailId.toLowerCase().includes(query)
-        )
+        (employee) =>
+          employee.firstName.toLowerCase().includes(query) ||
+          employee.lastName.toLowerCase().includes(query) ||
+          employee.emailId.toLowerCase().includes(query)
+      )
       : [...this.employees];
 
     this.currentPage = 1; // Reset to the first page after search
@@ -104,12 +104,12 @@ export class EmployeeListComponent implements OnInit {
 
   /** Navigates to view employee details */
   viewEmployee(id: number): void {
-    this.router.navigate(['view-employee', id]);
+    this.router.navigate(['/view-employee', id]);
   }
 
   /** Navigates to the update employee page */
   updateEmployee(id: number): void {
-    this.router.navigate(['update-employees', id]);
+    this.router.navigate(['/update-employees', id]);
   }
 
   /** Deletes an employee with confirmation */

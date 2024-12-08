@@ -13,7 +13,7 @@
       <div class="row">
         <!-- Left Column for Image Upload -->
         <div class="col-md-4 text-center">
-          <div class="image-upload">
+          <div class="image-upload" style="margin-top: 54px">
             <!-- Image Preview Above File Input -->
             <div *ngIf="imageSrc" class="image-preview">
               <img
@@ -24,18 +24,20 @@
             </div>
 
             <!-- Choose File Input Below Image Preview -->
+
             <input
+              #fileInput
               type="file"
               accept="image/*"
               (change)="onFileSelect($event)"
-              class="form-control mt-3 p-2"
+              class="d-none"
             />
 
-            <!-- Upload Image Button Below the Input -->
+            <!-- Custom Upload Button -->
             <button
               type="button"
               class="btn btn-primary mt-2 p-2"
-              (click)="onUploadImage()"
+              (click)="fileInput.click()"
             >
               Upload Image
             </button>

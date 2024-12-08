@@ -11,48 +11,33 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="register.component.scss" />
-    <title>Bootstrap Login | Ludiflex</title>
+    <title>Register | Employee Management System</title>
   </head>
 
   <body>
-    <div
-      class="container d-flex justify-content-center align-items-center min-vh-100"
-    >
-      <div class="row border rounded-5 p-3 bg-white shadow box-area">
-        <!-- Left Panel -->
-        <div
-          class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
-          style="background: #103cbe"
-        >
-          <p
-            class="text-white fs-2"
-            style="
-              font-family: 'Courier New', Courier, monospace;
-              font-weight: 600;
-              text-align: center;
-            "
-          >
-            Employee Management System
-          </p>
-          <small
-            class="text-white text-wrap text-center"
-            style="width: 17rem; font-family: 'Courier New', Courier, monospace"
-            >Register to get started!</small
-          >
-        </div>
-
+    <div class="background-layer"></div>
+    <div class="container d-flex align-items-center justify-content-center">
+      <div class="row">
         <!-- Right Panel -->
-        <div class="col-md-6 right-box">
+        <div class="col-md-6 right-box rounded-custom">
           <form (ngSubmit)="onRegister()">
             <div class="row align-items-center">
               <div class="header-text mb-4">
-                <h2 style="text-align: center">Welcome to EMS Pro</h2>
+                <h3
+                  style="
+                    text-align: center;
+                    font-weight: 50;
+                    color: white;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                  "
+                >
+                  Create an Account
+                </h3>
               </div>
-
               <div class="input-group mb-3">
                 <input
                   type="text"
-                  class="form-control form-control-lg bg-light fs-6"
+                  class="form-control form-control-lg"
                   placeholder="Username"
                   id="username"
                   [(ngModel)]="username"
@@ -60,21 +45,17 @@
                   required
                 />
               </div>
-
-              <!-- Email Input -->
               <div class="input-group mb-3">
                 <input
                   type="email"
+                  class="form-control form-control-lg"
+                  placeholder="Email"
                   id="email"
-                  class="form-control form-control-lg bg-light fs-6"
-                  placeholder="Enter email"
                   [(ngModel)]="email"
                   name="email"
                   required
                 />
               </div>
-
-              <!-- New Password Input -->
               <div class="input-group mb-3">
                 <input
                   [type]="showPassword ? 'text' : 'password'"
@@ -85,61 +66,80 @@
                   name="password"
                   required
                 />
-                <button
+                <span
                   type="button"
-                  class="btn btn-outline-secondary"
+                  class="btn btn-outline-secondary eye-icon"
                   (click)="togglePasswordVisibility()"
+                  style="border: none; background: none; border-radius: 40px"
                 >
-                  <span *ngIf="showPassword">Hide</span>
-                  <span *ngIf="!showPassword">Show</span>
-                </button>
+                  <i
+                    class="fas"
+                    [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                  ></i>
+                </span>
               </div>
-
-              <!-- Confirm Password Input -->
               <div class="input-group mb-3">
                 <input
-                  type="password"
+                  [type]="showPassword ? 'text' : 'password'"
                   id="confirmPassword"
-                  class="form-control form-control-lg bg-light fs-6"
+                  class="form-control form-control-lg"
                   placeholder="Confirm Password"
                   [(ngModel)]="confirmPassword"
                   name="confirmPassword"
                   required
                 />
+                <span
+                  type="button"
+                  class="btn btn-outline-secondary eye-icon"
+                  (click)="togglePasswordVisibility()"
+                  style="border: none; background: none; border-radius: 40px"
+                >
+                  <i
+                    class="fas"
+                    [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                  ></i>
+                </span>
               </div>
-
-              <!-- Remember Me Checkbox -->
-              <div class="input-group mb-5 d-flex justify-content-between">
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="formCheck"
-                  />
-                  <label for="formCheck" class="form-check-label text-secondary"
-                    ><small>Remember Me</small></label
-                  >
-                </div>
-              </div>
-
-              <!-- Error Message -->
-              <div class="error" *ngIf="errorMessage">
+              <div class="error" [ngClass]="{ show: errorMessage }">
                 <span class="text-danger">{{ errorMessage }}</span>
               </div>
-
-              <!-- Register Button -->
               <div class="input-group mb-3">
-                <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">
+                <button class="btn btn-lg btn-primary w-100 fs-5" type="submit">
                   Register
                 </button>
               </div>
-
-              <!-- Login Link -->
-              <div class="row">
-                <small
-                  >Already have an account?
-                  <a routerLink="/login">Login here</a></small
-                >
+              <div class="text-center" style="color: white">
+                <small>
+                  Already have an account?
+                  <a class="sign-up" routerLink="/login"
+                    ><button class="btn btn-lg btn-primary w-100 mt-2 fs-5">
+                      Login
+                    </button></a
+                  >
+                </small>
+                <div class="social-media mt-3">
+                  <a
+                    href="https://facebook.com"
+                    target="_blank"
+                    class="social-icon"
+                  >
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a
+                    href="https://twitter.com"
+                    target="_blank"
+                    class="social-icon"
+                  >
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    class="social-icon"
+                  >
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </form>
@@ -148,4 +148,3 @@
     </div>
   </body>
 </html>
-<app-footer></app-footer>

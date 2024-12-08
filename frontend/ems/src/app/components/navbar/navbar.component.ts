@@ -9,10 +9,14 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   title = 'Employee Management System';
+  isAdmin: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    const userName = localStorage.getItem('userName');
+    this.isAdmin = userName === 'admin';
+  }
 
   logout() {
     console.log("logout pressed");

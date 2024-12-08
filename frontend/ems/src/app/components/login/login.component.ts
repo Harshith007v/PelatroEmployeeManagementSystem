@@ -31,6 +31,8 @@ export class LoginComponent {
           this.authService.setToken(response.token);
           console.log(response.token); // Log the token for debugging
 
+          localStorage.setItem('userName', this.userName);
+
           // Show success alert
           Swal.fire('Logged In!', 'User LogIn Successful.', 'success');
 

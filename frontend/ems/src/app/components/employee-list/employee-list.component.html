@@ -13,7 +13,7 @@
         aria-label="Search Employee"
       />
       <button
-        class="btn btn-success add-employee-btn"
+        class="btn add-employee-btn"
         (click)="addEmployee()"
         aria-label="Add Employee"
       >
@@ -55,7 +55,7 @@
     <div class="row g-3">
       <div
         *ngFor="let employee of paginatedEmployees"
-        class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
+        class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-5"
       >
         <div
           class="card small-card clickable-card h-100"
@@ -103,7 +103,6 @@
       </div>
     </div>
 
-    Pagination Buttons
     <div class="pagination-buttons d-flex justify-content-center mt-3">
       <button
         class="btn btn-secondary me-2 pagination-left"

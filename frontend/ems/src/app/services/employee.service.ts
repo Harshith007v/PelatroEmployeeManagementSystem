@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class EmployeeService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getEmployeeList(): Observable<Employee[]> {
     return this.httpClient.get<any>('http://localhost:8080/api/employees').pipe(
@@ -56,9 +56,9 @@ export class EmployeeService {
       );
   }
 
-  updateEmployee(id: number, employee: Employee): Observable<Object> {
+  updateEmployee(id: number, formData: FormData): Observable<Object> {
     return this.httpClient
-      .put(`http://localhost:8080/api/employees/${id}`, employee)
+      .put(`http://localhost:8080/api/employees/${id}`, formData)
       .pipe(
         map((response: any) => {
           if (response.status === 'pass') {

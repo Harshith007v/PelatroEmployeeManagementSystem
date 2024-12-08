@@ -1,7 +1,8 @@
-<h3 class="page-title text-center">View Employee Details</h3>
+<!-- <h3 class="page-title text-center" style="color: #b85042">
+  View Employee Details
+</h3>
 <div class="container mt-4">
   <div class="row">
-    <!-- Left Side: Employee Details -->
     <div class="col-lg-6 col-md-6 col-12 employee-details">
       <div class="section section-1 mb-3">
         <div class="detail-item">
@@ -12,6 +13,12 @@
         </div>
         <div class="detail-item">
           <label><b>Last Name:</b></label> {{ employee.lastName }}
+        </div>
+        <div class="detail-item">
+          <label><b>Phone Number:</b></label> {{ employee.phone }}
+        </div>
+        <div class="detail-item">
+          <label><b>Joining Date:</b></label> {{ employee.joiningDate }}
         </div>
       </div>
 
@@ -30,26 +37,91 @@
           {{ employee.department.departmentName }}
         </div>
       </div>
+
+      <div class="section section-3">
+        <h4 class="text-center">Employee Picture</h4>
+        <div class="text-center">
+          <img
+            [src]="profilePictureUrl"
+            class="employee-image"
+            alt="Employee Image"
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-12 performance-report">
+        <div class="section section-3">
+          <h4 class="text-center">Performance Report</h4>
+          Last updated on: {{ asOfDate }}
+          <div class="charts-container">
+            <canvas id="performanceChart"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Right Side: Performance Report -->
-    <div class="col-lg-6 col-md-6 col-12 performance-report">
-      <div class="section section-3">
-        <h4 class="text-center">Performance Report</h4>
-        Last updated on : {{ asOfDate }}
+    <div class="row mt-4">
+      <div class="col-12 text-center">
+        <button (click)="backToEmployeeList()" class="btn btn-secondary">
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container">
+  <!-- Header Section -->
+  <div class="header">
+    <h1>View Employee Details</h1>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="left-section">
+      <!-- Employee Profile Picture -->
+      <div class="profile-card">
+        <img
+          [src]="profilePictureUrl"
+          alt="Employee Image"
+          class="employee-image"
+        />
+      </div>
+      <!-- Performance Report (Initially Hidden) -->
+      <div class="report-card">
+        <h2>Performance Report</h2>
+        <p><strong>Last Updated:</strong> {{ asOfDate }}</p>
         <div class="charts-container">
           <canvas id="performanceChart"></canvas>
         </div>
       </div>
     </div>
+
+    <!-- Right Section for Employee Details and Report -->
+    <div class="right-section">
+      <!-- Employee Details -->
+      <div class="details-card">
+        <h2>Employee Details</h2>
+        <p><strong>Employee ID:</strong> PEL{{ employee.id }}</p>
+        <p><strong>First Name:</strong> {{ employee.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ employee.lastName }}</p>
+        <p><strong>Phone Number:</strong> {{ employee.phone }}</p>
+        <p><strong>Joining Date:</strong> {{ employee.joiningDate }}</p>
+        <p><strong>Email ID:</strong> {{ employee.emailId }}</p>
+        <p><strong>Role:</strong> {{ employee.role }}</p>
+        <p>
+          <strong>Department:</strong>
+          {{ employee.department.departmentName }}
+        </p>
+        <p><strong>Department ID:</strong> {{ employee.department.id }}</p>
+      </div>
+    </div>
   </div>
 
-  <!-- Back Button -->
-  <div class="row mt-4">
-    <div class="col-12 text-center">
-      <button (click)="backToEmployeeList()" class="btn btn-secondary">
-        Back
-      </button>
-    </div>
+  <!-- Footer Section -->
+  <div class="footer">
+    <button (click)="backToEmployeeList()" class="btn-back">
+      Back to Employee List
+    </button>
   </div>
 </div>

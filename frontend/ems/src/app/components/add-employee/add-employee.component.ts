@@ -28,7 +28,7 @@ export class AddEmployeeComponent implements OnInit {
     private departmentService: DepartmentServiceService,
     private router: Router,
     private location: Location
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getDepartments();
@@ -92,8 +92,10 @@ export class AddEmployeeComponent implements OnInit {
       formData.append('profilePicture', this.employee.profilePicture); // Append the image file
     }
 
+
     this.employeeService.createEmployee(formData).subscribe((data) => {
       console.log(data);
+
       this.router.navigate(['/employees']).then(() => {
         // Force a page reload to refresh the component
         this.location.go(this.router.url);
@@ -101,6 +103,8 @@ export class AddEmployeeComponent implements OnInit {
       });
     });
   }
+
+
   showValidationError() {
     if (!this.employee.firstName) {
       const firstNameField = document.getElementById(

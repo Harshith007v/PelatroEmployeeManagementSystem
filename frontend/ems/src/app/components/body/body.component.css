@@ -29,10 +29,6 @@
   height: 100vh;
   margin-left: 5rem;
   margin-top: 54px; /* Matches Navbar height */
-<<<<<<< HEAD
-=======
-  /*background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);*/
->>>>>>> c7862832869d7625f21477ad1e0f9dfb834d83e8
   overflow: hidden; /* Prevents content from spilling outside */
   overflow-y: scroll; /* Allows vertical scrolling */
   box-sizing: border-box; /* Includes padding in width/height calculations */
@@ -57,12 +53,14 @@
 
 /* Content Box Style */
 .body-content {
-  background: #fbfff1 ; /* Clean white background */
+  background: #f4f5f7 ; /* Clean white background */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: scroll; /* Ensures content stays within the box */
+  overflow-x: hidden ;
   height: 86vh;
   position: fixed;
-  width: 100vw;
+  width: 94vw;
+  border-radius: 10px;
 }
 
 

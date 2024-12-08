@@ -16,6 +16,14 @@ export class ViewEmployeeComponent implements OnInit {
   performanceData: any;
   asOfDate: any;
 
+  showReport: boolean = true;
+
+  // Toggles the display of the performance report
+  toggleReport() {
+    console.log("show report clicked")
+    this.showReport = !this.showReport;
+  }
+
   constructor(
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
@@ -30,6 +38,8 @@ export class ViewEmployeeComponent implements OnInit {
       this.employee = data;
     });
 
+
+
     // Fetch performance data and create chart
     const filePath = "/home/pelatro/HdfsOutput/part-r-00000";
     this.employeeService.getPerformanceData(filePath).subscribe(data => {
@@ -39,30 +49,38 @@ export class ViewEmployeeComponent implements OnInit {
     });
   }
 
+  get profilePictureUrl(): string {
+    return this.employee.profilePicturePath
+      ? `http://localhost:8080/api/photos?profilePicturePath=${encodeURIComponent(this.employee.profilePicturePath)}`
+      : '/assets/images/default_profile.jpg';
+  }
+
   createPerformanceChart() {
-    // Convert the employee ID from number to the string format (e.g., 'emp1', 'emp2', etc.)
+
     const employeeId = `PEL${this.id}`;
 
-    // If the performance data for the employee exists
     if (this.performanceData && this.performanceData[employeeId] !== undefined) {
-      const performanceScore = this.performanceData[employeeId]; // Individual performance score
+      const performanceScore = this.performanceData[employeeId];
 
       new Chart('performanceChart', {
-        type: 'pie',  // Using pie chart
+        type: 'doughnut', // Doughnut chart for a gauge look
         data: {
-          labels: ['Employee Performance', 'Remaining'],  // Pie chart segments
+          labels: ['Performance'],
           datasets: [{
-            data: [performanceScore, 100 - performanceScore],  // Showing the individual performance vs remaining
-            backgroundColor: ['#4caf50', '#e0e0e0'],  // Green for performance, gray for remaining
+            data: [performanceScore, 100 - performanceScore], // Show performance vs remaining
+            backgroundColor: performanceScore >= 50 ? ['#4caf50', '#e0e0e0'] : ['#f44336', '#e0e0e0'], // Green for good performance, Red for low performance
             borderColor: '#fff',
             borderWidth: 1
           }]
         },
         options: {
           responsive: true,
+          circumference: Math.PI,
+          rotation: Math.PI,
+          cutoutPercentage: 80, // To create a donut effect
           plugins: {
             legend: {
-              position: 'top'
+              display: false
             },
             tooltip: {
               callbacks: {
@@ -76,14 +94,14 @@ export class ViewEmployeeComponent implements OnInit {
         }
       });
     } else {
-      // Empty pie chart if no data found for the employee
+      // Empty chart if no data found for the employee
       new Chart('performanceChart', {
-        type: 'pie',
+        type: 'doughnut',
         data: {
           labels: ['No Data Available'],
           datasets: [{
-            data: [100],  // Empty pie chart with no performance data
-            backgroundColor: ['#e0e0e0'],  // Gray color indicating no data
+            data: [100],  // Empty chart with no performance data
+            backgroundColor: ['#e0e0e0'],
             borderColor: '#fff',
             borderWidth: 1
           }]

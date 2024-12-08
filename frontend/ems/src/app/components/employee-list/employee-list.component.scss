@@ -1,12 +1,14 @@
 /* Responsive Page Container Styling */
 .custom-container {
   padding: 1rem;
+  width: 90vw;
+  margin-left: 2rem;
 
   .page-title {
     color: #b85042;
     font-size: 2rem;
     font-weight: bold;
-    margin: 0;
+    margin: 20px;
   }
 
   .search-container {
@@ -51,7 +53,7 @@
     }
 
     .card {
-      border: none;
+      border-color: #8685854b;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       overflow: hidden;
@@ -116,40 +118,8 @@
         }
       }
     }
-    .pagination-left {
-      position: absolute;
-      top: 50%; /* Vertically center-align */
-      left: -60px; /* Adjust position to the left of the cards */
-      transform: translateY(-50%);
-    }
+  }
   
-    /* Right Pagination Button */
-    .pagination-right {
-      position: absolute;
-      top: 50%; /* Vertically center-align */
-      right: -60px; /* Adjust position to the right of the cards */
-      transform: translateY(-50%);
-    }
-  }
-
-  .pagination-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-
-    button {
-      min-width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 1rem;
-      margin: 0 5px;
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-    }
-  }
 }
 
 /* Modal Styling */
@@ -171,6 +141,7 @@
   background: white;
   padding: 20px;
   border-radius: 10px;
+  width: 60vw;
   max-width: 90%; /* Limit width to 90% of screen */
   animation: popup 0.3s ease;
 }
@@ -188,6 +159,37 @@
   line-height: 1;
   padding: 0;
 }
+
+.add-employee-btn{
+  color: #fff;
+  background: #082567;
+
+  &:hover{
+    color: #fff;
+    background: #2457c5;
+    transition: 0.7s;
+  }
+}
+
+.pagination-buttons{
+  position: relative;
+
+}
+
+.pagination-right{
+  position: fixed;
+  left: 110rem;
+  bottom: 26rem;
+  background: #082567
+}
+
+.pagination-left{
+  position: fixed;
+  right: 105rem;
+  bottom: 26rem;
+  background: #082567
+}
+
 
 /* Animations */
 @keyframes fadeIn {
