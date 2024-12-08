@@ -4,83 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #fbfff1;
-      }
-
-      .dashboard {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 90vw;
-        margin-left: 2rem;
-        padding: 1rem;
-      }
-
-      .page-title {
-        font-size: 2rem;
-        color: blue;
-        margin-bottom: 1rem;
-        font-weight: bold;
-        text-align: center;
-      }
-
-      .top-section {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1rem;
-        height: 50%;
-        margin-bottom: 1rem;
-      }
-
-      .box {
-        background-color: #fff;
-        border-radius: 0.5rem;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        padding: 1rem;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #6c757d;
-        cursor: pointer;
-      }
-
-      .box:hover {
-        background-color: #f1f1f1;
-      }
-
-      .chart-container {
-        width: 100%;
-        height: 70%;
-      }
-
-      .bottom-section {
-        padding: 20px;
-        flex-grow: 1;
-        background-color: fff;
-        border-radius: 0.5rem;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      canvas {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
+    <link rel="stylesheet" href="dashboard.component.css" />
   </head>
   <body>
     <div class="dashboard">
@@ -88,22 +12,10 @@
 
       <!-- Top Section -->
       <div class="top-section">
-        <div class="box">
-          <p>Development Dept</p>
+        <div class="box department">
+          <p>Department Wise Performance</p>
           <div class="chart-container">
-            <canvas id="devPerformanceChart"></canvas>
-          </div>
-        </div>
-        <div class="box">
-          <p>Testing Dept</p>
-          <div class="chart-container">
-            <canvas id="testPerformanceChart"></canvas>
-          </div>
-        </div>
-        <div class="box">
-          <p>Support Dept</p>
-          <div class="chart-container">
-            <canvas id="supportPerformanceChart"></canvas>
+            <canvas id="departmentPerformanceChart"></canvas>
           </div>
         </div>
         <div class="box">
@@ -114,9 +26,40 @@
         </div>
       </div>
 
-      <!-- Bottom Section -->
-      <div class="bottom-section">
-        <canvas id="overallPerformanceChart"></canvas>
+      <!-- Top 5 Performers Section -->
+      <div class="top-performers-carousel">
+        <div class="top-performers">
+          <div
+            class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-5"
+            *ngFor="let employee of topPerformersDetails"
+          >
+            <div
+              class="card small-card clickable-card h-100"
+              (click)="viewEmployee(employee.empId)"
+            >
+              <div class="profile-picture">
+                <img
+                  [src]="employee.profilePictureUrl"
+                  alt="{{ employee.firstName }} {{
+                    employee.lastName
+                  }}'s Profile Picture"
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center">
+                  {{ employee.fullName }}
+                </h5>
+                <p class="card-text-id text-center">PEL{{ employee.empId }}</p>
+                <p class="card-text">
+                  <strong>Department:</strong> {{ employee.department }}
+                </p>
+                <p class="card-text">
+                  <strong>Performance:</strong> {{ employee.performance }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>

@@ -2,6 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
+import { Employee } from 'src/app/employee';
+
+
+interface TopPerformer {
+  empId: string;
+  fullName: string; // Changed from name to fullName
+  department: string;
+  performance: number;
+  profilePictureUrl: string;
+}
+
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +31,8 @@ export class DashboardComponent implements OnInit {
   supportEmployees: string[] = [];
   topPerformers: string[] = [];
   topPerformanceValues: number[] = [];
+  topPerformersDetails: TopPerformer[] = [];
+
 
   constructor(private employeeService: EmployeeService, private router: Router) { }
 
@@ -68,6 +81,9 @@ export class DashboardComponent implements OnInit {
     this.topPerformers = this.findTopPerformers();
     this.topPerformanceValues = this.topPerformers.map((empId) => this.performanceData[empId] || 0);
 
+    const topPerformerIds = this.findTopPerformers();
+    this.fetchTopPerformersDetails(topPerformerIds);
+
     this.createCharts();
   }
 
@@ -85,24 +101,74 @@ export class DashboardComponent implements OnInit {
     return sortedEmployees.slice(0, 5); // Get top 5 performers
   }
 
+  fetchTopPerformersDetails(topPerformerIds: string[]) {
+    this.topPerformersDetails = []; // Reset before populating
+
+    topPerformerIds.forEach((empId) => {
+      console.log(topPerformerIds)
+      const id = parseInt(empId.replace('PEL', ''), 10);
+      this.employeeService.getEmployeeById(id).subscribe(
+        (employeeData: Employee) => {
+          const topPerformer: TopPerformer = {
+            profilePictureUrl: employeeData.profilePicturePath
+              ? `http://localhost:8080/api/photos?profilePicturePath=${encodeURIComponent(
+                employeeData.profilePicturePath
+              )}`
+              : '/assets/images/default_profile.jpg',
+            empId: employeeData.id.toString(),
+            // Combine firstName and lastName
+            fullName: `${employeeData.firstName} ${employeeData.lastName}`,
+            department: employeeData.department.departmentName,
+            performance: this.performanceData[empId]
+          };
+          this.topPerformersDetails.push(topPerformer);
+        },
+        (error) => console.error(`Error fetching details for ${empId}:`, error)
+      );
+    });
+  }
+
   goToEmployee() {
     const employeeId = this.topPerformers[0].replace('PEL', '');
     this.router.navigate([`/view-employee/${employeeId}`]);
   }
 
+  /** Navigates to view employee details */
+  viewEmployee(id: number): void {
+    this.router.navigate(['/view-employee', id]);
+  }
+
   createCharts() {
-    // Department-wise Bar Charts
+    // Combined department-wise performance data
+    const departmentPerformance = [
+      {
+        department: 'Development',
+        performance: this.developmentPerformance
+      },
+      {
+        department: 'Testing',
+        performance: this.testingPerformance
+      },
+      {
+        department: 'Support',
+        performance: this.supportPerformance
+      }
+    ];
 
-    // Development Performance Chart
-    new Chart('devPerformanceChart', {
+    // Department-wise Overall Performance Chart
+    new Chart('departmentPerformanceChart', {
       type: 'bar',
       data: {
-        labels: this.devEmployees,
+        labels: departmentPerformance.map((dept) => dept.department),
         datasets: [
           {
-            label: 'Employee Performance (%)',
-            data: this.devEmployees.map((empId) => this.performanceData[empId]),
-            backgroundColor: '#4CAF50', // Green
+            label: 'Department Performance (%)',
+            data: departmentPerformance.map((dept) => dept.performance),
+            backgroundColor: [
+              '#4CAF50', // Green for Development
+              '#FFC107', // Yellow for Testing
+              '#03A9F4', // Blue for Support
+            ],
           },
         ],
       },
@@ -112,75 +178,7 @@ export class DashboardComponent implements OnInit {
           x: {
             title: {
               display: true,
-              text: 'Employee IDs',
-            },
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Performance (%)',
-            },
-            beginAtZero: true,
-            max: 100,
-          },
-        },
-      },
-    });
-
-    // Testing Performance Chart
-    new Chart('testPerformanceChart', {
-      type: 'bar',
-      data: {
-        labels: this.testEmployees,
-        datasets: [
-          {
-            label: 'Employee Performance (%)',
-            data: this.testEmployees.map((empId) => this.performanceData[empId]),
-            backgroundColor: '#FFC107', // Yellow
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Employee IDs',
-            },
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Performance (%)',
-            },
-            beginAtZero: true,
-            max: 100,
-          },
-        },
-      },
-    });
-
-    // Support Performance Chart
-    new Chart('supportPerformanceChart', {
-      type: 'bar',
-      data: {
-        labels: this.supportEmployees,
-        datasets: [
-          {
-            label: 'Employee Performance (%)',
-            data: this.supportEmployees.map((empId) => this.performanceData[empId]),
-            backgroundColor: '#03A9F4', // Blue
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Employee IDs',
+              text: 'Department',
             },
           },
           y: {
@@ -199,11 +197,11 @@ export class DashboardComponent implements OnInit {
     new Chart('topPerformersChart', {
       type: 'line',  // Change this to 'line' for a line chart
       data: {
-        labels: Object.keys(this.performanceData), // All employees
+        labels: this.topPerformers.map(empId => `PEL${empId.replace('PEL', '')}`), // Format the empId to PEL1, PEL2, etc.
         datasets: [
           {
             label: 'Employee Performance (%)',
-            data: Object.keys(this.performanceData).map((empId) => this.performanceData[empId]),  // All performance data
+            data: this.topPerformanceValues,
             borderColor: '#673AB7', // Purple for the line color
             fill: false,  // No fill under the line
             tension: 0.1, // Smooth curve for the line
