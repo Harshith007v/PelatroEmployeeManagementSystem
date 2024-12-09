@@ -86,18 +86,19 @@
               {{ employee.department.departmentName }}
             </p>
           </div>
-          <div class="card-footer d-flex justify-content-between">
+          <div
+            class="card-footer d-flex justify-content-between"
+            *ngIf="isAdmin"
+          >
             <button
               (click)="updateEmployee(employee.id); $event.stopPropagation()"
               class="btn btn-info btn-sm"
-              *ngIf="isAdmin"
             >
               Update
             </button>
             <button
               (click)="deleteEmployee(employee.id); $event.stopPropagation()"
               class="btn btn-danger btn-sm"
-              *ngIf="isAdmin"
             >
               Delete
             </button>
