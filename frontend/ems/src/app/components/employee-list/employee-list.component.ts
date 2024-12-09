@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./employee-list.component.scss'],
 })
 export class EmployeeListComponent implements OnInit {
+  isAdmin: boolean = false;
+
   isAddEmployeeModalVisible = false; // Controls modal visibility
   employees: Employee[] = []; // Original list of employees
   filteredEmployees: Employee[] = []; // Filtered employees for search
@@ -24,6 +26,8 @@ export class EmployeeListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const userName = localStorage.getItem('userName');
+    this.isAdmin = userName === 'admin';
     this.getEmployees(); // Fetch employee data on component initialization
   }
 

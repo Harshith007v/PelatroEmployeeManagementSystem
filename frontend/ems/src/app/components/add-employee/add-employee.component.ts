@@ -99,7 +99,7 @@ export class AddEmployeeComponent implements OnInit {
       this.router.navigate(['/employees']).then(() => {
         // Force a page reload to refresh the component
         this.location.go(this.router.url);
-        window.location.reload();
+        // window.location.reload();
       });
     });
   }
