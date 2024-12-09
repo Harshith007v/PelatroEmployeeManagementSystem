@@ -58,6 +58,13 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
+  .date-input {
+    width: 17%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
   
   .dropdown-list {
     position: absolute;
