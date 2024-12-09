@@ -108,6 +108,7 @@
     width: 100%;
     max-width: 250px;
     margin: 0 auto;
+    cursor: pointer;
     background-color: #ffffff;
   }
   
